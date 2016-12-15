@@ -1,0 +1,44 @@
+//Supplier Dashboard Layout
+.pageWrap{
+	width: 100%;
+	padding-bottom: 70px;
+}
+.pageWrap:after{
+	clear: both;
+	content: ' ';
+	display: block;
+	padding-bottom: 70px;
+}
+.imageSize{
+	display: block;
+	max-width: 200px;
+	width: auto;
+	height: auto;
+}
+.dropZone{
+	width: 100%;
+}
+.navWrap{
+	width: 20%;
+	float: left;
+	margin: 65px 0 0;
+}
+.contentWrap{
+	width: 80%;
+	float: left;
+	margin: 10px 0 0;
+	padding: 10px;
+}
+.fromDash{
+	padding: 0 0 70px 0;
+}
+//Supplier Signup
+.group{
+	padding: 1%;
+}
+.form{
+	padding: 20px 0  70px 0;
+}
+.center{
+	text-align: center;
+}
