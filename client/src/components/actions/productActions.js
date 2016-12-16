@@ -10,12 +10,15 @@ export const grabSupplierProducts = (Products) => {
 }
 
 export const removeProduct = (product) => {
-	type: REMOVE_PRODUCT,
-	product
+	return{
+		type: REMOVE_PRODUCT,
+		product
+	}
 }
 
 export const updateProduct = (product) => {
-	
-	type: UPDATE_PRODUCT,
-	product
+	return{	
+		type: UPDATE_PRODUCT,
+		product
+	}
 }

@@ -17,7 +17,11 @@ class SingleProduct extends React.Component {
 		const deleteProductId = {
 			productId: productId
 		}
-		this.props.deleteProduct(deleteProductId);
+		this.props.deleteProduct(deleteProductId)
+		.then((res) => {
+			
+		})
+		.catch();
 	}
 
 	render(){

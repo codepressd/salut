@@ -20,8 +20,10 @@ class SupplierProducts extends React.Component{
 		const userId = {
 			userId : user.id
 		}
+		
 		this.props.getSupplierProducts(userId)
 		.then((res) => {
+
 			const products = res.data.products;
 			this.props.grabSupplierProducts(products);
 

@@ -22,7 +22,7 @@ const UserSchema = mongoose.Schema({
         region: { type: String },
         businessType: { type: String }
     },
-    products: { type: Array },
+   orders: { type: Array },
     role: {
         type: String,
         enum: ['restaurant', 'supplier'],

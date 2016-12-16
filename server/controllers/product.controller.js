@@ -12,14 +12,15 @@ function setProductInfo(req){
 		casePrice: req.price.case,
 		category: req.category,
 		imageurl: req.image,
+		supplier: req.supplier,
 		supplier: req.supplierId
 	}
 }
 
 
 exports.postProduct = function(req, res, next){
-
-	const {supplierId,supplier, productName, unitPrice, casePrice, productDescription, productType, image} = req.body;
+	
+	const {supplierId, supplier, productName, unitPrice, casePrice, productDescription, productType, image} = req.body;
 	if(!productName){
 		return res.status(422).send({ email: 'You must enter a Product Name.' });
 	}
@@ -64,7 +65,7 @@ exports.getSupplierProducts = function(req, res, next){
 
 	const supplyId = req.body.userId;
 
-	Product.find({supplier :  supplyId}, function(err, products){
+	Product.find({supplierId :  supplyId}, function(err, products){
 		if (err){
 			return next(err);
 		}

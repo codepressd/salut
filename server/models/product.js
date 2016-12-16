@@ -15,6 +15,7 @@ const ProductSchema = mongoose.Schema({
     },
     category: { type: String },
     image: {type: String },
+    supplierId:{type:String},
     supplier: { type: String }
 });
 
