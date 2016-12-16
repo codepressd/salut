@@ -1,5 +1,7 @@
 import Product from '../models/product';
 import serverConfig from '../config/database';
+import mongoose from 'mongoose';
+
 
 function setProductInfo(req){
 	return{
@@ -57,8 +59,19 @@ exports.postProduct = function(req, res, next){
 	})
 }
 
-exports.getSupplierProducts = function(req,res, next){
+exports.getSupplierProducts = function(req, res, next){
 
-	console.log(req.body);
+	const supplyId = req.body.userId;
+
+	Product.find({supplier :  supplyId}, function(err, products){
+		if (err){
+			return next(err);
+		}
+
+		res.status(201).json({products: products});
+
+	});
+
+	
 	
 }

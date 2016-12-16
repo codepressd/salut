@@ -4,6 +4,6 @@ export function getSupplierProducts(data){
 	
 	return dispatch =>{
 
-		return axios.get('/api/getSupplierProducts', data);
+		return axios.post('/api/getSupplierProducts', data);
 	}
 }

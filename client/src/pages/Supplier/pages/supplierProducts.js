@@ -1,9 +1,11 @@
 import React, { PropTypes } from 'react';
 import { Container, Grid, Image } from 'semantic-ui-react';
+import{bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 //import action get
-import {getSupplierProducts} from '../actions/getSupplierProducts';
+import {getSupplierProducts} from '../actions/getSupplierProducts';//call to database
+import {grabSupplierProducts} from '../../../components/actions/productActions';//update state with products
 import SideMenu from '../components/SupplierMenu';
 import  '../supplier.css';
 
@@ -14,10 +16,20 @@ class SupplierProducts extends React.Component{
 
 	componentWillMount() {
 		const {user} = this.props;
-		this.props.getSupplierProducts(user.id);
+		const userId = {
+			userId : user.id
+		}
+		this.props.getSupplierProducts(userId)
+		.then((res) => {
+			const products = res.data.products;
+			this.props.grabSupplierProducts(products);
+
+		})
+		.catch(() => this.setState({ errors: 'There Was An Error Fetching Data' }));
 	}
 
 	render(){
+		const{user} = this.props;
 		return(
 			<div className='pageWrap'>
 				<div className='navWrap'>
@@ -25,7 +37,7 @@ class SupplierProducts extends React.Component{
 				</div>
 				<div className='contentWrap'>
 					<Container>
-					<h2>Supplier Dashboard : Products</h2>
+					<h2>{user.companyName} : Products</h2>
 						<Grid celled>
 						    <Grid.Row>
 						      <Grid.Column width={3}>
@@ -57,8 +69,25 @@ class SupplierProducts extends React.Component{
 
 }
 
+function mapStateToProps(state){
+	return {
+		user: state.ActiveUser.user,
+		products: state.Products.Products
+	}
+
+}
+
+function mapDispatchToProps(dispatch){
+	return{
+		getSupplierProducts: bindActionCreators(getSupplierProducts, dispatch),
+		grabSupplierProducts: bindActionCreators(grabSupplierProducts, dispatch)
+	}
+}
+// state => ({
+//     user: state.ActiveUser.user
+//   })
+
 export default connect(
-  state => ({
-    user: state.ActiveUser.user
-  }), {getSupplierProducts}
+   mapStateToProps,
+  mapDispatchToProps
 )(SupplierProducts);

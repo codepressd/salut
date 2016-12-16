@@ -1,10 +1,12 @@
 export const POST_PRODUCT = 'POST_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
-export const GET_SUPPLIER_PRODUCTS = 'GET_SUPPLIER_PRODUCTS';
+export const GRAB_SUPPLIER_PRODUCTS = 'GRAB_SUPPLIER_PRODUCTS';
 
-export const getSupplierProducts = (supplierId) => {
-	type: GET_SUPPLIER_PRODUCTS,
-	supplierId
+export const grabSupplierProducts = (Products) => {
+	return{
+		type: GRAB_SUPPLIER_PRODUCTS,
+		Products
+	}
 }
 
 export const postProduct = (product) => {
