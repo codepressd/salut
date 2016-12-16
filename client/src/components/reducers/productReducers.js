@@ -5,7 +5,7 @@ const initialState ={
 }
 
 const ProductReducer = (state=initialState, action) => {
-	console.log(action.products);
+	
 	switch(action.type){
 		case GRAB_SUPPLIER_PRODUCTS:
 			return{

@@ -19,7 +19,7 @@ function setProductInfo(req){
 
 exports.postProduct = function(req, res, next){
 
-	const {supplierId, productName, unitPrice, casePrice, productDescription, productType, image} = req.body;
+	const {supplierId,supplier, productName, unitPrice, casePrice, productDescription, productType, image} = req.body;
 	if(!productName){
 		return res.status(422).send({ email: 'You must enter a Product Name.' });
 	}
@@ -45,7 +45,8 @@ exports.postProduct = function(req, res, next){
 		},
 		category: productType,
 		image: image,
-		supplier: supplierId
+		supplierId: supplierId,
+		supplier: supplier
 	});
 	product.save(function(err, user){
 		if(err){
@@ -70,8 +71,18 @@ exports.getSupplierProducts = function(req, res, next){
 
 		res.status(201).json({products: products});
 
-	});
+	});	
+}
 
-	
-	
+exports.removeProduct = function(req, res, next){
+	Product.remove({
+
+		_id: req.params.product_id
+
+	}, function(err, product){
+		if(err){
+			return next(err);
+		}
+		res.status(201).json({message: 'Product Successfully Deleted!'});
+	})
 }

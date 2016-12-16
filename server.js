@@ -7,7 +7,6 @@ var cookieParser = require('cookie-parser');
 
 var configDB = require('./server/config/database');
 
-console.log('DB set',configDB);
 //static assets
 app.use(express.static('public'));
 

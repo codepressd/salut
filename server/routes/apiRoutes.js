@@ -11,5 +11,6 @@ router.route('/signup').post(userController.register);
 //product routes
 router.route('/postProduct').post(productController.postProduct);
 router.route('/getSupplierProducts').post(productController.getSupplierProducts);
+router.route('/removeProduct/:product_id').delete(productController.removeProduct);
 
 export default router;

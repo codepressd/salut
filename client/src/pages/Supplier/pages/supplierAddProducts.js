@@ -93,7 +93,7 @@ class SupplierAddProducts extends React.Component {
         let user = this.props.activeUser.user;
         //add Supplier
         formData.supplierId = user.id;
-
+        formData.supplier = user.companyName;
         const {uploadedFile, uploadedFileCloudinaryUrl} = this.state;
         const{errors} = this.validateInput(formData);
 
@@ -108,7 +108,6 @@ class SupplierAddProducts extends React.Component {
                  errors: {},
              });
 
-             formData.supplierId = user.id;
 
              if (uploadedFile) {
 
