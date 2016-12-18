@@ -9,10 +9,10 @@ export const grabSupplierProducts = (Products) => {
 	}
 }
 
-export const removeProduct = (product) => {
+export const removeProduct = (index) => {
 	return{
 		type: REMOVE_PRODUCT,
-		product
+		index
 	}
 }
 

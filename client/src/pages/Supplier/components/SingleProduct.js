@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 //remove product function
 
 import {deleteProduct} from '../actions/removeProduct';
+import {removeProduct} from '../../../components/actions/productActions';
 
 class SingleProduct extends React.Component {
 	constructor(props){
@@ -13,24 +14,31 @@ class SingleProduct extends React.Component {
 
 	}
 
-	removeProduct(productId){
+	removeProduct(productId, index){
+
+		const productIndex = index;
+		
 		const deleteProductId = {
 			productId: productId
 		}
+		
 		this.props.deleteProduct(deleteProductId)
 		.then((res) => {
-			
+			this.props.removeProduct(productIndex);
 		})
 		.catch();
 	}
 
 	render(){
 		const {product} = this.props;
-
+		let imageUrl = 'http://semantic-ui.com/images/wireframe/image.png';
+		if(product.image.length !== 0){
+			imageUrl = product.image;
+		}
 		return(
 			<Grid.Row>
 			      <Grid.Column width={2}>
-			        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
+			        <Image src={imageUrl} />
 			      </Grid.Column>
 			      <Grid.Column width={4}>
 			        <h4>Product Title:</h4>
@@ -51,7 +59,7 @@ class SingleProduct extends React.Component {
 			      <Grid.Column width={3}>
 			        <Button.Group attached='top' vertical>
 				    <Button icon='setting' content='Edit' />
-				    <Button onClick={this.removeProduct.bind(this, product._id)} icon='ban' content='Remove'/>
+				    <Button onClick={this.removeProduct.bind(this, product._id, this.props.index)} icon='ban' content='Remove'/>
 			         </Button.Group>
 			      </Grid.Column>
 			    </Grid.Row>
@@ -60,6 +68,12 @@ class SingleProduct extends React.Component {
 	}
 }
 
+function mapDispatchToProps (dispatch){
+	return{
+		deleteProduct: bindActionCreators(deleteProduct, dispatch),
+		removeProduct: bindActionCreators(removeProduct, dispatch)
+	}
+}
 
 
-export default connect(null,{deleteProduct}) (SingleProduct);
+export default connect(null,mapDispatchToProps) (SingleProduct);
