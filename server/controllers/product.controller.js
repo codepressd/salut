@@ -75,6 +75,46 @@ exports.getSupplierProducts = function(req, res, next){
 	});	
 }
 
+exports.getSingleProduct = function(req, res, next){
+
+	Product.findOne({
+		_id: req.params.productId
+	}, function(err, product){
+		if(err){
+			return next(err);
+		}
+
+		res.status(201).json({product: product});
+	})
+
+
+}
+exports.updateProduct = function(req, res, next){
+
+	const {supplierId, productId, supplier, productName, unitPrice, casePrice, productDescription, productType, image} = req.body;
+	const updatedProduct = {
+		title: productName,
+		description: productDescription,
+		price: {
+			single: unitPrice,
+			case: casePrice
+		},
+		category: productType,
+		image: image,
+		supplierId: supplierId,
+		supplier: supplier
+	};
+
+	Product.findOneAndUpdate({
+		_id: productId 
+	},{ $set: updatedProduct}, {new: true}, function(err, product){
+		if(err){
+			return next(err);
+		}
+		res.status(201).json({message: 'Product Successfully Updated!'});
+	})
+}
+
 exports.removeProduct = function(req, res, next){
 	Product.remove({
 
@@ -86,4 +126,19 @@ exports.removeProduct = function(req, res, next){
 		}
 		res.status(201).json({message: 'Product Successfully Deleted!'});
 	})
+}
+
+//For Restaurant side
+
+exports.getProducts = function(req, res, next){
+
+	Product.find({}, function(err, product){
+		if(err){
+			return next(err);
+		}
+
+		res.status(201).json({products: product});
+	})
+
+
 }

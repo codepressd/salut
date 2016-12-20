@@ -4,10 +4,10 @@ import { Menu, Icon, Input } from 'semantic-ui-react';
 
 import styles from '../restaurant.css';
 
-const userId = 'rest';
+
 
 export function sideMenu (props){
-
+   const user = props.activeUser.user;
     return (
       <Menu className={styles.menu} icon='labeled' fluid vertical>
         <Menu.Item>
@@ -15,22 +15,22 @@ export function sideMenu (props){
           <Input placeholder='Search...' />
         </Menu.Item>
         
-        <Menu.Item className={styles.navButton} name='dashboard' active={props.location.pathname === '/restDash/'+userId} onClick={() => browserHistory.push( '/restDash/'+userId)}>
+        <Menu.Item className={styles.navButton} name='dashboard' active={props.location.pathname === '/restaurant/dashboard/'+user.id} onClick={() => browserHistory.push( '/restaurant/dashboard/'+user.id)}>
           <Icon name='settings' />
           Dashboard
         </Menu.Item>
 
-        <Menu.Item className={styles.navButton} name='shop'  active={props.location.pathname === '/restDash/'+userId+'/shop'} onClick={() => browserHistory.push( '/restDash/'+userId+'/shop')}>
+        <Menu.Item className={styles.navButton} name='shop'  active={props.location.pathname === '/restaurant/dashboard/'+user.id+'/shop'} onClick={() => browserHistory.push( '/restaurant/dashboard/'+user.id+'/shop')}>
           <Icon name='shop' />
           Shop
         </Menu.Item>
 
-        <Menu.Item className={styles.navButton} name='orders'  active={props.location.pathname === '/restDash/'+userId+'/orders'} onClick={() => browserHistory.push( '/restDash/'+userId+'/orders')}>
+        <Menu.Item className={styles.navButton} name='orders'  active={props.location.pathname === '/restaurant/dashboard/'+user.id+'/orders'} onClick={() => browserHistory.push( '/restaurant/dashboard/'+user.id+'/orders')}>
           <Icon name='payment' />
           Orders
         </Menu.Item>
 
-        <Menu.Item className={styles.navButton} name='suppliers' active={props.location.pathname === '/restDash/'+userId+'/suppliers'} onClick={() => browserHistory.push( '/restDash/'+userId+'/suppliers')}>
+        <Menu.Item className={styles.navButton} name='suppliers' active={props.location.pathname === '/restaurant/dashboard/'+user.id+'/suppliers'} onClick={() => browserHistory.push( '/restaurant/dashboard/'+user.id+'/suppliers')}>
           <Icon name='shipping' />
           Suppliers
         </Menu.Item>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Dropdown, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../../components/actions/authActions';
 
@@ -28,8 +28,21 @@ handleClick(){
           <Menu.Item name='About' active={this.props.location.pathname === '/about'} onClick={()=> browserHistory.push('/about')} />
           <Menu.Item name='FAQ'  active={this.props.location.pathname === '/faq'} onClick={()=> browserHistory.push('/faq')} />
           <Menu.Menu position='right'>
-          {/* <Menu.Item name='Profile'  active={context.router.isActive('/'+props.activeUser.user.role+'/dashboard/'+props.activeUser.user.id+'/profile', true)} onClick={()=> browserHistory.push('/'+props.activeUser.user.role+'/dashboard/'+props.activeUser.user.id+'/profile')} />*/}
-            <Menu.Item name='Logout'  onClick={()=> browserHistory.push('/logout')} />
+          <Menu.Item as={Dropdown} text='Profile'>
+            <Dropdown.Menu>
+              <Dropdown.Item>Edit Proflie</Dropdown.Item>
+              <Dropdown.Item>Dashboard</Dropdown.Item>
+            </Dropdown.Menu>
+          </Menu.Item>
+          <Button
+                basic
+                size='small'
+                className='cart'
+                content='CART'
+                icon='cart'
+                label={{ as: 'a', basic: true, pointing: 'left', content: '0' }}
+          />
+         <Menu.Item name='Logout'  onClick={()=> browserHistory.push('/logout')} />
           </Menu.Menu>
         </Menu>
     </div>
@@ -44,9 +57,8 @@ BackEndHeader.contextTypes = {
 
 const mapStateToProps = function(state){
   return{
-    activeUser: state.ActiveUser,
-    logoutUser: logoutUser
+    user: state.ActiveUser.user,
   }
 }
 
-export default connect(null, {mapStateToProps, logoutUser})(BackEndHeader);
+export default connect(mapStateToProps, {logoutUser})(BackEndHeader);

@@ -1,20 +1,26 @@
 import React, { PropTypes } from 'react';
 import { Container, Grid, Image } from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import{bindActionCreators} from 'redux';
 
 import SideMenu from '../components/sideMenu';
-import styles from '../restaurant.css';
+import  '../restaurant.css';
 
 class Orders extends React.Component{
+	constructor(props){
+		super(props);
+	}
 
 	render(){
+		const {user} = this.props;
 		return(
-			<div className={styles.pageWrap}>
-				<div className={styles.navWrap}>
+			<div className='pageWrap'>
+				<div className='navWrap'>
 					<SideMenu {...this.props}/>
 				</div>
-				<div className={styles.contentWrap}>
+				<div className='contentWrap'>
 					<Container>
-					<h2>Restaurant's Name : Orders View</h2>
+					<h2>{user.companyName} : Orders</h2>
 						<Grid celled>
 						    <Grid.Row>
 						      <Grid.Column width={3}>
@@ -45,5 +51,10 @@ class Orders extends React.Component{
 	}
 
 }
+function mapStateToProps(state){
+	return{
+		user: state.ActiveUser.user,
+	}
+}
 
-export default Orders;
+export default connect(mapStateToProps) (Orders);

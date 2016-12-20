@@ -20,7 +20,8 @@ const UserSchema = mongoose.Schema({
         city: { type: String },
         state: { type: String },
         region: { type: String },
-        businessType: { type: String }
+        businessType: { type: String },
+        cart: {type: Boolean}
     },
    orders: { type: Array },
     role: {

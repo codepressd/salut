@@ -19,6 +19,9 @@
 	margin: 10px 0 0;
 	padding: 10px;
 }
+.ui.card, .ui.cards>.card {
+	max-width: 33%;
+}
 //Supplier Signup Page
 .group{
 	padding: 1%;
@@ -29,3 +32,4 @@
 .center{
 	text-align: center;
 }
+

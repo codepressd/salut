@@ -5,7 +5,7 @@ import { signupRequest } from '../actions/signupActions';
 import {authorizeUser} from '../../../components/actions/authActions.js';
 import { Container, Header, Icon, Grid, Image, Button, Checkbox, Form, Input, Message, Radio, Select, TextArea, Divider } from 'semantic-ui-react';
 import classnames from 'classnames';
-//import validateInput from '../../../../util/validateSignup.js';
+
 // Import Style
 import '../signup.css';
 
@@ -62,6 +62,7 @@ class Signup extends React.Component {
             }
 
         });
+        
         if (data.password !== data.passwordConfirm) {
             errors.password = 'Passwords Don\'t Match';
             errors.passwordConfrim = 'Passwords Don\'t Match';

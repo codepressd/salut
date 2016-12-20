@@ -8,9 +8,15 @@ const router = new Router();
 router.route('/login').post(userController.login);
 router.route('/signup').post(userController.register);
 
-//product routes
-router.route('/postProduct').post(productController.postProduct);
-router.route('/getSupplierProducts').post(productController.getSupplierProducts);
-router.route('/removeProduct/:product_id').delete(productController.removeProduct);
+//product routes supplier
+router.route('/postProduct').post(productController.postProduct);//post a new product
+router.route('/updateProduct').post(productController.updateProduct);//update an existing Product
+router.route('/getSingleProduct/:productId').get(productController.getSingleProduct);//get an existing product info
+router.route('/getSupplierProducts').post(productController.getSupplierProducts); //get all supplier products
+router.route('/removeProduct/:product_id').delete(productController.removeProduct);//delete product
+
+//product routes restaurant
+
+router.route('/getProducts').get(productController.getProducts);
 
 export default router;

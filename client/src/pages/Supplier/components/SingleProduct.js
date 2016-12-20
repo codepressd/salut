@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Grid, Image, Button } from 'semantic-ui-react';
 import{bindActionCreators} from 'redux';
+import{browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 
 //remove product function
@@ -12,6 +13,10 @@ class SingleProduct extends React.Component {
 	constructor(props){
 		super(props);
 
+		this.state ={
+			message: ''
+		}
+
 	}
 
 	removeProduct(productId, index){
@@ -21,7 +26,7 @@ class SingleProduct extends React.Component {
 		const deleteProductId = {
 			productId: productId
 		}
-		
+
 		this.props.deleteProduct(deleteProductId)
 		.then((res) => {
 			this.props.removeProduct(productIndex);
@@ -30,7 +35,7 @@ class SingleProduct extends React.Component {
 	}
 
 	render(){
-		const {product} = this.props;
+		const {product, user} = this.props;
 		let imageUrl = 'http://semantic-ui.com/images/wireframe/image.png';
 		if(product.image.length !== 0){
 			imageUrl = product.image;
@@ -58,13 +63,19 @@ class SingleProduct extends React.Component {
 			      </Grid.Column>
 			      <Grid.Column width={3}>
 			        <Button.Group attached='top' vertical>
-				    <Button icon='setting' content='Edit' />
+				    <Button onClick={() => browserHistory.push('/supplier/dashboard/'+user.id+'/updateProducts/'+product._id)} icon='setting' content='Edit' />
 				    <Button onClick={this.removeProduct.bind(this, product._id, this.props.index)} icon='ban' content='Remove'/>
 			         </Button.Group>
 			      </Grid.Column>
 			    </Grid.Row>
 
 		)
+	}
+}
+
+function mapStateToProps(state){
+	return{
+		user: state.ActiveUser.user,
 	}
 }
 
@@ -76,4 +87,4 @@ function mapDispatchToProps (dispatch){
 }
 
 
-export default connect(null,mapDispatchToProps) (SingleProduct);
+export default connect(mapStateToProps,mapDispatchToProps) (SingleProduct);

@@ -7,13 +7,13 @@
   background-size: cover;
   border-bottom: 1px solid #ccc;
 }
-.navColor{
-  background-color: #aac5de !important;
-  border-color: #9eb1c1 !important;
-  padding: 10px 0 0;
-}
-.navWrap  li>a{
-  color: #173870 !important;
+ .ui.secondary.pointing.menu{
+  background-color: #aac5de;
+   border-color: #9eb1c1;
+   padding: 10px 0 0;
+} 
+.ui.secondary.pointing.menu  li>a{
+  color: #173870 ;
 }
 .myBrand{
   font-family: 'Delius', cursive;
@@ -21,4 +21,9 @@
   padding: .2em 1.5em 0 1em;
   color: #173870;
 }
-
+.cart{
+    color: #173870;
+}
+.cart.label{
+  background-color: none;
+}

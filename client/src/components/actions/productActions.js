@@ -1,6 +1,8 @@
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const GRAB_SUPPLIER_PRODUCTS = 'GRAB_SUPPLIER_PRODUCTS';
+export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
+export const PUSH_SINGLE_PRODUCT = 'PUSH_SINGLE_PRODUCT';
 
 export const grabSupplierProducts = (Products) => {
 	return{
@@ -19,6 +21,22 @@ export const removeProduct = (index) => {
 export const updateProduct = (product) => {
 	return{	
 		type: UPDATE_PRODUCT,
+		product
+	}
+}
+
+export const getAllProducts = (products) => {
+
+	return{	
+		type: GET_ALL_PRODUCTS,
+		products
+	}
+}
+
+export const pushSingleProduct = (product) => {
+	
+	return{	
+		type: PUSH_SINGLE_PRODUCT,
 		product
 	}
 }
