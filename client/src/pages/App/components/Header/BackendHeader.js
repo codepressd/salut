@@ -19,6 +19,7 @@ handleClick(){
 }
 
   render(){
+    let cart = this.props.cart.length;
   
     return(
       <div className="header">
@@ -40,7 +41,7 @@ handleClick(){
                 className='cart'
                 content='CART'
                 icon='cart'
-                label={{ as: 'a', basic: true, pointing: 'left', content: '0' }}
+                label={{ as: 'a', basic: true, pointing: 'left', content: cart }}
           />
          <Menu.Item name='Logout'  onClick={()=> browserHistory.push('/logout')} />
           </Menu.Menu>
@@ -58,6 +59,7 @@ BackEndHeader.contextTypes = {
 const mapStateToProps = function(state){
   return{
     user: state.ActiveUser.user,
+    cart: state.ActiveUser.cart
   }
 }
 

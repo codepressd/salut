@@ -11,7 +11,8 @@ import {loadUserState, saveUserState} from './components/localStorage';
 
 export function configureStore() {
 
-  const persistedUserState = loadUserState();
+
+const persistedUserState = loadUserState();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   // Middleware and store enhancers

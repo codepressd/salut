@@ -39,12 +39,6 @@ const ProductReducer = (state=initialState, action) => {
 				isFetching: false
 			}
 
-		case UPDATE_CART:
-			return{
-				...state,
-				Cart: action.product,
-				isFetching: false
-			}
 
 		case RESET_FETCH:
 			return{
