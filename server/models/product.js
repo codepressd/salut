@@ -16,7 +16,8 @@ const ProductSchema = mongoose.Schema({
     category: { type: String },
     image: {type: String },
     supplierId:{type:String},
-    supplier: { type: String }
+    supplier: { type: String },
+    supplieritemId: {type:String}
 });
 
 module.exports = mongoose.model('Product', ProductSchema)

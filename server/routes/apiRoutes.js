@@ -18,5 +18,7 @@ router.route('/removeProduct/:product_id').delete(productController.removeProduc
 //product routes restaurant
 
 router.route('/getProducts').get(productController.getProducts);
+router.route('/addToCart').post(userController.addToCart);
+
 
 export default router;

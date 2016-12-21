@@ -6,6 +6,7 @@ import{bindActionCreators} from 'redux';
 
 import {getProducts} from '../actions/getProducts';//call to database return products
 import {getAllProducts} from '../../../components/actions/productActions';//update state with products
+import {resetFetch} from '../../../components/actions/productActions';//reset fetching
 
 //import product template
 
@@ -34,6 +35,10 @@ class Shop extends React.Component{
 
 		})
 		.catch(() => this.setState({ errors: 'There Was An Error Fetching Data' }));
+	}
+	componentWillUnmount(){
+		this.props.resetFetch();
+
 	}
 
 	render(){
@@ -80,7 +85,8 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
 	return{
 		getProducts: bindActionCreators(getProducts, dispatch),
-		getAllProducts: bindActionCreators(getAllProducts, dispatch)
+		getAllProducts: bindActionCreators(getAllProducts, dispatch),
+		resetFetch : bindActionCreators(resetFetch, dispatch)
 	}
 }
 

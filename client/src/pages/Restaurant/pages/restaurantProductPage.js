@@ -4,8 +4,18 @@ import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
 import classnames from 'classnames';
 
+//Getting Product
 import { getSingleProduct } from '../../Supplier/actions/getSingleProduct';//call to database return Single Product
 import {pushSingleProduct} from '../../../components/actions/productActions';//update state with Single product
+
+//Add to Users Cart
+
+import {addProductToCart } from '../actions/addToCart';
+import {updateCart} from '../../../components/actions/productActions';
+
+//Reset Fetching State
+
+import {resetFetch} from '../../../components/actions/productActions';//reset fetching
 
 //import product template
 
@@ -59,6 +69,10 @@ class ProductPage extends React.Component{
 	        	.catch((err) => this.setState({ errors: err.response.data }));
 	}
 
+	componentWillUnmount(){
+		this.props.resetFetch();
+	}
+
 	validateInput(data) {
 	        let errors = {};
 	       
@@ -80,6 +94,8 @@ class ProductPage extends React.Component{
 		e.preventDefault();
 		const {formData} = data;
 		const {errors} = this.validateInput(formData);//check for errors
+		const{ product } = this.props;
+		const{user}= this.props;
 
 		//Update errors state 
 		if (Object.keys(errors).length !== 0) {
@@ -90,7 +106,22 @@ class ProductPage extends React.Component{
 		            this.setState({
 		                errors: {},
 		});
+		            //Add Product price
+		            if(formData.type === 'case'){
+				formData.price = product.price.case;
+			}else{
+				formData.price = product.price.single;
+			}
+			formData.product = product;
+			formData.userId = user.id;
+
+			this.props.addProductToCart(data.formData)
+			.then((res) =>{
+				this.props.updateCart(res.data);
+			} )
+			// .catch((err) => this.setState({ errors: err.response.data }));
 		}
+
 
 	}
 
@@ -160,7 +191,11 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
 	return{
 		getSingleProduct: bindActionCreators(getSingleProduct, dispatch),
-		pushSingleProduct: bindActionCreators(pushSingleProduct, dispatch)
+		pushSingleProduct: bindActionCreators(pushSingleProduct, dispatch),
+		addProductToCart: bindActionCreators(addProductToCart, dispatch),
+		updateCart: bindActionCreators(updateCart, dispatch),
+		resetFetch: bindActionCreators(resetFetch, dispatch)
+
 	}
 }
 

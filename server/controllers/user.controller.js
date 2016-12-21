@@ -59,7 +59,7 @@ exports.login = function(req, res, next) {
 
 //register route
 exports.register = function(req, res, next) {
-console.log('firing on backend' ,req.body);
+
     // Check for registration errors
     const email = req.body.email;
     const password = req.body.password;
@@ -157,4 +157,34 @@ exports.roleAuthorization = function(role) {
             return next('Unauthorized');
         })
     }
+}
+
+//Add Product to Users Cart
+exports.addToCart = function(req, res, next){
+
+    console.log(req.body);
+    const addedProduct = req.body;
+
+    // const {supplierId, productId, supplier, productName, unitPrice, casePrice, productDescription, productType, image} = req.body;
+    // const updatedProduct = {
+    //     title: productName,
+    //     description: productDescription,
+    //     price: {
+    //         single: unitPrice,
+    //         case: casePrice
+    //     },
+    //     category: productType,
+    //     image: image,
+    //     supplierId: supplierId,
+    //     supplier: supplier
+    // };
+
+    User.findOneAndUpdate({
+        _id: addedProduct.userId
+    },{ $set: {cart: addedProduct}}, {new: true}, function(err, product){
+        if(err){
+            return next(err);
+        }
+        res.status(201).json(product.cart);
+    })
 }

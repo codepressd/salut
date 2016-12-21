@@ -89,6 +89,7 @@ exports.getSingleProduct = function(req, res, next){
 
 
 }
+
 exports.updateProduct = function(req, res, next){
 
 	const {supplierId, productId, supplier, productName, unitPrice, casePrice, productDescription, productType, image} = req.body;
@@ -139,6 +140,4 @@ exports.getProducts = function(req, res, next){
 
 		res.status(201).json({products: product});
 	})
-
-
 }

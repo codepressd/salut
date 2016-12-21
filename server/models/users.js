@@ -24,6 +24,7 @@ const UserSchema = mongoose.Schema({
         cart: {type: Boolean}
     },
    orders: { type: Array },
+   cart: {type:Array},
     role: {
         type: String,
         enum: ['restaurant', 'supplier'],
