@@ -162,26 +162,11 @@ exports.roleAuthorization = function(role) {
 //Add Product to Users Cart
 exports.addToCart = function(req, res, next){
 
-    console.log(req.body);
     const addedProduct = req.body;
-
-    // const {supplierId, productId, supplier, productName, unitPrice, casePrice, productDescription, productType, image} = req.body;
-    // const updatedProduct = {
-    //     title: productName,
-    //     description: productDescription,
-    //     price: {
-    //         single: unitPrice,
-    //         case: casePrice
-    //     },
-    //     category: productType,
-    //     image: image,
-    //     supplierId: supplierId,
-    //     supplier: supplier
-    // };
-
+   
     User.findOneAndUpdate({
         _id: addedProduct.userId
-    },{ $set: {cart: addedProduct}}, {new: true}, function(err, product){
+    },{ $push: {cart: addedProduct}}, {new: true}, function(err, product){
         if(err){
             return next(err);
         }

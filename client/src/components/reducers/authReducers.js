@@ -38,7 +38,7 @@ const AuthUserReducer = (state = initialState, action) => {
 			
 			return{
 				...state,
-				cart: [...state.cart, action.product]
+				cart: action.product
 					
 			}
 

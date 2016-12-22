@@ -50,7 +50,7 @@ export const resetFetch = () => {
 	}
 }
 
-export const updateCart = (product) => {
+export const addToCart = (product) => {
 	
 	return{	
 		type: UPDATE_CART,

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image, Loader, Divider, Form, Button } from 'semantic-ui-react';
+import { Container, Grid, Image, Loader, Divider, Form, Button, Item, Icon } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
 import classnames from 'classnames';
@@ -19,7 +19,7 @@ import {resetFetch} from '../../../components/actions/productActions';//reset fe
 
 //import product template
 
-import OneProduct  from '../components/oneProduct';
+import CheckoutOneProduct  from '../components/checkoutOneProduct';
 
 
 import SideMenu from '../components/sideMenu';
@@ -45,7 +45,7 @@ const quantity = [
   { text: '8', value: 8},
 ]
 
-class ProductPage extends React.Component{
+class CheckoutPage extends React.Component{
 
 	constructor(props){
 		super(props);
@@ -58,7 +58,7 @@ class ProductPage extends React.Component{
 	}
 
 	componentWillMount() {
-		const {productId} = this.props.params;
+		/*const {productId} = this.props.params;
 
 	                  this.props.getSingleProduct(productId)
 	                 .then((res) => {
@@ -66,7 +66,7 @@ class ProductPage extends React.Component{
 	                		this.props.pushSingleProduct(product);
 
 	            	})
-	        	.catch((err) => this.setState({ errors: err.response.data }));
+	        	.catch((err) => this.setState({ errors: err.response.data }));*/
 	}
 
 	componentWillUnmount(){
@@ -129,14 +129,13 @@ class ProductPage extends React.Component{
 	render(){
 		const {user} = this.props;
 		const isLoading = this.props.isFetching;
-		const { product } = this.props;
 		const { errors } = this.state;
-		
-		if(isLoading){
-		          return(
-		          <Loader active inline='centered' />
-		          )
-		}else{
+		const { cart } = this.props;
+		// if(isLoading){
+		//           return(
+		//           <Loader active inline='centered' />
+		//           )
+		// }else{}
 
 		return(
 
@@ -146,29 +145,49 @@ class ProductPage extends React.Component{
 				</div>
 				<div className='contentWrap'>
 					<Container>
-					<h2>Supplier : {product.supplier}</h2>
-						<Grid columns='equal'>
+					<h2>Checkout</h2>
+						<Grid >
 							<Grid.Row>
-								<Grid.Column>
-								<Image size='large' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
-								</Grid.Column>
-								<Grid.Column>
-								<h2>{product.title}</h2>
-								<Divider />
-								<h4>{product.description}</h4>
-								<h4>Single: ${product.price.single}</h4>
-								<h4>Case: ${product.price.case}</h4>
-
-								<Divider />
-								<Form onSubmit={this.handleSubmit}>
-								        <Form.Group widths='equal'>
-								          <Form.Select label={errors.quantity && errors.quantity || 'Quantity'} className={classnames({'error': errors.quantity})}  name='quantity' options={quantity} placeholder='Amount' required />
-								          <Form.Select label={errors.type && errors.type || 'Single Or Case'} className={classnames({'error': errors.type})}  name='type' options={type} placeholder='Pick One' required  />
-								        </Form.Group>
-								        <Button fluid positive type='submit'>Add To Cart</Button>
-								</Form>
-
-								</Grid.Column>
+							<Grid.Column width={10}>
+							<Item.Group>
+							     {cart.map((product, index) => <CheckoutOneProduct key={index} index={index} product={product} /> )}
+							    </Item.Group>
+							      </Grid.Column>
+							      <Grid.Column  width={6}>
+							        <div className='checkout-sidebar'>
+							        	<div className='sidebar-content'>
+								        <h3>Order Summary</h3>
+								        <Divider />
+								        <Grid>
+									    <Grid.Column floated='left' width={5}>
+									     <h4>SubTotal:</h4>
+									    </Grid.Column>
+									    <Grid.Column floated='right' width={5}>
+									      <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
+									    </Grid.Column>
+								        </Grid>
+								        <Grid>
+									    <Grid.Column floated='left' width={5}>
+									     <h4>Tax:</h4>
+									    </Grid.Column>
+									    <Grid.Column floated='right' width={5}>
+									      <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
+									    </Grid.Column>
+								        </Grid>
+								        <Divider />
+								        <Grid>
+									    <Grid.Column floated='left' width={5}>
+									     <h4>Total:</h4>
+									    </Grid.Column>
+									    <Grid.Column floated='right' width={5}>
+									      <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
+									    </Grid.Column>
+								        </Grid>
+								        <Button fluid className='checkout-button'>Send Order</Button>
+							        	</div>
+							        </div>
+							      </Grid.Column>
+								
 							</Grid.Row>
 						</Grid>
 					</Container>
@@ -176,7 +195,7 @@ class ProductPage extends React.Component{
 			</div>
 
 		)
-		}
+		
 	}
 
 }
@@ -184,8 +203,7 @@ class ProductPage extends React.Component{
 function mapStateToProps(state){
 	return{
 		user: state.ActiveUser.user,
-		product: state.Products.Products,
-		isFetching: state.Products.isFetching
+		cart: state.ActiveUser.cart
 	}
 }
 
@@ -200,4 +218,4 @@ function mapDispatchToProps(dispatch){
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (ProductPage);
+export default connect(mapStateToProps, mapDispatchToProps) (CheckoutPage);

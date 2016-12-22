@@ -20,7 +20,7 @@ handleClick(){
 
   render(){
     let cart = this.props.cart.length;
-  
+    const {user} = this.props;
     return(
       <div className="header">
         <Menu className="navColor" pointing secondary>
@@ -37,6 +37,7 @@ handleClick(){
           </Menu.Item>
           <Button
                 basic
+                onClick={()=>browserHistory.push('/restaurant/dashboard/'+user.id+'/checkout')}
                 size='small'
                 className='cart'
                 content='CART'

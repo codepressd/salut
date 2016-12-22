@@ -22,6 +22,22 @@
 .ui.card, .ui.cards>.card {
 	max-width: 33%;
 }
+
+.checkout-sidebar{
+	border: 2px solid #eaeaea;
+	color: #898989;
+}
+.sidebar-content>h3{
+	text-align: center;
+	padding: 10px 0;
+}
+.sidebar-content{
+	padding: 10px;
+}
+.checkout-button{
+	background-color: #aac5de !important;
+}
+
 //Supplier Signup Page
 .group{
 	padding: 1%;
