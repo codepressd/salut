@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import {browserHistory} from 'react-router';
 import { Menu, Icon } from 'semantic-ui-react';

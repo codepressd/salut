@@ -4,6 +4,9 @@ export const GRAB_SUPPLIER_PRODUCTS = 'GRAB_SUPPLIER_PRODUCTS';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const PUSH_SINGLE_PRODUCT = 'PUSH_SINGLE_PRODUCT';
 export const UPDATE_CART= 'UPDATE_CART';
+
+export const REMOVE_PRODUCT_FROM_CART= 'REMOVE_PRODUCT_FROM_CART';
+
 export const RESET_FETCH= 'RESET_FETCH';
 
 export const grabSupplierProducts = (Products) => {
@@ -54,6 +57,14 @@ export const addToCart = (product) => {
 	
 	return{	
 		type: UPDATE_CART,
+		product
+	}
+}
+
+export const removeProductFromCart= (product) => {
+	
+	return{	
+		type: REMOVE_PRODUCT_FROM_CART,
 		product
 	}
 }

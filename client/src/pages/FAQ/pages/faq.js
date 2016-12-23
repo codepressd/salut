@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Container, Header, Icon, Grid, Image } from 'semantic-ui-react';
 

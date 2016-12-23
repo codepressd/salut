@@ -1,5 +1,6 @@
+/* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Grid, Image, Button, Card , Divider} from 'semantic-ui-react';
+import { Card , Divider} from 'semantic-ui-react';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
@@ -31,7 +32,7 @@ class OneProduct extends React.Component {
             
                   <Card onClick={()=>browserHistory.push('/restaurant/dashboard/'+user.id+'/product/'+product._id)}>
                       <Card.Content>
-                        <Image floated='right' size='tiny' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
+                        <Image floated='right' size='tiny' src={imageUrl} />
                         <Card.Header>
                           {product.title}
                         </Card.Header>
@@ -58,12 +59,6 @@ function mapStateToProps(state) {
     }
 }
 
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         deleteProduct: bindActionCreators(deleteProduct, dispatch),
-//         removeProduct: bindActionCreators(removeProduct, dispatch)
-//     }
-// }
 
 
 export default connect(mapStateToProps)(OneProduct);

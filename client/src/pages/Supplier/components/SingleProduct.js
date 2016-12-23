@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { PropTypes } from 'react';
 import { Grid, Image, Button } from 'semantic-ui-react';
 import{bindActionCreators} from 'redux';

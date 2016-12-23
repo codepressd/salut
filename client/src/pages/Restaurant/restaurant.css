@@ -38,6 +38,16 @@
 	background-color: #aac5de !important;
 }
 
+.innerGrid{
+	padding: 0 !important;
+}
+
+.total-price{
+	color: #aac5de;
+	font-size: 18px;
+	font-weight: 400;
+}
+
 //Supplier Signup Page
 .group{
 	padding: 1%;

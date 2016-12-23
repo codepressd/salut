@@ -173,3 +173,19 @@ exports.addToCart = function(req, res, next){
         res.status(201).json(product.cart);
     })
 }
+
+//remove product from Users Cart
+exports.removeFromCart= function(req, res, next){
+
+    const removedProduct = req.body;
+    console.log(removedProduct);
+   
+    // User.findOneAndUpdate({
+    //     _id: addedProduct.userId
+    // },{ $push: {cart: addedProduct}}, {new: true}, function(err, product){
+    //     if(err){
+    //         return next(err);
+    //     }
+    //     res.status(201).json(product.cart);
+    // })
+}

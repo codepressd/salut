@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Container, Grid, Image } from 'semantic-ui-react';
 import {connect} from 'react-redux';

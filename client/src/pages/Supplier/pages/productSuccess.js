@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Grid, Button, Container, Divider } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';

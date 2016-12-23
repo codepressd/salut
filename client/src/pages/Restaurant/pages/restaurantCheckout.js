@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { PropTypes } from 'react';
 import { Container, Grid, Image, Loader, Divider, Form, Button, Item, Icon } from 'semantic-ui-react';
 import {connect} from 'react-redux';
@@ -21,6 +22,8 @@ import {resetFetch} from '../../../components/actions/productActions';//reset fe
 
 import CheckoutOneProduct  from '../components/checkoutOneProduct';
 
+//helpers
+import {calculateCartTotal} from '../../../components/helpers';
 
 import SideMenu from '../components/sideMenu';
 import  '../restaurant.css';
@@ -131,6 +134,8 @@ class CheckoutPage extends React.Component{
 		const isLoading = this.props.isFetching;
 		const { errors } = this.state;
 		const { cart } = this.props;
+		const cartTotals = calculateCartTotal(this.props.cart);
+
 		// if(isLoading){
 		//           return(
 		//           <Loader active inline='centered' />
@@ -159,28 +164,28 @@ class CheckoutPage extends React.Component{
 								        <h3>Order Summary</h3>
 								        <Divider />
 								        <Grid>
-									    <Grid.Column floated='left' width={5}>
+									    <Grid.Column floated='left' width={3}>
 									     <h4>SubTotal:</h4>
 									    </Grid.Column>
-									    <Grid.Column floated='right' width={5}>
-									      <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
+									    <Grid.Column floated='right' width={7}>
+									      <h4>$ {cartTotals.subTotal}</h4>
 									    </Grid.Column>
 								        </Grid>
 								        <Grid>
-									    <Grid.Column floated='left' width={5}>
+									    <Grid.Column floated='left' width={3}>
 									     <h4>Tax:</h4>
 									    </Grid.Column>
-									    <Grid.Column floated='right' width={5}>
-									      <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
+									    <Grid.Column floated='right' width={7}>
+									      <h4>$ {cartTotals.tax}</h4>
 									    </Grid.Column>
 								        </Grid>
 								        <Divider />
 								        <Grid>
-									    <Grid.Column floated='left' width={5}>
+									    <Grid.Column floated='left' width={3}>
 									     <h4>Total:</h4>
 									    </Grid.Column>
-									    <Grid.Column floated='right' width={5}>
-									      <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
+									    <Grid.Column floated='right' width={7}>
+									      <h4>$ {cartTotals.total}</h4>
 									    </Grid.Column>
 								        </Grid>
 								        <Button fluid className='checkout-button'>Send Order</Button>

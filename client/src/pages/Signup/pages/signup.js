@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+/* eslint-disable */
+import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import { signupRequest } from '../actions/signupActions';

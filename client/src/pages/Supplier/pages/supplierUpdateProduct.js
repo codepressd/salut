@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { PropTypes } from 'react';
 import { Container, Grid, Image, Form, Input, Divider, Checkbox, Select, Radio, Button, Label, Loader } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';

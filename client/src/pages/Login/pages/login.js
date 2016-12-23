@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { Container, Grid, Form, Icon, Header, Checkbox, Button } from 'semantic-ui-react';
 import { authorizeUser } from '../../../components/actions/authActions.js';

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { PropTypes } from 'react';
 import { Container, Grid, Image, Card, Loader } from 'semantic-ui-react';
 import {connect} from 'react-redux';

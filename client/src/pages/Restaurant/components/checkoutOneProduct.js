@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { PropTypes } from 'react';
 import { Grid, Image, Button,  Divider, Item, Icon} from 'semantic-ui-react';
 import { bindActionCreators } from 'redux';
@@ -5,9 +6,9 @@ import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 
 //Cart
-
-// import {addToCart} from '../actions/removeProduct';
-//import {updateCart} from '../../../components/actions/productActions';
+import '../restaurant.css';
+import {deleteProductFromCart} from '../actions/deleteProductFromCart';
+import {removeProductFromCart} from '../../../components/actions/productActions';
 
 class CheckoutOneProduct extends React.Component {
     constructor(props) {
@@ -16,21 +17,44 @@ class CheckoutOneProduct extends React.Component {
         this.state = {
             message: ''
         }
+          this.calcProductTotal = this.calcProductTotal.bind(this);
+    }
+
+    calcProductTotal(numbers, quantity){
+                const total = Number(numbers) * Number(quantity);
+                return total;
 
     }
 
-    render() {
-        const { product, user } = this.props;
-         let imageUrl = 'http://semantic-ui.com/images/wireframe/image.png';
+    handleRemove(productId, productIndex) {
 
-        if (product.product.image.length !== 0) {
-          imageUrl = product.image;
-       }
-       let size = product.type;
-       console.log(product.type);
-       if (product.quantity !== '1'){
-        size = size+'s';
-       }
+              const userProductInfo = {
+                  productId: productId,
+                  userId: this.props.user.id
+              }
+
+              this.props.deleteProductFromCart(userProductInfo)
+                  .then((res) => {
+                      this.props.removeProductFromCart(productIndex);
+                  })
+                  .catch();
+
+}
+
+
+    render() {
+            const { product, user } = this.props;
+            let imageUrl = 'http://semantic-ui.com/images/wireframe/image.png';
+            const total = this.calcProductTotal(product.price, product.quantity);
+
+            if (product.product.image.length !== 0) {
+            imageUrl = product.image;
+            }
+            let size = product.type;
+       
+            if (product.quantity !== '1'){
+                size = size+'s';
+            }
 
         return (
             
@@ -40,20 +64,25 @@ class CheckoutOneProduct extends React.Component {
                     <Item.Content>
                       <Item.Header as='a'>{product.product.title}</Item.Header>
                       <Item.Meta>
-                        <p>Quantity:  {product.quantity} {size}</p>
-                         <p>Price:  ${product.price} per {product.type}</p>
+                         <Grid className='innerGrid'>
+                                  <Grid.Column floated='left' width={13}>
+                                     <p>Quantity:  {product.quantity} {size}</p>
+                                    <p>Price:  ${product.price} per {product.type}</p>
+                                  </Grid.Column>
+                                  <Grid.Column floated='right' width={2}>
+                                    <p className='total-price'> ${total}</p>
+                                  </Grid.Column>
+                          </Grid>
                       </Item.Meta>
-                      <Item.Description>Here is some test to fill in</Item.Description>
                       <Item.Extra>
-                        <Button primary floated='right'>
-                          Buy tickets
-                          <Icon name='right chevron' />
-                        </Button>
+                      <Button.Group >
+                        <Button negative onClick={this.handleRemove.bind(this, product.product._id, this.props.index)}>Remove</Button>
+                        <Button.Or />
+                        <Button positive onClick={()=> browserHistory.push('/restaurant/dashboard/'+user.id+'/product/'+product.product._id)}>Edit Item</Button>
+                      </Button.Group>
                       </Item.Extra>
                     </Item.Content>
                   </Item>
-
-
         )
     }
 }
@@ -64,12 +93,12 @@ function mapStateToProps(state) {
     }
 }
 
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         deleteProduct: bindActionCreators(deleteProduct, dispatch),
-//         removeProduct: bindActionCreators(removeProduct, dispatch)
-//     }
-// }
+function mapDispatchToProps(dispatch) {
+    return {
+        deleteProductFromCart: bindActionCreators(deleteProductFromCart, dispatch),
+        removeProductFromCart: bindActionCreators(removeProductFromCart, dispatch)
+    }
+}
 
 
-export default connect(mapStateToProps)(CheckoutOneProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutOneProduct);
