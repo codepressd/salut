@@ -4,8 +4,11 @@ export const GRAB_SUPPLIER_PRODUCTS = 'GRAB_SUPPLIER_PRODUCTS';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const PUSH_SINGLE_PRODUCT = 'PUSH_SINGLE_PRODUCT';
 export const UPDATE_CART= 'UPDATE_CART';
+export const RESET_CART= 'RESET_CART';
 
 export const REMOVE_PRODUCT_FROM_CART= 'REMOVE_PRODUCT_FROM_CART';
+
+export const ORDERS_TO_STORE= 'ORDERS_TO_STORE';
 
 export const RESET_FETCH= 'RESET_FETCH';
 
@@ -61,10 +64,24 @@ export const addToCart = (product) => {
 	}
 }
 
-export const removeProductFromCart= (product) => {
+export const removeProductFromCart= (index) => {
 	
 	return{	
 		type: REMOVE_PRODUCT_FROM_CART,
-		product
+		index
+	}
+}
+export const resetCart= () => {
+	
+	return{	
+		type: RESET_CART,
+	}
+}
+
+export const addOrdersToStore= (orders) => {
+	
+	return{	
+		type: ORDERS_TO_STORE,
+		orders
 	}
 }

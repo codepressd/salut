@@ -1,4 +1,4 @@
-import {GRAB_SUPPLIER_PRODUCTS, REMOVE_PRODUCT, GET_ALL_PRODUCTS, PUSH_SINGLE_PRODUCT, UPDATE_CART, RESET_FETCH} from '../actions/productActions';
+import {GRAB_SUPPLIER_PRODUCTS, REMOVE_PRODUCT, GET_ALL_PRODUCTS, PUSH_SINGLE_PRODUCT, UPDATE_CART, RESET_FETCH, ORDERS_TO_STORE} from '../actions/productActions';
 
 const initialState ={
 	Products: [],
@@ -45,6 +45,14 @@ const ProductReducer = (state=initialState, action) => {
 				...state,
 				isFetching: true
 			}
+
+		case ORDERS_TO_STORE:
+			return{
+				...state,
+				Orders: action.orders,
+				isFetching: false
+			}
+
 
 
 		default:

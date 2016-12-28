@@ -1,16 +1,36 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image } from 'semantic-ui-react';
+import { Container, Grid, Image, Table, Header, Rating, Button } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
 
 import SideMenu from '../components/sideMenu';
 import  '../restaurant.css';
 
+//actions to get orders and update state
+
+import {getRestaurantsOrders } from '../actions/getRestaurantsOrders'; //call to database
+import {addOrdersToStore} from '../../../components/actions/productActions';
+
+
 class Orders extends React.Component{
 	constructor(props){
 		super(props);
 	}
+
+	componentWillMount(){
+		const {user} = this.props;
+
+		this.props.getRestaurantsOrders(user.id)
+		.then((res) =>{
+			this.props.addOrdersToStore(res.data.orders);
+		})
+		.catch();
+	}
+
+	// componentWillUnmount(){
+	// 	this.props.resetFetch();
+	// }
 
 	render(){
 		const {user} = this.props;
@@ -22,28 +42,37 @@ class Orders extends React.Component{
 				<div className='contentWrap'>
 					<Container>
 					<h2>{user.companyName} : Orders</h2>
-						<Grid celled>
-						    <Grid.Row>
-						      <Grid.Column width={3}>
-						        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
-						      </Grid.Column>
-						      <Grid.Column width={13}>
-						        <Image src='http://semantic-ui.com/images/wireframe/centered-paragraph.png' />
-						      </Grid.Column>
-						    </Grid.Row>
+						<Table celled padded>
+						      <Table.Header>
+						        <Table.Row>
+						          <Table.HeaderCell >Products</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'># of Items</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'>Date</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'>Total</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'>Order Details</Table.HeaderCell>
+						        </Table.Row>
+						      </Table.Header>
 
-						    <Grid.Row>
-						      <Grid.Column width={3}>
-						        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
-						      </Grid.Column>
-						      <Grid.Column width={10}>
-						        <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
-						      </Grid.Column>
-						      <Grid.Column width={3}>
-						        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
-						      </Grid.Column>
-						    </Grid.Row>
-						  </Grid>
+						      <Table.Body>
+						        <Table.Row>
+						          <Table.Cell>
+						            Creatine supplementation is the reference compound for increasing muscular creatine levels; there is
+						            variability in this increase, however, with some nonresponders.
+						          </Table.Cell>
+						          <Table.Cell singleLine textAlign='center'>4</Table.Cell>
+						          <Table.Cell>
+						            12/26/16
+						          </Table.Cell>
+						          <Table.Cell textAlign='center'>
+						            $1000.00
+						          </Table.Cell>
+						          <Table.Cell textAlign='center'>
+						          <Button >View Order</Button>
+						          </Table.Cell>
+						        </Table.Row>
+						        
+						      </Table.Body>
+						    </Table>
 					</Container>
 				</div>
 			</div>
@@ -55,7 +84,15 @@ class Orders extends React.Component{
 function mapStateToProps(state){
 	return{
 		user: state.ActiveUser.user,
+		orders: state.Products.Orders
 	}
 }
 
-export default connect(mapStateToProps) (Orders);
+function mapDispatchToProps(dispatch){
+	return{
+		getRestaurantsOrders: bindActionCreators(getRestaurantsOrders, dispatch),
+		addOrdersToStore: bindActionCreators(addOrdersToStore, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Orders);

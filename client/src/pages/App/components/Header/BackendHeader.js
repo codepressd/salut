@@ -32,7 +32,7 @@ handleClick(){
           <Menu.Item as={Dropdown} text='Profile'>
             <Dropdown.Menu>
               <Dropdown.Item>Edit Proflie</Dropdown.Item>
-              <Dropdown.Item>Dashboard</Dropdown.Item>
+              <Dropdown.Item onClick={()=> browserHistory.push('/'+user.role+'/dashboard/'+user.id)}>Dashboard</Dropdown.Item>
             </Dropdown.Menu>
           </Menu.Item>
           <Button

@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import User from '../models/users';
+import Cart from '../models/cart';
+import Orders from '../models/orders';
 import serverConfig from '../config/database';
 
 function generateToken(user) {
@@ -120,7 +122,28 @@ exports.register = function(req, res, next) {
             if (err) {
                 return next(err);
             }
+            //initialize cart and Orders for restaurants
+                   if(user.role === 'restaurant'){
+                       let orders = new Orders({
+                            usersId: user._id
+                        }); 
 
+                       orders.save(function(errs, orders){
+                            if (errs) {
+                                     return next(errs);
+                            }
+                        });
+
+                        let cart = new Cart({
+                            usersId: user._id
+                        });
+
+                        cart.save(function(errs, cart){
+                            if (errs) {
+                                     return next(errs);
+                            }
+                        });
+                   }
             // Subscribe member to Mailchimp list
             // mailchimp.subscribeToNewsletter(user.email);
 
@@ -177,12 +200,12 @@ exports.addToCart = function(req, res, next){
 //remove product from Users Cart
 exports.removeFromCart= function(req, res, next){
 
-    const removedProduct = req.body;
+    const removedProductInfo = req.body;
     console.log(removedProduct);
    
     // User.findOneAndUpdate({
-    //     _id: addedProduct.userId
-    // },{ $push: {cart: addedProduct}}, {new: true}, function(err, product){
+    //     _id: removedProductInfo.userId
+    // },{ $pull: {cart: addedProduct}}, {new: true}, function(err, product){
     //     if(err){
     //         return next(err);
     //     }

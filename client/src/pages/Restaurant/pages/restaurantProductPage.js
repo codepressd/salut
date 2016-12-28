@@ -113,6 +113,7 @@ class ProductPage extends React.Component{
 			}else{
 				formData.price = product.price.single;
 			}
+			formData.productId= product._id;
 			formData.product = product;
 			formData.userId = user.id;
 

@@ -52,7 +52,6 @@ class Shop extends React.Component{
 		          <Loader active inline='centered' />
 		          )
 		}else{
-
 		return(
 
 			<div className='pageWrap'>
