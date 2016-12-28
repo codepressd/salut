@@ -49,33 +49,38 @@ const getDate = () =>{
 }
 
 export const sortCart = (cart, user) => {
+
 	let itemsOrdered = cart.length;
-	let supplierArray = [];
+	
 	let orderDate = getDate();
 	let cartTotal = calculateCartTotal(cart);
 	const orderNumber = 'Salut-'+randomNumber();//create order number
-	let suppliersProducts = {};
 
 	const uniqueSupplierIDs = [...new Set(cart.map(item => item.product.supplierId))];
+	let productsArray =  cart.map((item) => {
+		return{
+			 title: item.product.title,
+			 productId: item.product._id,
+			 quantity: item.quantity,
+			 price: item.price,
+			 size: item.type,
+			 description: item.product.description,
+			 supplierId: item.product.supplierId,
+			 supplierName: item.product.supplier
+			}
 
-	for (var i =0 ; i < uniqueSupplierIDs.length; i++){
-
-		let currentId = uniqueSupplierIDs[i];
-		var product = cart.filter(function(el){
-			return el.product.supplierId === uniqueSupplierIDs[i];
-		});
-		suppliersProducts[currentId] = product;
-		
-	}
+	});
 	
-	const sortedOrder = {
+
+	const finalOrder = {
 		orderNumber: orderNumber,
 		orderTotal: cartTotal,
-		itemsOrdered: itemsOrdered,
 		orderDate: orderDate,
 		userId: user,
-		productsOrdered: suppliersProducts
+		products: productsArray,
+		suppliers: uniqueSupplierIDs
 	};
+
 	
-	return sortedOrder;
+	return finalOrder;
 }

@@ -5,7 +5,11 @@ const OrderSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    orders: [{}]
+    orderTotal: {},
+    orderDate:{type: String},
+    orderNumber: {type: String},
+    products: [{}],
+    suppliers:[]
 });
 
-module.exports = mongoose.model('Orders', OrderSchema)
+module.exports = mongoose.model('Order', OrderSchema)

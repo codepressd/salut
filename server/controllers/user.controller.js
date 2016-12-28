@@ -122,18 +122,9 @@ exports.register = function(req, res, next) {
             if (err) {
                 return next(err);
             }
-            //initialize cart and Orders for restaurants
+            //initialize cart  for restaurants
                    if(user.role === 'restaurant'){
-                       let orders = new Orders({
-                            usersId: user._id
-                        }); 
-
-                       orders.save(function(errs, orders){
-                            if (errs) {
-                                     return next(errs);
-                            }
-                        });
-
+                      
                         let cart = new Cart({
                             usersId: user._id
                         });
@@ -142,6 +133,7 @@ exports.register = function(req, res, next) {
                             if (errs) {
                                      return next(errs);
                             }
+
                         });
                    }
             // Subscribe member to Mailchimp list

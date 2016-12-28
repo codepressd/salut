@@ -32,6 +32,7 @@ import RestaurantSuppliers from './pages/Restaurant/pages/restaurantSuppliers';
 import RestaurantProductPage from './pages/Restaurant/pages/restaurantProductPage';
 import RestaurantCheckout from './pages/Restaurant/pages/restaurantCheckout';
 import RestaurantOrderSuccess from './pages/Restaurant/pages/orderSuccess';
+import RestaurantViewOrder from './pages/Restaurant/pages/restaurantViewOrder';
 
 
 export default function App (props) {
@@ -61,6 +62,7 @@ export default function App (props) {
             <Route path='/restaurant/dashboard/:userid/checkout' component={RestaurantCheckout} />
             <Route path='/restaurant/dashboard/:userid/orderSuccess' component={RestaurantOrderSuccess} />
             <Route path='/restaurant/dashboard/:userid/orders' component={RestaurantOrders} />
+            <Route path='/restaurant/dashboard/:userid/vieworder/:ordernumber' component={RestaurantViewOrder} />
             <Route path='/restaurant/dashboard/:userid/suppliers' component={RestaurantSuppliers} />
           </Route>
         </Router>

@@ -8,7 +8,7 @@ import classnames from 'classnames';
 
 //Send Orders
 
-import {sendOrders} from '../actions/sendOrder';//post Orders to database
+import {getSingleOrder} from '../actions/getSingleOrder';//get single order from database
 import {addToCart, resetCart} from '../../../components/actions/productActions';//update store, reset cart
 
 //Reset Fetching State
@@ -46,7 +46,7 @@ const quantity = [
   { text: '8', value: 8},
 ]
 
-class CheckoutPage extends React.Component{
+class ViewOrder extends React.Component{
 
 	constructor(props){
 		super(props);
@@ -58,15 +58,15 @@ class CheckoutPage extends React.Component{
 	}
 
 	componentWillMount() {
-		/*const {productId} = this.props.params;
+		const {ordernumber} = this.props.params;
 
-	                  this.props.getSingleProduct(productId)
+	                  this.props.getSingleOrder(ordernumber)
 	                 .then((res) => {
-	                		const { product } = res.data;
-	                		this.props.pushSingleProduct(product);
+	                		//const { order } = res.data;
+	                		//this.props.pushSingleOrder(product);
 
 	            	})
-	        	.catch((err) => this.setState({ errors: err.response.data }));*/
+	        	.catch((err) => this.setState({ errors: err.response.data }));
 	}
 
 	componentWillUnmount(){
@@ -107,7 +107,7 @@ class CheckoutPage extends React.Component{
 				</div>
 				<div className='contentWrap'>
 					<Container>
-					<h2>Checkout</h2>
+					<h2>Order #  </h2>
 						<Grid >
 							<Grid.Row>
 							<Grid.Column width={10}>
@@ -171,11 +171,11 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
 	return{
-		sendOrders: bindActionCreators(sendOrders, dispatch),
+		getSingleOrder: bindActionCreators(getSingleOrder, dispatch),
 		resetCart: bindActionCreators(resetCart, dispatch),
 		resetFetch: bindActionCreators(resetFetch, dispatch)
 
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (CheckoutPage);
+export default connect(mapStateToProps, mapDispatchToProps) (ViewOrder);

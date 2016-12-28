@@ -23,5 +23,6 @@ router.route('/addToCart').post(cartController.addToCart);
 router.route('/deleteProductFromCart').put(cartController.removeFromCart);
 router.route('/sendOrders').post(cartController.sendOrders);
 router.route('/getRestOrders/:restId').get(cartController.getRestOrders);
+router.route('/getSingleOrder/:restId').get(cartController.getSingleOrder);
 
 export default router;
