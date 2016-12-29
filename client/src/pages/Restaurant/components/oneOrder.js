@@ -23,7 +23,7 @@ class OneOrder extends React.Component{
 			            {order.orderNumber}
 			          </Table.Cell>
 			          <Table.Cell singleLine textAlign='center'>{itemsOrdered}</Table.Cell>
-			          <Table.Cell>
+			          <Table.Cell textAlign='center'>
 			            {order.orderDate}
 			          </Table.Cell>
 			          <Table.Cell textAlign='center'>

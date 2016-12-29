@@ -94,15 +94,15 @@ exports.getRestOrders= function(req, res, next){
 
 exports.getSingleOrder= function(req, res, next){
 
-   	 const orderId= req.params.restId;
+   	 const orderId = req.params.restId;
    	
 
- //   	Orders.find({ orders: { $in: [orderId] }},function(err, order){
-	// 	if (err){
-	// 		return next(err);
-	// 	}
-	// 	console.log(order);
-	// 	//res.status(201).json({order: orders.orders});
-	// });
+   	Order.findOne({ orderNumber: orderId},function(err, order){
+		if (err){
+
+			return next(err);
+		}
+		res.status(201).json(order);
+	});
 
 }

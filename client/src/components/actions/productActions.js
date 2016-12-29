@@ -6,10 +6,15 @@ export const PUSH_SINGLE_PRODUCT = 'PUSH_SINGLE_PRODUCT';
 export const UPDATE_CART= 'UPDATE_CART';
 export const RESET_CART= 'RESET_CART';
 
+
+
 export const REMOVE_PRODUCT_FROM_CART= 'REMOVE_PRODUCT_FROM_CART';
 
+//getting orders
 export const ORDERS_TO_STORE= 'ORDERS_TO_STORE';
+export const SINGLE_ORDER_TO_STORE= 'SINGLE_ORDER_TO_STORE';
 
+//resets fetching for double render
 export const RESET_FETCH= 'RESET_FETCH';
 
 export const grabSupplierProducts = (Products) => {
@@ -85,3 +90,13 @@ export const addOrdersToStore= (orders) => {
 		orders
 	}
 }
+
+export const singleOrderToStore= (order) => {
+	
+	return{	
+		type: SINGLE_ORDER_TO_STORE,
+		order
+	}
+}
+
+

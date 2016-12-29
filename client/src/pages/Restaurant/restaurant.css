@@ -22,11 +22,20 @@
 .ui.card, .ui.cards>.card {
 	max-width: 33%;
 }
+.invoice-header{
+	border: 2px solid #eaeaea;
+	color: #898989;
+	text-align: center;
+}
 
+.align-right{
+	text-align: right;
+}
 .checkout-sidebar{
 	border: 2px solid #eaeaea;
 	color: #898989;
 }
+
 .sidebar-content>h3{
 	text-align: center;
 	padding: 10px 0;

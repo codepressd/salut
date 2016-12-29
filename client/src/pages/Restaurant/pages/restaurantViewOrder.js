@@ -9,42 +9,19 @@ import classnames from 'classnames';
 //Send Orders
 
 import {getSingleOrder} from '../actions/getSingleOrder';//get single order from database
-import {addToCart, resetCart} from '../../../components/actions/productActions';//update store, reset cart
+import {singleOrderToStore} from '../../../components/actions/productActions';//update store with single order
 
 //Reset Fetching State
 
 import {resetFetch} from '../../../components/actions/productActions';//reset fetching
 
-//import product template
+//import OneSupplier template
 
-import CheckoutOneProduct  from '../components/checkoutOneProduct';
-
-//helpers
-import {calculateCartTotal,sortCart} from '../../../components/helpers';
-
+import OneSupplier  from '../components/oneSupplier';
 
 import SideMenu from '../components/sideMenu';
 import  '../restaurant.css';
 
-//Case or Single
-
-const type = [
-  { text: '', value: '' },
-  { text: 'Single', value: 'single' },
-  { text: 'Case', value: 'case' },
-]
-
-const quantity = [
-  { text: '', value: '' },
-  { text: '1', value: 1 },
-  { text: '2', value: 2},
-  { text: '3', value: 3 },
-  { text: '4', value: 4},
-  { text: '5', value: 5 },
-  { text: '6', value: 6},
-  { text: '7', value: 7 },
-  { text: '8', value: 8},
-]
 
 class ViewOrder extends React.Component{
 
@@ -54,6 +31,7 @@ class ViewOrder extends React.Component{
 		this.state={
 			errors: {}
 		}
+		this.sortSuppliers = this.sortSuppliers.bind(this);
 		
 	}
 
@@ -62,15 +40,34 @@ class ViewOrder extends React.Component{
 
 	                  this.props.getSingleOrder(ordernumber)
 	                 .then((res) => {
-	                		//const { order } = res.data;
-	                		//this.props.pushSingleOrder(product);
+
+	                		const order = res.data;
+	                		this.props.singleOrderToStore(order);
 
 	            	})
-	        	.catch((err) => this.setState({ errors: err.response.data }));
+	        	.catch((err) => this.setState({ errors: err }));
 	}
 
 	componentWillUnmount(){
 		this.props.resetFetch();
+	}
+
+	sortSuppliers(order){
+		let supplyWrapArray =[];
+		
+		const{suppliers, products} = order;
+		
+		 
+		    for (let i =0 ; i < suppliers.length; i++){
+		        let suppliersProducts = {};
+		        let product = products.filter(function(el){
+		       	return el.supplierId === suppliers[i];
+		        });
+		        suppliersProducts[product[0].supplierName] = product;
+		        supplyWrapArray.push(suppliersProducts);
+		    }
+		   
+		   return supplyWrapArray;
 	}
 
 
@@ -88,17 +85,20 @@ class ViewOrder extends React.Component{
 	}
 
 	render(){
-		const {user, cart} = this.props;
+		const {user, order} = this.props;
 		const isLoading = this.props.isFetching;
 		const { errors } = this.state;
-		const cartTotals = calculateCartTotal(this.props.cart);
-		
-		// if(isLoading){
-		//           return(
-		//           <Loader active inline='centered' />
-		//           )
-		// }else{}
+		const fakeArray = [1,2];
 
+		
+		
+		if(isLoading){
+		          return(
+		          <Loader active inline='centered' />
+		          )
+		}else{
+			const uniqueSuppliers = this.sortSuppliers(order);
+			const cartTotals = order.orderTotal;
 		return(
 
 			<div className='pageWrap'>
@@ -107,56 +107,62 @@ class ViewOrder extends React.Component{
 				</div>
 				<div className='contentWrap'>
 					<Container>
-					<h2>Order #  </h2>
+					<h2>Order #: {order.orderNumber}</h2>
 						<Grid >
 							<Grid.Row>
-							<Grid.Column width={10}>
-							<Item.Group>
-							   {cart.map((product, index) => <CheckoutOneProduct key={index} index={index} product={product} /> )}
-							    </Item.Group>
-							      </Grid.Column>
-							      <Grid.Column  width={6}>
-							        <div className='checkout-sidebar'>
-							        	<div className='sidebar-content'>
-								        <h3>Order Summary</h3>
-								        <Divider />
-								        <Grid>
-									    <Grid.Column floated='left' width={3}>
-									     <h4>SubTotal:</h4>
+							<Grid.Column width={16}>
+								<div className='invoice-header'>
+									<Grid columns ={3} divided>
+									    <Grid.Column >
+									     <h3>Order Date:</h3>
+									     <Divider />
+									      <h2>{order.orderDate}</h2>
 									    </Grid.Column>
-									    <Grid.Column floated='right' width={7}>
-									      <h4>$ {cartTotals.subTotal}</h4>
+									    <Grid.Column >
+									     <h3>Number Of  Suppliers: </h3>
+									     <Divider />
+									     <h2>{order.suppliers.length}</h2>
 									    </Grid.Column>
-								        </Grid>
-								        <Grid>
-									    <Grid.Column floated='left' width={3}>
-									     <h4>Tax:</h4>
-									    </Grid.Column>
-									    <Grid.Column floated='right' width={7}>
-									      <h4>$ {cartTotals.tax}</h4>
+									    <Grid.Column >
+									    <h3>Order Total :</h3>
+									    <Divider />
+									    <h2> ${order.orderTotal.total}</h2>
 									    </Grid.Column>
 								        </Grid>
-								        <Divider />
-								        <Grid>
-									    <Grid.Column floated='left' width={3}>
-									     <h4>Total:</h4>
-									    </Grid.Column>
-									    <Grid.Column floated='right' width={7}>
-									      <h4>$ {cartTotals.total}</h4>
-									    </Grid.Column>
-								        </Grid>
-								        <Button fluid onClick={this.sendOrder.bind(this)} className='checkout-button'>Send Order</Button>
-							        	</div>
-							        </div>
-							      </Grid.Column>
-								
+								</div>
+							</Grid.Column>
 							</Grid.Row>
-						</Grid>
+							</Grid>
+								<h2>Products Ordered:</h2>
+								{uniqueSuppliers.map((supplier, index) => <OneSupplier key={index} index={index} supplier={supplier} /> )}
+							<Divider />
+							<Grid>
+								<Grid.Row className='align-right'>
+									<Grid.Column width={10}>
+									     
+									</Grid.Column>				
+									<Grid.Column  width={3}>
+										<h4>Subtotal: </h4>
+										<Divider hidden />
+										<h4>Tax: </h4>
+										<Divider hidden />
+										<h4>Total: </h4>
+									</Grid.Column>
+									<Grid.Column  width={3}>
+										<h4>$ {cartTotals.subTotal}</h4>
+										<Divider hidden />
+										<h4>$ {cartTotals.tax}</h4>
+										<Divider  />
+									     	 <h4>$ {cartTotals.total}</h4>
+									</Grid.Column>		  
+								</Grid.Row>
+								
+							</Grid>
 					</Container>
 				</div>
 			</div>
 
-		)
+		)}
 		
 	}
 
@@ -165,14 +171,15 @@ class ViewOrder extends React.Component{
 function mapStateToProps(state){
 	return{
 		user: state.ActiveUser.user,
-		cart: state.ActiveUser.cart
+		order: state.Products.Order,
+		isFetching: state.Products.isFetching
 	}
 }
 
 function mapDispatchToProps(dispatch){
 	return{
 		getSingleOrder: bindActionCreators(getSingleOrder, dispatch),
-		resetCart: bindActionCreators(resetCart, dispatch),
+		singleOrderToStore: bindActionCreators(singleOrderToStore, dispatch),
 		resetFetch: bindActionCreators(resetFetch, dispatch)
 
 	}
