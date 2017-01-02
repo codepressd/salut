@@ -15,13 +15,16 @@ import {singleOrderToStore} from '../../../components/actions/productActions';//
 
 import {resetFetch} from '../../../components/actions/productActions';//reset fetching
 
+//grab helpers
+import {suppliersProducts} from '../../../components/helpers'; //sort suppliers products
 
-//import OneSupplier template
 
-import OneSupplier  from '../components/oneSupplier';
+//import product Order template
 
-import SideMenu from '../components/sideMenu';
-import  '../restaurant.css';
+import ProductOrder  from '../components/productOrder';
+
+import SideMenu from '../components/SupplierMenu';
+import  '../supplier.css';
 
 
 class ViewOrder extends React.Component{
@@ -32,7 +35,7 @@ class ViewOrder extends React.Component{
 		this.state={
 			errors: {}
 		}
-		this.sortSuppliers = this.sortSuppliers.bind(this);
+	
 		
 	}
 
@@ -53,53 +56,20 @@ class ViewOrder extends React.Component{
 		this.props.resetFetch();
 	}
 
-	sortSuppliers(order){
-		let supplyWrapArray =[];
-		
-		const{suppliers, products} = order;
-		
-		 
-		    for (let i =0 ; i < suppliers.length; i++){
-		        let suppliersProducts = {};
-		        let product = products.filter(function(el){
-		       	return el.supplierId === suppliers[i];
-		        });
-		        suppliersProducts[product[0].supplierName] = product;
-		        supplyWrapArray.push(suppliersProducts);
-		    }
-		   
-		   return supplyWrapArray;
-	}
-
-
-	sendOrder(){
-		const {cart, user} = this.props;
-		const order = sortCart(cart, user.id);
-		
-		this.props.sendOrders(order)
-		.then((res)=>{
-				this.props.resetCart();
-				browserHistory.push('/restaurant/dashboard/' +user.id+'/orderSuccess');
-		})
-		.catch((err) => this.setState({ errors: err.response.data }));
-
-	}
 
 	render(){
 		const {user, order} = this.props;
 		const isLoading = this.props.isFetching;
 		const { errors } = this.state;
-		const fakeArray = [1,2];
 
-		
-		
 		if(isLoading){
 		          return(
 		          <Loader active inline='centered' />
 		          )
 		}else{
-			const uniqueSuppliers = this.sortSuppliers(order);
-			const cartTotals = order.orderTotal;
+			
+			const products = suppliersProducts(order, user.id);
+			
 		return(
 
 			<div className='pageWrap'>
@@ -120,14 +90,14 @@ class ViewOrder extends React.Component{
 									      <h2>{order.orderDate}</h2>
 									    </Grid.Column>
 									    <Grid.Column >
-									     <h3>Number Of  Suppliers: </h3>
+									     <h3>Number Of  Items Ordered: </h3>
 									     <Divider />
-									     <h2>{order.suppliers.length}</h2>
+									     <h2>{products.products.length}</h2>
 									    </Grid.Column>
 									    <Grid.Column >
 									    <h3>Order Total :</h3>
 									    <Divider />
-									    <h2> ${order.orderTotal.total}</h2>
+									    <h2> ${products.totalPrice.total}</h2>
 									    </Grid.Column>
 								        </Grid>
 								</div>
@@ -135,7 +105,7 @@ class ViewOrder extends React.Component{
 							</Grid.Row>
 							</Grid>
 								<h2>Products Ordered:</h2>
-								{uniqueSuppliers.map((supplier, index) => <OneSupplier key={index} index={index} supplier={supplier} /> )}
+								{products.products.map((product, index) => <ProductOrder key={index} index={index} product={product} /> )}
 							<Divider />
 							<Grid>
 								<Grid.Row className='align-right'>
@@ -150,11 +120,11 @@ class ViewOrder extends React.Component{
 										<h4>Total: </h4>
 									</Grid.Column>
 									<Grid.Column  width={3}>
-										<h4>$ {cartTotals.subTotal}</h4>
+										<h4>$ {products.totalPrice.subTotal}</h4>
 										<Divider hidden />
-										<h4>$ {cartTotals.tax}</h4>
+										<h4>$ {products.totalPrice.tax}</h4>
 										<Divider  />
-									     	 <h4>$ {cartTotals.total}</h4>
+									     	 <h4>$ {products.totalPrice.total}</h4>
 									</Grid.Column>		  
 								</Grid.Row>
 								

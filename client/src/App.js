@@ -23,6 +23,7 @@ import SupplyUpdateProducts from './pages/Supplier/pages/supplierUpdateProduct';
 import SupplyOrders from './pages/Supplier/pages/supplierOrders';
 import SupplyEarnings from './pages/Supplier/pages/supplierEarnings';
 import PostProductSucess from './pages/Supplier/pages/productSuccess';
+import SupplierViewOrder from './pages/Supplier/pages/supplierViewOrder';
 
 //Restaurant Routes
 import RestaurantDash from './pages/Restaurant/pages/restaurantDashboard';
@@ -54,6 +55,7 @@ export default function App (props) {
             <Route path='/supplier/dashboard/:userid/addProductSuccess' component={PostProductSucess} />
             <Route path='/supplier/dashboard/:userid/updateProducts/:productId' component={SupplyUpdateProducts} />
             <Route path='/supplier/dashboard/:userid/orders' component={SupplyOrders} />
+            <Route path='/supplier/dashboard/:userid/vieworder/:ordernumber' component={SupplierViewOrder} />
             <Route path='/supplier/dashboard/:userid/earnings' component={SupplyEarnings} />
           {/*Restaurant Routes*/}
             <Route path='/restaurant/dashboard/:userid' component={RestaurantDash} />

@@ -1,13 +1,58 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image } from 'semantic-ui-react';
+import { Container, Grid, Image, Table, Header, Rating, Button, Loader } from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import{bindActionCreators} from 'redux';
 
 import SideMenu from '../components/SupplierMenu';
 import  '../supplier.css';
 
-class SupplierOrders extends React.Component{
+//actions to get orders and update state
+
+import {getSupplierOrders } from '../actions/getSupplierOrders'; //call to database
+import {addOrdersToStore} from '../../../components/actions/productActions';//update store with orders
+
+//Reset Fetching State
+
+import {resetFetch} from '../../../components/actions/productActions';//reset fetching
+
+
+
+//Import the One Product
+import SupplierOneOrder from '../components/supplierOneOrder';
+
+
+class Orders extends React.Component{
+	constructor(props){
+		super(props);
+	}
+
+	componentWillMount(){
+		const {user} = this.props;
+
+		this.props.getSupplierOrders(user.id)
+		.then((res) =>{
+			
+			this.props.addOrdersToStore(res.data.orders);
+		})
+		.catch();
+	}
+
+	componentWillUnmount(){
+		this.props.resetFetch();
+	}
 
 	render(){
+
+		const {user, orders} = this.props;
+		const isLoading = this.props.isFetching;
+
+		if(isLoading){
+		          return(
+		          <Loader active inline='centered' />
+		          )
+		}else{
+		
 		return(
 			<div className='pageWrap'>
 				<div className='navWrap'>
@@ -15,36 +60,44 @@ class SupplierOrders extends React.Component{
 				</div>
 				<div className='contentWrap'>
 					<Container>
-					<h2>Supplier Dashboard : Orders</h2>
-						<Grid celled>
-						    <Grid.Row>
-						      <Grid.Column width={3}>
-						        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
-						      </Grid.Column>
-						      <Grid.Column width={13}>
-						        <Image src='http://semantic-ui.com/images/wireframe/centered-paragraph.png' />
-						      </Grid.Column>
-						    </Grid.Row>
+					<h2>{user.companyName} : Orders</h2>
+						<Table celled padded>
+						      <Table.Header>
+						        <Table.Row>
+						          <Table.HeaderCell >Order Number</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'># of Items</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'>Date</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'>Total</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'>Order Details</Table.HeaderCell>
+						        </Table.Row>
+						      </Table.Header>
 
-						    <Grid.Row>
-						      <Grid.Column width={3}>
-						        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
-						      </Grid.Column>
-						      <Grid.Column width={10}>
-						        <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
-						      </Grid.Column>
-						      <Grid.Column width={3}>
-						        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
-						      </Grid.Column>
-						    </Grid.Row>
-						  </Grid>
+						      <Table.Body>
+						     {orders.map((order, index) => <SupplierOneOrder key={index} index={index} order={order} /> )}
+						      </Table.Body>
+						    </Table>
 					</Container>
 				</div>
 			</div>
 
-		)
+		)}
 	}
 
 }
+function mapStateToProps(state){
+	return{
+		user: state.ActiveUser.user,
+		orders: state.Products.Orders,
+		isFetching: state.Products.isFetching
+	}
+}
 
-export default SupplierOrders;
+function mapDispatchToProps(dispatch){
+	return{
+		getSupplierOrders: bindActionCreators(getSupplierOrders, dispatch),
+		addOrdersToStore: bindActionCreators(addOrdersToStore, dispatch),
+		resetFetch: bindActionCreators(resetFetch, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Orders);

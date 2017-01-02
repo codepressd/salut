@@ -84,3 +84,27 @@ export const sortCart = (cart, user) => {
 	
 	return finalOrder;
 }
+
+export const suppliersProducts = (order, supplierId) => {
+		
+		 let products = order.products .filter((product) => {
+				return product.supplierId === supplierId;
+			});
+
+		 let cartTotal = calculateCartTotal(products);
+		 let supplierOrder={
+		 	totalPrice: cartTotal,
+		 	products: products
+		 };
+		return supplierOrder;
+}
+
+export const productTotal = (products) => {
+		let totalPrice = null;
+		products.forEach((product) =>{
+			let productPrice = product.price * product.quantity;
+			totalPrice += productPrice;
+
+		});
+		return totalPrice
+	}

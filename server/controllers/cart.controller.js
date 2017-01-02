@@ -33,6 +33,8 @@ exports.removeFromCart= function(req, res, next){
 	    })
 }
 
+// Send orders to database
+
 exports.sendOrders= function(req, res, next){
 
    	 const usersOrder= req.body;
@@ -75,6 +77,8 @@ exports.sendOrders= function(req, res, next){
 
 }
 
+//restaurant Orders
+
 exports.getRestOrders= function(req, res, next){
 
    	 const restId= req.params.restId;
@@ -103,6 +107,25 @@ exports.getSingleOrder= function(req, res, next){
 			return next(err);
 		}
 		res.status(201).json(order);
+	});
+
+}
+
+//Suppliers orders
+
+exports.getSupplierOrders= function(req, res, next){
+
+   	 const {supplierId}= req.params;
+   	
+
+   	Order.find({
+   		suppliers : { $in: [supplierId] }
+   	},function(err, orders){
+		if (err){
+			return next(err);
+		}
+		
+		res.status(201).json({orders: orders});
 	});
 
 }

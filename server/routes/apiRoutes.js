@@ -15,14 +15,15 @@ router.route('/updateProduct').post(productController.updateProduct);//update an
 router.route('/getSingleProduct/:productId').get(productController.getSingleProduct);//get an existing product info
 router.route('/getSupplierProducts').post(productController.getSupplierProducts); //get all supplier products
 router.route('/removeProduct/:product_id').delete(productController.removeProduct);//delete product
+router.route('/getSupplierOrders/:supplierId').get(cartController.getSupplierOrders);//get all suppliers orders
 
 //product routes restaurant
 
-router.route('/getProducts').get(productController.getProducts);
-router.route('/addToCart').post(cartController.addToCart);
-router.route('/deleteProductFromCart').put(cartController.removeFromCart);
-router.route('/sendOrders').post(cartController.sendOrders);
-router.route('/getRestOrders/:restId').get(cartController.getRestOrders);
-router.route('/getSingleOrder/:restId').get(cartController.getSingleOrder);
+router.route('/getProducts').get(productController.getProducts);//get all products to display
+router.route('/addToCart').post(cartController.addToCart);//add to cart
+router.route('/deleteProductFromCart').put(cartController.removeFromCart);//remove from cart
+router.route('/sendOrders').post(cartController.sendOrders);// Send out orders from cart
+router.route('/getRestOrders/:restId').get(cartController.getRestOrders);// get all restaurants orders
+router.route('/getSingleOrder/:restId').get(cartController.getSingleOrder);// get a single restaurants order
 
 export default router;
