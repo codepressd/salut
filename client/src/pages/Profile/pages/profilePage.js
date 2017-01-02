@@ -5,7 +5,6 @@ import { profileUpdate } from '../actions/profileActions';
 import {authorizeUser} from '../../../components/actions/authActions.js';
 import { Container, Header, Icon, Grid, Image, Button, Checkbox, Form, Input, Message, Radio, Select, TextArea, Divider } from 'semantic-ui-react';
 import classnames from 'classnames';
-import validateInput from '../../../../server/util/validateSignup';
 // Import Style
 import styles from '../profile.css';
 
