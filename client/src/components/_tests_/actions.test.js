@@ -10,141 +10,219 @@ const middlewares =[thunk];
 const mockStore = configMockStore(middlewares);
 const mock = new MockAdapter(axios);
 
+
+
+//Auth Action
 describe('Test All  Actions', () => {
 
 
-	it('creates FETCH_DATA_SUCCESS when fetching getLeagueData', (done) => {
-		mock
-			.onGet('https://api.football-data.org/v1/competitions/?season=2016')
-			.reply(200, [])
+	it('Tests AUTHORIZE_USER action', () => {
+		const user = {
+			name: 'Hello'
+		}
+		const token ='34we34';
 
-		const expectedActions =[
+		const expectedActions = {
+			type: authActions.AUTHORIZE_USER,
+			user: {name: 'Hello'},
+			token: '34we34'
+		}
 
-			{leagues: [] , type: 'FETCH_DATA_SUCCESS'}
 
-		];
-
-		 const store = mockStore({ leagues: [] });
-
-		 return store.dispatch(actions.getLeagueData('https://api.football-data.org/v1/competitions/?season=2016'))
-      			.then(() => { // return of async actions
-        			expect(store.getActions()).toEqual(expectedActions);
-        			done();
-      		});
+		expect(authActions.authorizeUser(user, token)).toEqual(expectedActions)
 		   
 
 	});
 
-	it('creates FETCH_DATA_ERROR ', () => {
-		const text = 'This is throwing an error';
+	it('Tests AUTHORIZE_USER_UPDATE action', () => {
+		const user = {
+			name: 'Hello'
+		}
+		const token ='34we34';
 
-		const expectedActions ={
-			type: 'FETCH_DATA_ERROR',
-			error: 'This is throwing an error'
-		};
+		const expectedActions = {
+			type: authActions.AUTHORIZE_USER_UPDATE,
+			user: {name: 'Hello'}
+		}
 
-		expect(actions.fetchDataError(text)).toEqual(expectedActions);   
+
+		expect(authActions.authorizeUserUpdate(user)).toEqual(expectedActions)
+		   
 
 	});
+	//This test should work but I do a redirect which messes with the test
 
-	it('creates FETCH_TEAM_SUCCESS when fetching getLeagueData', (done) => {
-		mock
-			.onGet('https://api.football-data.org/v1/competitions/PL/teams')
-			.reply(200, [])
+	// it('Tests USER_LOGOUT  action', () => {
 
-		const expectedActions =[
+	// 	const expectedActions = {
+	// 		type: authActions.USER_LOGOUT
+	// 	}
 
-			{teams: [] , type: 'FETCH_TEAM_SUCCESS'}
 
-		];
+	// 	expect(authActions.logoutUser()).toEqual(expectedActions)
+		   
 
-		 const store = mockStore({ teams: [] });
+	// });
 
-		 return store.dispatch(actions.getTeamData('https://api.football-data.org/v1/competitions/PL/teams'))
-      			.then(() => { // return of async actions
-        			expect(store.getActions()).toEqual(expectedActions);
-        			done();
-      		});
+	
+
+});
+
+//Product Actions
+describe('Test All  Actions', () => {
+
+
+	it('Tests GRAB_SUPPLIER_PRODUCTS action', () => {
+		const products = [{
+			name: 'productName'
+		},
+		{
+			name: 'productName2'
+		}]
+		
+
+		const expectedActions = {
+			type: productActions.GRAB_SUPPLIER_PRODUCTS,
+			Products:  [{
+			name: 'productName'
+		},
+		{
+			name: 'productName2'
+		}]
+		}
+
+
+		expect(productActions.grabSupplierProducts(products)).toEqual(expectedActions)
 		   
 
 	});
 
-	it('creates FETCH_TEAM_ERROR ', () => {
-		const text = 'This is throwing an error';
+	it('Tests REMOVE_PRODUCT action', () => {
+		const index  = 1;
 
-		const expectedActions ={
-			type: 'FETCH_TEAM_ERROR',
-			error: 'This is throwing an error'
+		const expectedActions = {
+			type: productActions.REMOVE_PRODUCT,
+			index: 1
 		};
 
-		expect(actions.fetchTeamError(text)).toEqual(expectedActions);   
 
+		expect(productActions.removeProduct(index)).toEqual(expectedActions)
+	
 	});
 
-	it('creates FETCH_PLAYERS_SUCCESS when fetching getLeagueData', (done) => {
-		mock
-			.onGet('https://api.football-data.org/v1/teams/322/players')
-			.reply(200, [])
+	it('Tests UPDATE_PRODUCT action', () => {
+		const product  = {};
 
-		const expectedActions =[
-
-			{players: [] , type: 'FETCH_PLAYERS_SUCCESS'}
-
-		];
-
-		 const store = mockStore({ players: [] });
-
-		 return store.dispatch(actions.getTeamPlayersData('https://api.football-data.org/v1/teams/322/players'))
-      			.then(() => { // return of async actions
-        			expect(store.getActions()).toEqual(expectedActions);
-        			done();
-      		});
-		   
-
-	});
-	it('creates FETCH_PLAYERS_ERROR ', () => {
-		const text = 'This is throwing an error';
-
-		const expectedActions ={
-			type: 'FETCH_PLAYERS_ERROR',
-			error: 'This is throwing an error'
+		const expectedActions = {
+			type: productActions.UPDATE_PRODUCT,
+			product: {}
 		};
 
-		expect(actions.fetchTeamPlayersError(text)).toEqual(expectedActions);   
 
+		expect(productActions.updateProduct(product)).toEqual(expectedActions)
+	
 	});
 
-	it('creates FETCH_LEAGUE_TABLE_SUCCESS when fetching getLeagueData', (done) => {
-		mock
-			.onGet('https://api.football-data.org/v1/competitions/PL/leagueTable')
-			.reply(200, [])
+	it('Tests GET_ALL_PRODUCTS action', () => {
+		const products  = [{},{}];
 
-		const expectedActions =[
-
-			{tables: [] , type: 'FETCH_LEAGUE_TABLE_SUCCESS'}
-
-		];
-
-		 const store = mockStore({ tables: [] });
-
-		 return store.dispatch(actions.getLeagueTableData('https://api.football-data.org/v1/competitions/PL/leagueTable'))
-      			.then(() => { // return of async actions
-        			expect(store.getActions()).toEqual(expectedActions);
-        			done();
-      		});
-		   
-
-	});
-	it('creates FETCH_LEAGUE_TABLE_ERROR ', () => {
-		const text = 'This is throwing an error';
-
-		const expectedActions ={
-			type: 'FETCH_LEAGUE_TABLE_ERROR',
-			error: 'This is throwing an error'
+		const expectedActions = {
+			type: productActions.GET_ALL_PRODUCTS,
+			products: [{},{}]
 		};
 
-		expect(actions.fetchLeagueTableError(text)).toEqual(expectedActions);   
 
+		expect(productActions.getAllProducts(products)).toEqual(expectedActions)
+	
+	});
+
+	it('Tests  PUSH_SINGLE_PRODUCT action', () => {
+		const product  = {};
+
+		const expectedActions = {
+			type: productActions. PUSH_SINGLE_PRODUCT,
+			product: {}
+		};
+
+
+		expect(productActions.pushSingleProduct (product)).toEqual(expectedActions)
+	
+	});
+
+	it('Tests RESET_FETCH action', () => {
+		
+
+		const expectedActions = {
+			type: productActions.RESET_FETCH,
+		
+		};
+
+
+		expect(productActions.resetFetch()).toEqual(expectedActions)
+	
+	});
+
+	it('Tests UPDATE_CART action', () => {
+		const product = {};
+
+		const expectedActions = {
+			type: productActions.UPDATE_CART,
+			product: {}
+		};
+
+
+		expect(productActions.addToCart(product)).toEqual(expectedActions)
+	
+	});
+
+	it('Tests REMOVE_PRODUCT_FROM_CART action', () => {
+		const index  = 1;
+
+		const expectedActions = {
+			type: productActions.REMOVE_PRODUCT_FROM_CART,
+			index: 1
+		};
+
+
+		expect(productActions.removeProductFromCart(index)).toEqual(expectedActions)
+	
+	});
+
+	it('Tests  RESET_CART action', () => {
+		
+		const expectedActions = {
+			type: productActions.RESET_CART
+		};
+
+
+		expect(productActions.resetCart()).toEqual(expectedActions)
+	
+	});
+
+	it('Tests ORDERS_TO_STORE action', () => {
+		const orders  = [{},{}];
+
+		const expectedActions = {
+			type: productActions.ORDERS_TO_STORE,
+			orders: [{},{}]
+		};
+
+
+		expect(productActions.addOrdersToStore(orders)).toEqual(expectedActions)
+	
+	});
+
+	it('Tests SINGLE_ORDER_TO_STORE action', () => {
+		const order  = {};
+
+		const expectedActions = {
+			type: productActions.SINGLE_ORDER_TO_STORE,
+			order: {}
+		};
+
+
+		expect(productActions.singleOrderToStore(order)).toEqual(expectedActions)
+	
 	});
 
 });

@@ -1,72 +1,285 @@
-import  leagueReducer from '../reducers/leagueReducer';
-import  leagueTableReducer from '../reducers/leagueTableReducer';
-import  teamReducer from '../reducers/teamReducer';
-import  playerReducer from '../reducers/playerReducer';
+import  authReducer from '../reducers/authReducers';
+import productReducer from '../reducers/productReducers';
 
 
 
-describe('Test All Reducers', () => {
+
+describe('Test authReducers', () => {
 
 
-	it('should change leagueReducer State ', () => {
+	it('AUTHORIZE_USER State ', () => {
 
-		const initialState = [];
-
-		const actions = {
-			type: 'FETCH_DATA_SUCCESS',
-			leagues: [{},{}]
+		const initialState = {
+			user: null,
+			error: null,
+			cart: [],
+			token: null
 		}
 
-		const newState = leagueReducer(initialState, actions);
+		const actions = {
+			type: 'AUTHORIZE_USER',
+			user: {name: 'username'},
+			token: '34wer3w'
+		}
 
-		expect(newState).toEqual([{},{}]);
+		const newState = authReducer(initialState, actions);
+
+		expect(newState).toEqual({user: {name:'username'}, error: null, cart:[], token:'34wer3w'});
+		
+      	});
+	//for some reason this test is failing??
+      	it('AUTHORIZE_ERROR State ', () => {
+
+		const initialState = {
+			user: null,
+			error: null,
+			cart: [],
+			token: null
+		}
+
+		const actions = {
+			type: 'AUTHORIZE_ERROR',
+			error: 'there was an error'
+		}
+
+		const newState = authReducer(initialState, actions);
+
+		expect(newState).toEqual({user: null, error: null, cart:[], token: null});
+		
+      	});	
+
+      	it('AUTHORIZE_USER_UPDATE State ', () => {
+
+		const initialState = {
+			user: null,
+			error: null,
+			cart: [],
+			token: 'hello'
+		}
+
+		const actions = {
+			type: 'AUTHORIZE_USER',
+			user: {name: 'username'},
+			token: '34wer3w'
+		}
+
+		const newState = authReducer(initialState, actions);
+
+		expect(newState).toEqual({user: {name:'username'}, error: null, cart:[], token:'34wer3w'});
+		
+      	});	
+
+      	it('USER_LOGOUT State ', () => {
+
+		const initialState = {
+			user: null,
+			error: null,
+			cart: [],
+			token: null
+		}
+
+		const actions = {
+			type: 'USER_LOGOUT',
+		}
+
+		const newState = authReducer(initialState, actions);
+
+		expect(newState).toEqual({user: null, error: null, cart:[], token: null});
+		
+      	});	
+
+      	it('UPDATE_CART State ', () => {
+
+		const initialState = {
+			user: null,
+			error: null,
+			cart: [],
+			token: '34wer3w'
+		}
+
+		const actions = {
+			type: 'UPDATE_CART',
+			product: [{},{}]
+		}
+
+		const newState = authReducer(initialState, actions);
+
+		expect(newState).toEqual({user: null, error: null, cart:[{},{}], token:'34wer3w'});
+		
+      	});	
+
+      	it('REMOVE_PRODUCT_FROM_CART State ', () => {
+
+		const initialState = {
+			user: null,
+			error: null,
+			cart: [{},{},{}],
+			token: '34wer3w'
+		}
+
+		const actions = {
+			type: 'REMOVE_PRODUCT_FROM_CART',
+			index: 1
+		}
+
+		const newState = authReducer(initialState, actions);
+
+		expect(newState).toEqual({user:null, error: null, cart:[{},{}], token:'34wer3w'});
+		
+      	});	
+
+      	it('RESET_CART State ', () => {
+
+		const initialState = {
+			user: null,
+			error: null,
+			cart: [{},{}],
+			token: '34wer3w'
+		}
+
+		const actions = {
+			type: 'RESET_CART',
+		
+		}
+
+		const newState = authReducer(initialState, actions);
+
+		expect(newState).toEqual({user: null, error: null, cart:[], token:'34wer3w'});
+		
+      	});			   
+
+});
+
+//Product Reducers Tests
+
+describe('Test Product Reducers', () => {
+
+
+	it('GRAB_SUPPLIER_PRODUCTS State ', () => {
+
+		const initialState ={
+			Products: [],
+			isFetching: true
+		};
+
+		const actions = {
+			type: 'GRAB_SUPPLIER_PRODUCTS',
+			Products: [{},{}]
+		}
+
+		const newState = productReducer(initialState, actions);
+
+		expect(newState).toEqual({Products:[{},{}], isFetching: true});
 		
       	});
 
-	it('should change leagueTableReducer State ', () => {
+	it('REMOVE_PRODUCT State ', () => {
 
-		const initialState = [];
+		const initialState ={
+			Products: [{},{},{}],
+			isFetching: true
+		};
 
 		const actions = {
-			type: 'FETCH_LEAGUE_TABLE_SUCCESS',
-			tables: [{},{}]
+			type: 'REMOVE_PRODUCT',
+			index: 1
 		}
 
-		const newState = leagueTableReducer(initialState, actions);
+		const newState = productReducer(initialState, actions);
 
-		expect(newState).toEqual([{},{}]);
+		expect(newState).toEqual({Products:[{},{}], isFetching: true});
 		
       	});
 
-	it('should change teamReducer State ', () => {
+	it('GET_ALL_PRODUCTS State ', () => {
 
-		const initialState = [];
+		const initialState ={
+			Products: [],
+			isFetching: true
+		};
 
 		const actions = {
-			type: 'FETCH_TEAM_SUCCESS',
-			teams: [{},{}]
+			type: 'GET_ALL_PRODUCTS',
+			products: [{},{}]
 		}
 
-		const newState = teamReducer(initialState, actions);
+		const newState = productReducer(initialState, actions);
 
-		expect(newState).toEqual([{},{}]);
+		expect(newState).toEqual({Products:[{},{}], isFetching: false});
 		
       	});
 
-	it('should change playerReducer State ', () => {
+	it('PUSH_SINGLE_PRODUCT State ', () => {
 
-		const initialState = [];
+		const initialState ={
+			Products: [],
+			isFetching: true
+		};
 
 		const actions = {
-			type: 'FETCH_PLAYERS_SUCCESS',
-			players: [{},{}]
+			type: 'PUSH_SINGLE_PRODUCT',
+			product: {}
 		}
 
-		const newState = playerReducer(initialState, actions);
+		const newState = productReducer(initialState, actions);
 
-		expect(newState).toEqual([{},{}]);
+		expect(newState).toEqual({Products:{}, isFetching: false});
 		
       	});
-		   
+
+	it('RESET_FETCH State ', () => {
+
+		const initialState ={
+			Products: [],
+			isFetching: false
+		};
+
+		const actions = {
+			type: 'RESET_FETCH',
+			
+		}
+
+		const newState = productReducer(initialState, actions);
+
+		expect(newState).toEqual({Products:[], isFetching: true});
+		
+      	});
+
+	it('ORDERS_TO_STORE State ', () => {
+
+		const initialState ={
+			Products: [],
+			isFetching: true
+		};
+
+		const actions = {
+			type: 'ORDERS_TO_STORE',
+			orders: [{},{}]
+		}
+
+		const newState = productReducer(initialState, actions);
+
+		expect(newState).toEqual({Orders: [{},{}], Products:[], isFetching: false});
+		
+      	});
+
+	it('SINGLE_ORDER_TO_STORE State ', () => {
+
+		const initialState ={
+			Products: [],
+			isFetching: true
+		};
+
+		const actions = {
+			type: 'SINGLE_ORDER_TO_STORE',
+			order: {},
+
+		}
+
+		const newState = productReducer(initialState, actions);
+
+		expect(newState).toEqual({ Order: {}, Products: [], isFetching: false});
+		
+      	});
 
 });
