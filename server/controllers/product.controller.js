@@ -22,19 +22,19 @@ exports.postProduct = function(req, res, next){
 	
 	const {supplierId, supplier, productName, unitPrice, casePrice, productDescription, productType, image} = req.body;
 	if(!productName){
-		return res.status(422).send({ email: 'You must enter a Product Name.' });
+		return res.status(422).send({ productName: 'You must enter a Product Name.' });
 	}
 	if(!unitPrice){
-		return res.status(422).send({ email: 'You must enter a Unit Price.' });
+		return res.status(422).send({ unitPrice: 'You must enter a Unit Price.' });
 	}
 	if(!casePrice){
-		return res.status(422).send({ email: 'You must enter an Case Price.' });
+		return res.status(422).send({ casePrice: 'You must enter an Case Price.' });
 	}
 	if(!productDescription){
-		return res.status(422).send({ email: 'You must enter a Product Description.' });
+		return res.status(422).send({ productDescription: 'You must enter a Product Description.' });
 	}
 	if(!productType){
-		return res.status(422).send({ email: 'You must enter a Product Type.' });	
+		return res.status(422).send({ productType: 'You must enter a Product Type.' });	
 	}
 
 	let product = new Product ({
