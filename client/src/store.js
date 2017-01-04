@@ -1,6 +1,8 @@
 /**
  * Main store function
  */
+ import {routerMiddleware} from 'react-router-redux';
+ import {browserHistory} from 'react-router';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import DevTools from './pages/App/components/DevTools';
@@ -15,9 +17,11 @@ export function configureStore() {
 const persistedUserState = loadUserState();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const routingMiddleware = routerMiddleware(browserHistory);
+
   // Middleware and store enhancers
   const enhancers = composeEnhancers(
-    applyMiddleware(thunk),
+    applyMiddleware(thunk, routingMiddleware),
   );
 
   if (process.env.CLIENT && process.env.NODE_ENV === 'development') {

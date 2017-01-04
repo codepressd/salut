@@ -1,6 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router,  IndexRoute, Route, browserHistory } from 'react-router';
+import {UserAuthWrapper} from 'redux-auth-wrapper';
+import { routerActions } from 'react-router-redux';
 
 //Import Components
 import WrapApp from './pages/App/App';
@@ -35,11 +37,28 @@ import RestaurantCheckout from './pages/Restaurant/pages/restaurantCheckout';
 import RestaurantOrderSuccess from './pages/Restaurant/pages/orderSuccess';
 import RestaurantViewOrder from './pages/Restaurant/pages/restaurantViewOrder';
 
+//Auth User check role
+const SuppliersOnly = UserAuthWrapper({
+  authSelector: state => state.ActiveUser.user, // how to get the user state
+  redirectAction: routerActions.replace, // the redux action to dispatch for redirect
+  wrapperDisplayName: 'UserIsASupplier', // a nice name for this auth check
+  predicate: user => user.role === 'supplier'
+});
+
+const RestaurantOnly = UserAuthWrapper({
+  authSelector: state => state.ActiveUser.user, // how to get the user state
+  redirectAction: routerActions.replace, // the redux action to dispatch for redirect
+  wrapperDisplayName: 'UserIsARestaurant', // a nice name for this auth check
+   predicate: user => user.role === 'restaurant'
+});
+
+const RestaurantAuth = RestaurantOnly(({children}) => children);
+const SupplierAuth = SuppliersOnly(({children}) => children);
 
 export default function App (props) {
     return (
       <Provider store={props.store}>
-        <Router history={browserHistory}>
+        <Router history={props.history}>
           <Route path='/' component={WrapApp}>
             <IndexRoute component={Home}></IndexRoute>
               <Route path='/about' component={About} />
@@ -49,23 +68,27 @@ export default function App (props) {
               <Route path='/logout' component={Logout} />
             {/*Backend Routes*/}
           {/*Supplier Routes*/}
-            <Route path='/supplier/dashboard/:userid' component={SupplyDash} />
-            <Route path='/supplier/dashboard/:userid/products' component={SupplyProducts} />
-            <Route path='/supplier/dashboard/:userid/addProducts' component={SupplyAddProducts} />
-            <Route path='/supplier/dashboard/:userid/addProductSuccess' component={PostProductSucess} />
-            <Route path='/supplier/dashboard/:userid/updateProducts/:productId' component={SupplyUpdateProducts} />
-            <Route path='/supplier/dashboard/:userid/orders' component={SupplyOrders} />
-            <Route path='/supplier/dashboard/:userid/vieworder/:ordernumber' component={SupplierViewOrder} />
-            <Route path='/supplier/dashboard/:userid/earnings' component={SupplyEarnings} />
+            {/*<Route component={SupplierAuth}>*/}
+                    <Route path='/supplier/dashboard/:userid' component={SupplyDash} />
+                    <Route path='/supplier/dashboard/:userid/products' component={SupplyProducts} />
+                    <Route path='/supplier/dashboard/:userid/addProducts' component={SupplyAddProducts} />
+                    <Route path='/supplier/dashboard/:userid/addProductSuccess' component={PostProductSucess} />
+                    <Route path='/supplier/dashboard/:userid/updateProducts/:productId' component={SupplyUpdateProducts} />
+                    <Route path='/supplier/dashboard/:userid/orders' component={SupplyOrders} />
+                    <Route path='/supplier/dashboard/:userid/vieworder/:ordernumber' component={SupplierViewOrder} />
+                    <Route path='/supplier/dashboard/:userid/earnings' component={SupplyEarnings} />
+            {/*</Route>*/}
           {/*Restaurant Routes*/}
-            <Route path='/restaurant/dashboard/:userid' component={RestaurantDash} />
-            <Route path='/restaurant/dashboard/:userid/shop' component={RestaurantShop} />
-            <Route path='/restaurant/dashboard/:userid/product/:productId' component={RestaurantProductPage} />
-            <Route path='/restaurant/dashboard/:userid/checkout' component={RestaurantCheckout} />
-            <Route path='/restaurant/dashboard/:userid/orderSuccess' component={RestaurantOrderSuccess} />
-            <Route path='/restaurant/dashboard/:userid/orders' component={RestaurantOrders} />
-            <Route path='/restaurant/dashboard/:userid/vieworder/:ordernumber' component={RestaurantViewOrder} />
-            <Route path='/restaurant/dashboard/:userid/suppliers' component={RestaurantSuppliers} />
+            <Route component={RestaurantAuth}>
+                    <Route path='/restaurant/dashboard/:userid' component={RestaurantDash} />
+                    <Route path='/restaurant/dashboard/:userid/shop' component={RestaurantShop} />
+                    <Route path='/restaurant/dashboard/:userid/product/:productId' component={RestaurantProductPage} />
+                    <Route path='/restaurant/dashboard/:userid/checkout' component={RestaurantCheckout} />
+                    <Route path='/restaurant/dashboard/:userid/orderSuccess' component={RestaurantOrderSuccess} />
+                    <Route path='/restaurant/dashboard/:userid/orders' component={RestaurantOrders} />
+                    <Route path='/restaurant/dashboard/:userid/vieworder/:ordernumber' component={RestaurantViewOrder} />
+                    <Route path='/restaurant/dashboard/:userid/suppliers' component={RestaurantSuppliers} />
+            </Route>
           </Route>
         </Router>
       </Provider>

@@ -10,6 +10,18 @@ export const authorizeUser = (user, token) => ({
 	user,
 	token
 });
+// export const authorizeUser = (user, token) => {
+	
+// 	return dispatch =>{
+// 		browserHistory.push('/' + user.role + '/dashboard/' + user.id);
+// 		return dispatch({
+// 			type: AUTHORIZE_USER,
+// 			user,
+// 			token
+// 		});
+// 	}
+	
+// };
 
 // export const authorizeUserError = (error) => ({
 

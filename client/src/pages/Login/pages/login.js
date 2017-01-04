@@ -53,9 +53,10 @@ class Login extends React.Component {
                 errors: {},
 
             });
-
+           
             this.props.loginRequest(data.formData)
                 .then((res) => {
+                    console.log(res.data.user);
                     //if success push user data to store
                     const { _id, companyName, email, firstName, lastName, role } = res.data.user;
                     const token = res.data.token;
@@ -70,11 +71,13 @@ class Login extends React.Component {
                     this.props.authorizeUser(activeUser, token);
                     browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id);
                 })
-                .catch((err) => this.setState({ errors: err.response.data }));
+                //  this.setState({ errors: err.response.data })
+                .catch((err) => console.log(err));
         }
     }
 
     render() {
+        console.log('rendered');
          const { errors } = this.state;
         return (
             <Container className='fullPage'>
