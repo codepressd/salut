@@ -2,8 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { signupRequest } from '../actions/signupActions';
-import {authorizeUser} from '../../../components/actions/authActions.js';
+import{bindActionCreators} from 'redux';
+//import { signupRequest } from '../actions/signupActions';
+import {signupRequest} from '../../../components/actions/authActions.js';
 import { Container, Header, Icon, Grid, Image, Button, Checkbox, Form, Input, Message, Radio, Select, TextArea, Divider } from 'semantic-ui-react';
 import classnames from 'classnames';
 
@@ -90,35 +91,20 @@ class Signup extends React.Component {
                 errors: {},
             });
 
-            this.props.signupRequest(data.formData)
-                .then((res) =>{
-                	//if success push user data to store
-                	const { _id, companyName, email, firstName, lastName, role} = res.data.user;
-                	const token = res.data.token;
-                	const activeUser ={
-                		id: _id,
-                		email,
-                		firstName,
-                		lastName,
-                		companyName,
-                		role
-                	}
-                	this.props.authorizeUser(activeUser, token);
-                	browserHistory.push('/'+activeUser.role+'/dashboard/' +activeUser.id);	
-                })
-                .catch((err) => this.setState({ errors: err.response.data }));
+            this.props.signupRequest(data.formData);
+                 //.catch((err) => this.setState({ errors: err.response.data }));
         }
     }
     render() {
         const { errors } = this.state;
         return (
             <div>
-       <div className='topCover'>
-            <Container >
-              <Image src='/bird.png' alt='bird' centered/>
-              <h2 className='center'>Supplier Sign Up</h2>
-            </Container>
-      </div>
+            <div className='topCover'>
+                    <Container >
+                          <h2 className='center'> Sign Up</h2>
+                    </Container>
+                    <Divider />
+             </div>
     {/*Form Submit*/}
     <Container className='form'>
        <Form onSubmit={this.handleSubmit}>
@@ -166,16 +152,21 @@ class Signup extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        signupRequest: signupRequest(state),
-        authorizeUser: authorizeUser(state)
-    };
+// function mapStateToProps(state) {
+//     return {
+//         signupRequest: signupRequest(state),
+//        // authorizeUser: authorizeUser(state)
+//     };
+// }
+
+function mapDispatchToProps(dispatch){
+    return{
+        signupRequest: bindActionCreators(signupRequest ,dispatch)
+    }    
 }
 
 Signup.propTypes = {
-    signupRequest: React.PropTypes.func.isRequired,
-    authorizeUser: React.PropTypes.func.isRequired
+    signupRequest: React.PropTypes.func.isRequired
 }
 
-export default connect(null, { signupRequest, authorizeUser })(Signup);
+export default connect(null, mapDispatchToProps)(Signup);

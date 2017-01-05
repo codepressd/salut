@@ -6,21 +6,19 @@ import axios from 'axios';
 import {browserHistory} from 'react-router';
 
 export const authorizeUser = (user, token) => {
-	console.log('authUser',user);
 	return {
 		type: AUTHORIZE_USER,
 		user,
 		token
 	}
 };
-//new action
 
-export const loginRequest = (data) => dispatch => {
-	console.log(data);
-	return axios.post('api/login', data)
-		.then( res =>{
-			
-			  const { _id, companyName, email, firstName, lastName, role } = res.data.user;
+export const signupRequest = (data) => dispatch => {
+
+	return axios.post('api/signup', data)
+		.then( res => {
+
+			 const { _id, companyName, email, firstName, lastName, role, address, city, state } = res.data.user;
 		                    const token = res.data.token;
 		                    const activeUser = {
 		                        id: _id,
@@ -28,14 +26,58 @@ export const loginRequest = (data) => dispatch => {
 		                        firstName,
 		                        lastName,
 		                        companyName,
-		                        role
+		                        role,
+		                        address,
+		                        city,
+		                        state
 		                    }
-		                   // console.log(res);
+		                   
 			dispatch(authorizeUser(activeUser, token));
-			setTimeout(browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id),1000);
+			axios.defaults.headers.common['Authorization'] = token;
+			return browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id);
+		})
+		.catch(err => console.log(err));
+	
+}
+
+//new login request
+
+export const loginRequest = (data) => dispatch => {
+
+	return axios.post('api/login', data)
+		.then( res =>{
+			
+			  const { _id, companyName, email, firstName, lastName, role, address, city, state } = res.data.user;
+		                    const token = res.data.token;
+		                    const activeUser = {
+		                        id: _id,
+		                        email,
+		                        firstName,
+		                        lastName,
+		                        companyName,
+		                        role,
+		                        address,
+		                        city,
+		                        state
+		                    }
+		                   
+			dispatch(authorizeUser(activeUser, token));
+			axios.defaults.headers.common['Authorization'] = token;
+			return browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id);
 		})
 		.catch(err => console.log(err));
 }
+
+// //New Signup Route
+
+// export function signupRequest(data){
+	
+// 	return dispatch =>{
+
+// 		return axios.post('api/signup', data);
+// 	}
+// }
+
 
 // import axios from 'axios';
 

@@ -23,6 +23,7 @@ export class App extends Component {
 
 
     render() {
+         
         const Header = ({activeUser: {user}}) => user ? <BackEndHeader {...this.props} /> : <FrontEndHeader {...this.props} />;
         return (
             <div>

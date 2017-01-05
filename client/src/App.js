@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import axios from 'axios';
 import { Router,  IndexRoute, Route, browserHistory } from 'react-router';
 import {UserAuthWrapper} from 'redux-auth-wrapper';
 import { routerActions } from 'react-router-redux';
@@ -36,25 +37,6 @@ import RestaurantProductPage from './pages/Restaurant/pages/restaurantProductPag
 import RestaurantCheckout from './pages/Restaurant/pages/restaurantCheckout';
 import RestaurantOrderSuccess from './pages/Restaurant/pages/orderSuccess';
 import RestaurantViewOrder from './pages/Restaurant/pages/restaurantViewOrder';
-
-//Auth User check role
-const SuppliersOnly = UserAuthWrapper({
-  authSelector: state => state.ActiveUser.user, // how to get the user state
-  redirectAction: routerActions.replace, // the redux action to dispatch for redirect
-  wrapperDisplayName: 'UserIsASupplier', // a nice name for this auth check
-  predicate: user => user.role === 'supplier'
-});
-
-const RestaurantOnly = UserAuthWrapper({
-  authSelector: state => state.ActiveUser.user , // how to get the user state
-  redirectAction: routerActions.replace, // the redux action to dispatch for redirect
-  wrapperDisplayName: 'UserIsARestaurant', // a nice name for this auth check
-   predicate: user => user.role === 'restaurant'
-});
-
-const RestaurantAuth = RestaurantOnly(({children}) => children);
-const SupplierAuth = SuppliersOnly(({children}) => children);
-
 
 
 export default function App (props) {

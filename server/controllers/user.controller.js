@@ -19,6 +19,9 @@ function setUserInfo(request) {
         email: request.email,
         companyName: request.profile.companyName,
         role: request.role,
+        address: request.profile.address,
+        city: request.profile.city,
+        state: request.profile.state
     }
 };
 

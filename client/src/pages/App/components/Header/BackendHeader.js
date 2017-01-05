@@ -29,12 +29,7 @@ handleClick(){
           <Menu.Item name='About' active={this.props.location.pathname === '/about'} onClick={()=> browserHistory.push('/about')} />
           <Menu.Item name='FAQ'  active={this.props.location.pathname === '/faq'} onClick={()=> browserHistory.push('/faq')} />
           <Menu.Menu position='right'>
-          <Menu.Item as={Dropdown} text='Profile'>
-            <Dropdown.Menu>
-              <Dropdown.Item>Edit Proflie</Dropdown.Item>
-              <Dropdown.Item onClick={()=> browserHistory.push('/'+user.role+'/dashboard/'+user.id)}>Dashboard</Dropdown.Item>
-            </Dropdown.Menu>
-          </Menu.Item>
+          <Menu.Item  name='Dashboard' onClick={()=> browserHistory.push('/'+user.role+'/dashboard/'+user.id)} />
           <Button
                 basic
                 onClick={()=>browserHistory.push('/restaurant/dashboard/'+user.id+'/checkout')}
