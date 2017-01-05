@@ -92,7 +92,6 @@ class Signup extends React.Component {
             });
 
             this.props.signupRequest(data.formData);
-                 //.catch((err) => this.setState({ errors: err.response.data }));
         }
     }
     render() {

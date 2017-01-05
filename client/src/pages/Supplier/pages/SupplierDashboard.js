@@ -2,9 +2,16 @@
 import React, { PropTypes } from 'react';
 import axios from 'axios';
 import { Container, Grid, Image, Header, Icon, Divider, Form, Button } from 'semantic-ui-react';
+import {connect} from 'react-redux';
+import{bindActionCreators} from 'redux';
 
 import SideMenu from '../components/SupplierMenu';
 import '../supplier.css';
+
+//import Actions
+
+
+import {updateUserData} from '../../../components/actions/authActions';//send to database
 
 class SupplierDashboard extends React.Component{
 
@@ -15,7 +22,52 @@ class SupplierDashboard extends React.Component{
 		this.handleResetPassword = this.handleResetPassword.bind(this);
 	}
 
-	handleInfoSubmit(data){
+	validateInput (data) {
+	        let errors = {};
+
+	        Object.keys(data).map(function(objectKey, index) {
+	            let value = data[objectKey];
+
+	            if (typeof value == 'string' && value.length < 1) {
+
+	                errors[objectKey] = 'This Field Is Required';
+
+	            }
+	            if (data[objectKey] !== true && objectKey === 'terms') {
+	                errors.terms = 'Must Agree To Our Terms and Conditions';
+	            }
+
+	        });
+	        
+	        if (data.password !== data.passwordConfirm) {
+	            errors.password = 'Passwords Don\'t Match';
+	            errors.passwordConfrim = 'Passwords Don\'t Match';
+	        }
+	        
+	        return {
+	            errors
+	        }
+
+	}
+
+	handleInfoSubmit(e, data){
+		e.preventDefault();
+
+		const { errors} = this.validateInput(data.formData);
+
+		if (Object.keys(errors).length !== 0) {
+		            this.setState({ errors });
+		 }
+
+		if (Object.keys(errors).length === 0) {
+		            this.setState({
+		                errors: {},
+		            });
+		           data.formData.userId = this.props.activeUser.user.id;
+		            this.props.updateUserData(data.formData);
+		}
+
+		
 
 	}
 
@@ -55,9 +107,9 @@ class SupplierDashboard extends React.Component{
   							<Form.Input label='Address' name='address' placeholder='Address' />
   							<Form.Input label='City' name='city' placeholder='City' />
   							<Form.Input label='State' name='state' placeholder='State' />
-          							
+          							<Button primary type='submit' floated='right'>Update Information</Button>
           						           </Form>
-          						           <Button primary type='submit' floated='right'>Update Information</Button>
+          						           
 						      </Grid.Column>
 						      <Grid.Column width={8}>
 						        <Header as='h2' textAlign='center'>
@@ -115,4 +167,10 @@ class SupplierDashboard extends React.Component{
 
 }
 
-export default SupplierDashboard;
+function mapDispatchToProps(dispatch){
+	return{
+		updateUserData: bindActionCreators(updateUserData, dispatch)
+	}
+}
+
+export default connect(null, mapDispatchToProps) (SupplierDashboard);

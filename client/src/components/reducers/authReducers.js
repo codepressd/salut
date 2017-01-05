@@ -31,6 +31,7 @@ const AuthUserReducer = (state = initialState, action) => {
 				token: action.token
 			}
 
+
 		case USER_LOGOUT:
 			return initialState;
 

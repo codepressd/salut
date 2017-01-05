@@ -25,6 +25,26 @@ function setUserInfo(request) {
     }
 };
 
+//Update User
+
+exports.updateUserInfo = function (req, res, next) {
+
+    
+    const { companyName, address, city, state, userId } = req.body;
+
+    User.findOneAndUpdate({
+                _id : userId
+    }, {$set: {"profile.companyName": companyName,"profile.address": address, "profile.city": city, "profile.state": state  }}, {new: true}).exec() 
+    .then(function(user){
+            let userInfo = setUserInfo(user);
+           
+            res.status(201).json({
+                token: 'JWT ' + generateToken(userInfo),
+                user: userInfo
+            });
+    })
+    .catch(err => res.status(422).json({err}));
+};
 
 //login route
 
@@ -153,6 +173,8 @@ exports.register = function(req, res, next) {
         });
     });
 }
+
+
 
 //Role Authorization
 
