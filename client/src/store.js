@@ -4,6 +4,7 @@
  import {routerMiddleware} from 'react-router-redux';
  import {browserHistory} from 'react-router';
 import { createStore, applyMiddleware, compose } from 'redux';
+import throttle from 'lodash/throttle';
 import thunk from 'redux-thunk';
 import DevTools from './pages/App/components/DevTools';
 import rootReducer from './reducers';
@@ -33,20 +34,19 @@ const routingMiddleware = routerMiddleware(browserHistory);
 
 //persist state
 
-store.subscribe(() => {
+store.subscribe(throttle(() => 
   saveUserState({
     ActiveUser: store.getState().ActiveUser
-  });
-});
+  }),1000));
 
-  // For hot reloading reducers
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('./reducers', () => {
-      const nextReducer = require('./reducers').default; // eslint-disable-line global-require
-      store.replaceReducer(nextReducer);
-    });
-  }
+  // // For hot reloading reducers
+  // if (module.hot) {
+  //   // Enable Webpack hot module replacement for reducers
+  //   module.hot.accept('./reducers', () => {
+  //     const nextReducer = require('./reducers').default; // eslint-disable-line global-require
+  //     store.replaceReducer(nextReducer);
+  //   });
+  // }
 
   return store;
 }

@@ -1,9 +1,10 @@
 /* eslint-disable */
 import React from 'react';
 import { Container, Grid, Form, Icon, Header, Checkbox, Button } from 'semantic-ui-react';
-import { authorizeUser } from '../../../components/actions/authActions.js';
-import { loginRequest } from '../actions/loginAction';
+import { authorizeUser, loginRequest } from '../../../components/actions/authActions.js';
+//import { loginRequest } from '../actions/loginAction';
 import { connect } from 'react-redux';
+import{bindActionCreators} from 'redux';
 import { browserHistory } from 'react-router';
 //import validateInput from '../../../../util/validateLogin.js';
 import classnames from 'classnames';
@@ -54,25 +55,25 @@ class Login extends React.Component {
 
             });
            
-            this.props.loginRequest(data.formData)
-                .then((res) => {
-                    console.log(res.data.user);
-                    //if success push user data to store
-                    const { _id, companyName, email, firstName, lastName, role } = res.data.user;
-                    const token = res.data.token;
-                    const activeUser = {
-                        id: _id,
-                        email,
-                        firstName,
-                        lastName,
-                        companyName,
-                        role
-                    }
-                    this.props.authorizeUser(activeUser, token);
-                    browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id);
-                })
-                //  this.setState({ errors: err.response.data })
-                .catch((err) => console.log(err));
+            this.props.loginRequest(data.formData);
+                // .then((res) => {
+                //     console.log(res.data.user);
+                //     //if success push user data to store
+                //     const { _id, companyName, email, firstName, lastName, role } = res.data.user;
+                //     const token = res.data.token;
+                //     const activeUser = {
+                //         id: _id,
+                //         email,
+                //         firstName,
+                //         lastName,
+                //         companyName,
+                //         role
+                //     }
+                //     this.props.authorizeUser(activeUser, token);
+                //     browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id);
+                // })
+                // //  this.setState({ errors: err.response.data })
+                // .catch((err) => console.log(err));
         }
     }
 
@@ -105,14 +106,18 @@ class Login extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        loginRequest: loginRequest(state),
-        authorizeUser: authorizeUser(state)
+        //loginRequest: loginRequest(state),
+       // authorizeUser: authorizeUser(state)
     };
 }
-
+function mapDispatchToProps(dispatch){
+    return{
+        loginRequest: bindActionCreators(loginRequest ,dispatch)
+    }    
+}
 // Login.propTypes = {
 //     loginRequest: React.PropTypes.func.isRequired,
 //     authorizeUser: React.PropTypes.func.isRequired
 // }
 
-export default connect(null, { loginRequest, authorizeUser })(Login);
+export default connect(null, mapDispatchToProps)(Login);
