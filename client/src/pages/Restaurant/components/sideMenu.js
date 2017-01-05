@@ -29,11 +29,6 @@ export function sideMenu (props){
           <Icon name='payment' />
           Orders
         </Menu.Item>
-
-        <Menu.Item className={styles.navButton} name='suppliers' active={props.location.pathname === '/restaurant/dashboard/'+user.id+'/suppliers'} onClick={() => browserHistory.push( '/restaurant/dashboard/'+user.id+'/suppliers')}>
-          <Icon name='shipping' />
-          Suppliers
-        </Menu.Item>
       </Menu>
      
     )

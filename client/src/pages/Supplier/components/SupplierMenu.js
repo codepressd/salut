@@ -33,12 +33,6 @@ import '../supplier.css';
           <Icon name='shipping' />
           Orders
         </Menu.Item>
-
-        <Menu.Item className='navButton' name='Earnings' active={props.location.pathname ===  '/supplier/dashboard/'+user.id+'/earnings'} onClick={() => browserHistory.push('/supplier/dashboard/'+user.id+'/earnings')}>
-          <Icon name='dollar' />
-          Earnings
-        </Menu.Item>
-
       </Menu>
      
     )

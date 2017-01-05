@@ -90,8 +90,8 @@ export default function App (props) {
               <Route path='/login' component={Login} />
               <Route path='/logout' component={Logout} />
             {/*Backend Routes*/}
+
           {/*Supplier Routes*/}
-            {/*<Route component={SupplierAuth}>*/}
                     <Route path='/supplier/dashboard/:userid' component={SupplyDash} onEnter={supplierAuth} />
                     <Route path='/supplier/dashboard/:userid/products' component={SupplyProducts} onEnter={supplierAuth} />
                     <Route path='/supplier/dashboard/:userid/addProducts' component={SupplyAddProducts} onEnter={supplierAuth} />
@@ -100,9 +100,8 @@ export default function App (props) {
                     <Route path='/supplier/dashboard/:userid/orders' component={SupplyOrders} onEnter={supplierAuth} />
                     <Route path='/supplier/dashboard/:userid/vieworder/:ordernumber' component={SupplierViewOrder} onEnter={supplierAuth} />
                     <Route path='/supplier/dashboard/:userid/earnings' component={SupplyEarnings} onEnter={supplierAuth} />
-            {/*</Route>*/}
+            
           {/*Restaurant Routes*/}
-           
                     <Route path='/restaurant/dashboard/:userid' component={RestaurantDash} onEnter={restaurantAuth} />
                     <Route path='/restaurant/dashboard/:userid/shop' component={RestaurantShop} onEnter={restaurantAuth} />
                     <Route path='/restaurant/dashboard/:userid/product/:productId' component={RestaurantProductPage} onEnter={restaurantAuth} />
