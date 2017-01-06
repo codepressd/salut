@@ -20,6 +20,7 @@ import Logout from './pages/Login/pages/logout';
 
 //supplier routes
 import SupplyDash from './pages/Supplier/pages/SupplierDashboard';
+import InfoUpdateSuccess from './pages/Supplier/pages/infoUpdateSuccess';
 import SupplyProducts from './pages/Supplier/pages/supplierProducts';
 import SupplyAddProducts from './pages/Supplier/pages/supplierAddProducts';
 import SupplyUpdateProducts from './pages/Supplier/pages/supplierUpdateProduct';
@@ -75,6 +76,7 @@ export default function App (props) {
 
           {/*Supplier Routes*/}
                     <Route path='/supplier/dashboard/:userid' component={SupplyDash} onEnter={supplierAuth} />
+                    <Route path='/supplier/dashboard/:userid/updateSuccess' component={InfoUpdateSuccess} onEnter={supplierAuth} />
                     <Route path='/supplier/dashboard/:userid/products' component={SupplyProducts} onEnter={supplierAuth} />
                     <Route path='/supplier/dashboard/:userid/addProducts' component={SupplyAddProducts} onEnter={supplierAuth} />
                     <Route path='/supplier/dashboard/:userid/addProductSuccess' component={PostProductSucess} onEnter={supplierAuth} />

@@ -6,9 +6,7 @@ import Orders from '../models/orders';
 import serverConfig from '../config/database';
 
 function generateToken(user) {
-    return jwt.sign(user, serverConfig.secret, {
-        expiresIn: 10000
-    });
+    return jwt.sign(user, serverConfig.secret);
 }
 
 function setUserInfo(request) {
@@ -25,6 +23,30 @@ function setUserInfo(request) {
     }
 };
 
+//Check user Token
+exports.checkUserToken = function (req, res, next) {
+    const {token, userId} = req.body;
+
+    if(!token){
+        console.log('no token');
+        return res.status(422).json({success: false, message: 'Must have a token, please login!'})
+    }
+  
+    jwt.verify(token.replace(/^JWT\s/, ''), serverConfig.secret, function(err, decoded){
+        if(err){
+            console.log('err inside verify', err);
+            return res.status(422).json({success: false, message: 'Could not verify token'}) 
+        }else{
+
+            console.log('decoded',decoded);
+
+
+        }
+    });
+
+
+}
+
 //Update User
 
 exports.updateUserInfo = function (req, res, next) {
@@ -37,11 +59,49 @@ exports.updateUserInfo = function (req, res, next) {
     }, {$set: {"profile.companyName": companyName,"profile.address": address, "profile.city": city, "profile.state": state  }}, {new: true}).exec() 
     .then(function(user){
             let userInfo = setUserInfo(user);
-           
+
             res.status(201).json({
                 token: 'JWT ' + generateToken(userInfo),
                 user: userInfo
             });
+    })
+    .catch(err => res.status(422).json({err}));
+};
+
+//Change Password
+
+exports.changePassword = function (req, res, next) {
+
+    const {  oldPassword,  newPassword, confirmPassword, userId } = req.body;
+
+    User.findOne({ _id : userId }).exec() 
+    .then(function(user){
+            const validPass = user.validPassword(oldPassword);
+            
+            if(!validPass){
+                res.status(422).json({
+                    passwordError: 'Incorrect Password'
+                })
+            }
+
+            if( validPass  && newPassword === confirmPassword) {
+
+               user.password = newPassword;
+             
+               user.save(function(err){
+                        if(err){
+                            throw err;
+                        }else{
+                            let userInfo = setUserInfo(user);
+           
+                            res.status(201).json({
+                                token: 'JWT ' + generateToken(userInfo),
+                                user: userInfo
+                            });
+                        }
+               });
+            }
+            
     })
     .catch(err => res.status(422).json({err}));
 };

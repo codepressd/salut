@@ -1,5 +1,5 @@
 //import Auth Actions
-import {AUTHORIZE_USER, AUTHORIZE_ERROR, AUTHORIZE_USER_UPDATE, USER_LOGOUT} from '../actions/authActions';
+import {AUTHORIZE_USER, AUTHORIZE_ERROR, AUTHORIZE_USER_UPDATE, USER_LOGOUT, CHANGE_PASSWORD_ERROR} from '../actions/authActions';
 import {UPDATE_CART, REMOVE_PRODUCT_FROM_CART, RESET_CART} from '../actions/productActions.js';
 
 const initialState = {
@@ -34,6 +34,12 @@ const AuthUserReducer = (state = initialState, action) => {
 
 		case USER_LOGOUT:
 			return initialState;
+
+		case CHANGE_PASSWORD_ERROR:
+			return{
+				...state,
+				error: action.error
+			}
 
 		case UPDATE_CART:
 			

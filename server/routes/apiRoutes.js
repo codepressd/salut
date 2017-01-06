@@ -9,6 +9,9 @@ const router = new Router();
 router.route('/login').post(userController.login);
 router.route('/signup').post(userController.register);
 router.route('/updateUser').post(userController.updateUserInfo); //need to make test
+router.route('/changePassword').post(userController.changePassword); //need to make test
+router.route('/checkUserToken').post(userController.checkUserToken); //need to make test
+
 
 
 //product routes supplier

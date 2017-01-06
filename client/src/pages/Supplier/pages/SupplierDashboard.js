@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Container, Grid, Image, Header, Icon, Divider, Form, Button } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
+import classnames from 'classnames';
 
 import SideMenu from '../components/SupplierMenu';
 import '../supplier.css';
@@ -11,15 +12,29 @@ import '../supplier.css';
 //import Actions
 
 
-import {updateUserData} from '../../../components/actions/authActions';//send to database
+import {updateUserData, changePassword, checkUserToken} from '../../../components/actions/authActions';//send to database
 
 class SupplierDashboard extends React.Component{
 
 	constructor (props){
 		super(props);
 
+		this.state ={
+			errors: {},
+		}
+
 		this.handleInfoSubmit = this.handleInfoSubmit.bind(this);
 		this.handleResetPassword = this.handleResetPassword.bind(this);
+	}
+
+	componentWillMount(){
+		const{token} = this.props.activeUser;
+		const userId = this.props.activeUser.user.id;
+		const userInfo = {
+			token,
+			userId
+		}
+		this.props.checkUserToken(userInfo);
 	}
 
 	validateInput (data) {
@@ -39,9 +54,9 @@ class SupplierDashboard extends React.Component{
 
 	        });
 	        
-	        if (data.password !== data.passwordConfirm) {
-	            errors.password = 'Passwords Don\'t Match';
-	            errors.passwordConfrim = 'Passwords Don\'t Match';
+	        if (data.newPassword !== data.confirmPassword) {
+	            errors.newPassword = 'Passwords Don\'t Match';
+	            errors.confirmPassword = 'Passwords Don\'t Match';
 	        }
 	        
 	        return {
@@ -71,12 +86,29 @@ class SupplierDashboard extends React.Component{
 
 	}
 
-	handleResetPassword(data){
+	handleResetPassword(e, data){
+		e.preventDefault();
+		const { errors} = this.validateInput(data.formData);
+
+		if (Object.keys(errors).length !== 0) {
+		            this.setState({ errors });
+		 }
+
+		if (Object.keys(errors).length === 0) {
+		            this.setState({
+		                errors: {},
+		            });
+		           data.formData.userId = this.props.activeUser.user.id;
+		          
+		           this.props.changePassword(data.formData);
+		}
 
 	}
 
 	render(){
-		//console.log(axios.defaults.headers.common['Authorization']);
+		const {errors} =this.state;
+		const serverErrors = this.props.activeUser.error || '';
+		
 		const {user} = this.props.activeUser;
 		return(
 			<div className='pageWrap'>
@@ -103,10 +135,10 @@ class SupplierDashboard extends React.Component{
 						         <Divider hidden/>
 						         <Form onSubmit={this.handleInfoSubmit}>
         							
-  							<Form.Input label='Company Name' name='companyName' placeholder='Company Name' />
-  							<Form.Input label='Address' name='address' placeholder='Address' />
-  							<Form.Input label='City' name='city' placeholder='City' />
-  							<Form.Input label='State' name='state' placeholder='State' />
+  							<Form.Input label='Company Name' name='companyName' placeholder='Company Name' required/>
+  							<Form.Input label='Address' name='address' placeholder='Address' required/>
+  							<Form.Input label='City' name='city' placeholder='City' required/>
+  							<Form.Input label='State' name='state' placeholder='State' required/>
           							<Button primary type='submit' floated='right'>Update Information</Button>
           						           </Form>
           						           
@@ -149,12 +181,12 @@ class SupplierDashboard extends React.Component{
 						             </Header>
 						      <Form onSubmit={this.handleResetPassword}>
         							<Form.Group widths='equal'>
-	  							<Form.Input label='Old Password' name='companyName' placeholder='Old Password' />
-	  							<Form.Input label='New Password' name='newPassword' placeholder='New Password' />
-	  							<Form.Input label='Confirm Password' name='confirmPassword' placeholder='Confirm Password' />
+	  							<Form.Input label={serverErrors.passwordError && serverErrors.passwordError || 'Old Password'} className={classnames({'error': serverErrors.passwordError})} name='oldPassword' type='password'  placeholder='Old Password' required/>
+	  							<Form.Input label={errors.newPassword && errors.newPassword ||'New Password'} className={classnames({'error': errors.newPassword})} name='newPassword' type='password' placeholder={errors.newPassword && errors.newPassword ||'New Password'} required/>
+	  							<Form.Input label={errors.confirmPassword && errors.confirmPassword ||'Confirm Password'} className={classnames({'error': errors.confirmPassword})} name='confirmPassword' type='password' placeholder={errors.confirmPassword && errors.confirmPassword ||'Confirm Password'} required/>
   							</Form.Group>
+  							<Button primary type='submit' floated='right'>Reset Password</Button>
           						       </Form>
-          						        <Button primary type='submit' floated='right'>Reset Password</Button>
           						        </Grid.Column>
 						    </Grid.Row>
 						  </Grid>
@@ -169,7 +201,9 @@ class SupplierDashboard extends React.Component{
 
 function mapDispatchToProps(dispatch){
 	return{
-		updateUserData: bindActionCreators(updateUserData, dispatch)
+		updateUserData: bindActionCreators(updateUserData, dispatch),
+		changePassword: bindActionCreators(changePassword, dispatch),
+		checkUserToken: bindActionCreators(checkUserToken, dispatch)
 	}
 }
 

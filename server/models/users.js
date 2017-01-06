@@ -50,9 +50,10 @@ UserSchema.pre('save', function(next) {
         });
     });
 });
-// UserSchema.methods.generateHash = function(password) {
-//     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-// };
+
+UserSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
 
 UserSchema.methods.validPassword = function(passwordAttempt) {
     
