@@ -39,6 +39,8 @@ import RestaurantCheckout from './pages/Restaurant/pages/restaurantCheckout';
 import RestaurantOrderSuccess from './pages/Restaurant/pages/orderSuccess';
 import RestaurantViewOrder from './pages/Restaurant/pages/restaurantViewOrder';
 
+//not Auth
+import { notAuthorized } from './components/actions/authActions';
 
 export default function App (props) {
   const getUserRole = () =>{
@@ -51,14 +53,18 @@ export default function App (props) {
 
   const supplierAuth = () => {
     const userRole = getUserRole();
+     const message = 'Not Authorized For This Content';
     if(userRole !== 'supplier' || userRole.length === 0 || userRole === null){
+      props.store.dispatch({type: 'NOT_AUTHORIZED', message: 'Not Authorized For This Content', success: false});
       browserHistory.push('/login');
     }
   }
 
   const restaurantAuth = () => {
     const userRole = getUserRole();
+
     if(userRole !== 'restaurant' || userRole.length === 0 || userRole === null){
+      props.store.dispatch({type: 'NOT_AUTHORIZED', message: 'Not Authorized For This Content', success: false});
       browserHistory.push('/login');
     }
   }

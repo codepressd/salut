@@ -6,26 +6,105 @@ export const AUTHORIZE_USER = 'AUTHORIZE_USER';
 export const AUTHORIZE_USER_UPDATE = 'AUTHORIZE_USER_UPDATE';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const CHANGE_PASSWORD_ERROR = 'CHANGE_PASSWORD_ERROR';
+export const USER_TOKEN_SUCCESS = 'USER_TOKEN_SUCCESS';
+export const USER_RESET_FETCH = 'USER_RESET_FETCH';
+export const USER_TOKEN_FAIL = 'USER_TOKEN_FAIL';
+export const NO_TOKEN_FAIL = 'NO_TOKEN_FAIL';
+export const NOT_AUTHORIZED = 'NOT_AUTHORIZED';
 
 
 
-export const authorizeUser = (user, token) => {
+export const authorizeUser = (user, token, success) => {
 	return {
 		type: AUTHORIZE_USER,
 		user,
-		token
+		token, 
+		success
 	}
 };
+
+export const userTokenSuccess = (user, token, success) => {
+	return {
+		type: USER_TOKEN_SUCCESS,
+		user,
+		token,
+		success
+	}
+};
+
+ const userTokenFail = (expireTime, message, success) => {
+	return {
+		type: USER_TOKEN_FAIL,
+		expireTime,
+		success,
+		message
+	}
+};
+
+const noTokenFail = ( message, success) => {
+	return {
+		type: NO_TOKEN_FAIL,
+		success,
+		message
+	}
+};
+
+const notAuthorized = ( message, success) => {
+	return {
+		type: NOT_AUTHORIZED,
+		success,
+		message
+	}
+};
+
+
+
+export const userResetFetch = () => {
+	
+	return{	
+		type:USER_RESET_FETCH,
+	}
+}
+
+//user Token
 
 export const checkUserToken = (data) => dispatch => {
 
 	return axios.post('/api/checkUserToken', data)
 		.then( res => {
-			console.log(res);
+			
+			const { _id, companyName, email, firstName, lastName, role, address, city, state } = res.data.user;
+		
+		                    const {token, success }= res.data;
+		                    const activeUser = {
+		                        id: _id,
+		                        email,
+		                        firstName,
+		                        lastName,
+		                        companyName,
+		                        role,
+		                        address,
+		                        city,
+		                        state
+		                    }
+
+		                    dispatch(userTokenSuccess(activeUser, token, success));
 
 		})
-		.catch(err => console.log(err));
+		.catch((err) =>{
+			const {expireTime, message, success, token} = err.response.data;
+			if(expireTime && !success && message){
+				dispatch(userTokenFail(expireTime, message, success));
+				browserHistory.push('/login');
+			}else if(!success && message){
+				dispatch(noTokenFail(message, success));
+				browserHistory.push('/login');
+			}
+			
+		});
 }
+
+//signup
 
 export const signupRequest = (data) => dispatch => {
 
@@ -33,7 +112,7 @@ export const signupRequest = (data) => dispatch => {
 		.then( res => {
 
 			 const { _id, companyName, email, firstName, lastName, role, address, city, state } = res.data.user;
-		                    const token = res.data.token;
+		                    const {token, success} = res.data;
 		                    const activeUser = {
 		                        id: _id,
 		                        email,
@@ -46,8 +125,7 @@ export const signupRequest = (data) => dispatch => {
 		                        state
 		                    }
 		                   
-			dispatch(authorizeUser(activeUser, token));
-			axios.defaults.headers.common['Authorization'] = token;
+			dispatch(authorizeUser(activeUser, token, success));
 			return browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id);
 		})
 		.catch(err => console.log(err));
@@ -62,7 +140,7 @@ export const loginRequest = (data) => dispatch => {
 		.then( res =>{
 
 			  const { _id, companyName, email, firstName, lastName, role, address, city, state } = res.data.user;
-		                    const token = res.data.token;
+		                    const {token, success }= res.data;
 		                    const activeUser = {
 		                        id: _id,
 		                        email,
@@ -75,8 +153,7 @@ export const loginRequest = (data) => dispatch => {
 		                        state
 		                    }
 		                   
-			dispatch(authorizeUser(activeUser, token));
-			axios.defaults.headers.common['Authorization'] = token;
+			dispatch(authorizeUser(activeUser, token, success));
 			return browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id);
 		})
 		.catch(err => console.log(err));
@@ -88,7 +165,7 @@ export const updateUserData = (data) => dispatch => {
 		.then( res => {
 
 			  const {_id, companyName, email, firstName, lastName, role, address, city, state } = res.data.user;
-		                    const token = res.data.token;
+		                    const {token, success} = res.data;
 		                    const updatedUserInfo = {
 		                        id: data.userId,
 		                        email,
@@ -102,7 +179,7 @@ export const updateUserData = (data) => dispatch => {
 		                 
 		                    }
 
-		                    dispatch(authorizeUser(updatedUserInfo, token));
+		                    dispatch(authorizeUser(updatedUserInfo, token, success));
 		                   return browserHistory.push('/supplier/dashboard/'+updatedUserInfo.id+'/updateSuccess');
 		})
 		.catch(err => console.log(err));
@@ -114,7 +191,7 @@ export const changePassword = (data) => dispatch => {
 		.then( res => {
 
 			 const {_id, companyName, email, firstName, lastName, role, address, city, state } = res.data.user;
-		                    const token = res.data.token;
+		                    const {token, success }= res.data;
 		                    const updatedUserInfo = {
 		                        id: data.userId,
 		                        email,
@@ -128,21 +205,21 @@ export const changePassword = (data) => dispatch => {
 		                 
 		                    }
 
-		                    dispatch(authorizeUser(updatedUserInfo, token));
+		                    dispatch(authorizeUser(updatedUserInfo, token, success));
 		                    return browserHistory.push('/supplier/dashboard/'+updatedUserInfo.id+'/updateSuccess');
 		})
-		.catch(err => {
+		.catch((err)=> {
 
 			dispatch(changePasswordError(err.response.data));
 		});
 }
 
-export const changePasswordError = (error) =>{
-	return {
+export const changePasswordError = (error) =>({
+
 		type: CHANGE_PASSWORD_ERROR,
 		error
-	}
-}	
+	
+});	
 
 export const authorizeUserUpdate = (user) => ({
 

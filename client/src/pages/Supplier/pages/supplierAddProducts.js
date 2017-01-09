@@ -1,12 +1,18 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image, Form, Input, Divider, Checkbox, Select, Radio, Button, Label } from 'semantic-ui-react';
+import { Container, Grid, Image, Form, Input, Divider, Checkbox, Select, Radio, Button, Label, Loader } from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import { connect } from 'react-redux';
+import{bindActionCreators} from 'redux';
 import {browserHistory} from 'react-router';
 
+//import posting products
 import {postProduct} from '../actions/postProduct';
+
+//import user Actions
+import {checkUserToken, userResetFetch} from '../../../components/actions/authActions';//Check user is verified
+
 import classnames from 'classnames';
 
 import SideMenu from '../components/SupplierMenu';
@@ -40,6 +46,19 @@ class SupplierAddProducts extends React.Component {
         this.validateInput = this.validateInput.bind(this);
     }
 
+    componentWillMount(){
+            const{token} = this.props.activeUser;
+            const userId = this.props.activeUser.user.id;
+            const userInfo = {
+              token,
+              userId
+            }
+            this.props.checkUserToken(userInfo);
+  }
+
+  componentWillUnmount(){
+            this.props.userResetFetch();
+  }
 
     onImageDrop(files) {
         this.setState({
@@ -128,73 +147,96 @@ class SupplierAddProducts extends React.Component {
 
 }
 
+
+
     render() {
       const {user} = this.props;
 
       const {errors} = this.state;
-      return (
-        <div className='pageWrap'>
-          <div className='navWrap'>
-            <SideMenu {...this.props} />
-          </div>
-          <div className='contentWrap'>
-            <Container className='formDash'>
-              <h2>{user.companyName} : Add Product</h2>
-              <Grid columns={2} divided>
-                <h4>Upload an Image - 200px by 200px works best!</h4>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Dropzone
-                      onDrop={this.onImageDrop.bind(this)}
-                      multiple={false}
-                      accept="image/*">
-                      <div>Drop an image or click to select a file to upload.</div>
-                    </Dropzone>
-                  </Grid.Column>
-                  <Grid.Column>
-                    {this.state.uploadedFileCloudinaryUrl === '' ? null :
-                      <div>
-                        <p>{this.state.uploadedFile.name}</p>
-                        <img className='imageSize' src={this.state.uploadedFileCloudinaryUrl} />
-                      </div>}
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-              <Divider hidden />
-              <Form onSubmit={this.handleSubmit}>
 
-                <Form.Input label='Name Of Product' className={classnames({'error': errors.productName})} name='productName' placeholder={errors.productName && errors.productName ||'Product Name'}required/>
-                <h4>Individual Price</h4>
-                <Form.Group>
-                  <Input label='$' type='number' className={classnames({'error': errors.unitPrice})} name='unitPrice' placeholder={errors.unitPrice && errors.unitPrice ||'Amount'} required/>
-                </Form.Group>
-                <h4>Case Price</h4>
-                <Form.Group>
-                  <Input label='$' type='number' className={classnames({'error': errors.casePrice})} name='casePrice' placeholder={errors.casePrice && errors.casePrice ||'Amount'} required/>
-                </Form.Group>
-                <Form.TextArea name='productDescription' className={classnames({'error': errors.productDescription})} label='Product Description' placeholder={errors.productDescription && errors.productDescription ||'Describe what you are selling...'} rows='3' required/>
+      const {success, userIsFetching} = this.props.activeUser;
+    
 
-                <Divider section />
+    if(userIsFetching || !success){
+              return(
+              <Loader active inline='centered' />
+              )
+    }else if(success){
+                  return (
+                    <div className='pageWrap'>
+                      <div className='navWrap'>
+                        <SideMenu {...this.props} />
+                      </div>
+                      <div className='contentWrap'>
+                        <Container className='formDash'>
+                          <h2>{user.companyName} : Add Product</h2>
+                          <Grid columns={2} divided>
+                            <h4>Upload an Image - 200px by 200px works best!</h4>
+                            <Grid.Row>
+                              <Grid.Column>
+                                <Dropzone
+                                  onDrop={this.onImageDrop.bind(this)}
+                                  multiple={false}
+                                  accept="image/*">
+                                  <div>Drop an image or click to select a file to upload.</div>
+                                </Dropzone>
+                              </Grid.Column>
+                              <Grid.Column>
+                                {this.state.uploadedFileCloudinaryUrl === '' ? null :
+                                  <div>
+                                    <p>{this.state.uploadedFile.name}</p>
+                                    <img className='imageSize' src={this.state.uploadedFileCloudinaryUrl} />
+                                  </div>}
+                              </Grid.Column>
+                            </Grid.Row>
+                          </Grid>
+                          <Divider hidden />
+                          <Form onSubmit={this.handleSubmit}>
 
-                <Form.Group widths='2'>
-                  <Form.Field>
-                    <h2>Pick One  General Category</h2>
-                    <Form.Select label='Product Type' className={classnames({'error': errors.productType})} name='productType' options={categoryType} placeholder={errors.productType && errors.productType ||'Product Type'} required/>
-                  </Form.Field>
-                </Form.Group>
-                <Button primary type='submit'>Add Product</Button>
-              </Form>
-            </Container>
-          </div>
-        </div>
-      );
+                            <Form.Input label='Name Of Product' className={classnames({'error': errors.productName})} name='productName' placeholder={errors.productName && errors.productName ||'Product Name'}required/>
+                            <h4>Individual Price</h4>
+                            <Form.Group>
+                              <Input label='$' type='number' className={classnames({'error': errors.unitPrice})} name='unitPrice' placeholder={errors.unitPrice && errors.unitPrice ||'Amount'} required/>
+                            </Form.Group>
+                            <h4>Case Price</h4>
+                            <Form.Group>
+                              <Input label='$' type='number' className={classnames({'error': errors.casePrice})} name='casePrice' placeholder={errors.casePrice && errors.casePrice ||'Amount'} required/>
+                            </Form.Group>
+                            <Form.TextArea name='productDescription' className={classnames({'error': errors.productDescription})} label='Product Description' placeholder={errors.productDescription && errors.productDescription ||'Describe what you are selling...'} rows='3' required/>
+
+                            <Divider section />
+
+                            <Form.Group widths='2'>
+                              <Form.Field>
+                                <h2>Pick One  General Category</h2>
+                                <Form.Select label='Product Type' className={classnames({'error': errors.productType})} name='productType' options={categoryType} placeholder={errors.productType && errors.productType ||'Product Type'} required/>
+                              </Form.Field>
+                            </Form.Group>
+                            <Button primary type='submit'>Add Product</Button>
+                          </Form>
+                        </Container>
+                      </div>
+                    </div>
+                  )}else{
+                        browserHistory.push('/login');
+                      }
     }
 }
 
-
-export default connect(
-  state => ({
+function mapStateToProps(state){
+  return {
     user: state.ActiveUser.user
-  }),
-  {postProduct}
-)(SupplierAddProducts);
+  }
+
+}
+
+function mapDispatchToProps(dispatch){
+  return{
+    checkUserToken: bindActionCreators(checkUserToken, dispatch),
+    userResetFetch: bindActionCreators(userResetFetch, dispatch),
+    postProduct: bindActionCreators(postProduct, dispatch)
+  }
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SupplierAddProducts);

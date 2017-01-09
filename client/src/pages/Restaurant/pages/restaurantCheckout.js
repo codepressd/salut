@@ -7,20 +7,20 @@ import {browserHistory} from 'react-router';
 import classnames from 'classnames';
 
 //Send Orders
-
 import {sendOrders} from '../actions/sendOrder';//post Orders to database
 import {addToCart, resetCart} from '../../../components/actions/productActions';//update store, reset cart
 
 //Reset Fetching State
-
 import {resetFetch} from '../../../components/actions/productActions';//reset fetching
 
-//import product template
+//import user Actions
+import {checkUserToken, userResetFetch} from '../../../components/actions/authActions';//update user state
 
+//import product template
 import CheckoutOneProduct  from '../components/checkoutOneProduct';
 
 //helpers
-import {calculateCartTotal,sortCart} from '../../../components/helpers';
+import {calculateCartTotal, sortCart} from '../../../components/helpers';
 
 
 import SideMenu from '../components/sideMenu';
@@ -58,18 +58,17 @@ class CheckoutPage extends React.Component{
 	}
 
 	componentWillMount() {
-		/*const {productId} = this.props.params;
-
-	                  this.props.getSingleProduct(productId)
-	                 .then((res) => {
-	                		const { product } = res.data;
-	                		this.props.pushSingleProduct(product);
-
-	            	})
-	        	.catch((err) => this.setState({ errors: err.response.data }));*/
+		const userId = this.props.activeUser.user.id;
+		const{ token } = this.props.activeUser;
+		const userInfo = {
+			token,
+			userId
+		}
+		this.props.checkUserToken(userInfo);
 	}
 
 	componentWillUnmount(){
+		this.props.userResetFetch();
 		this.props.resetFetch();
 	}
 
@@ -92,12 +91,13 @@ class CheckoutPage extends React.Component{
 		const isLoading = this.props.isFetching;
 		const { errors } = this.state;
 		const cartTotals = calculateCartTotal(this.props.cart);
+		const {success, userIsFetching} = this.props.activeUser;
 		
-		// if(isLoading){
-		//           return(
-		//           <Loader active inline='centered' />
-		//           )
-		// }else{}
+		if(isLoading || !success){
+		          return(
+		          <Loader active inline='centered' />
+		          )
+		}else if(success){
 
 		return(
 
@@ -156,7 +156,9 @@ class CheckoutPage extends React.Component{
 				</div>
 			</div>
 
-		)
+		)}else{
+			browserHistory.push('/login');
+		}
 		
 	}
 
@@ -173,7 +175,9 @@ function mapDispatchToProps(dispatch){
 	return{
 		sendOrders: bindActionCreators(sendOrders, dispatch),
 		resetCart: bindActionCreators(resetCart, dispatch),
-		resetFetch: bindActionCreators(resetFetch, dispatch)
+		resetFetch: bindActionCreators(resetFetch, dispatch),
+		checkUserToken: bindActionCreators(checkUserToken, dispatch),
+		userResetFetch: bindActionCreators(userResetFetch, dispatch)
 
 	}
 }

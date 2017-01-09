@@ -5,8 +5,9 @@ import Cart from '../models/cart';
 import Orders from '../models/orders';
 import serverConfig from '../config/database';
 
+
 function generateToken(user) {
-    return jwt.sign(user, serverConfig.secret);
+    return jwt.sign(user, serverConfig.secret, { expiresIn: 10});
 }
 
 function setUserInfo(request) {
@@ -34,16 +35,27 @@ exports.checkUserToken = function (req, res, next) {
   
     jwt.verify(token.replace(/^JWT\s/, ''), serverConfig.secret, function(err, decoded){
         if(err){
-            console.log('err inside verify', err);
+            if(err.name === 'TokenExpiredError'){
+                return res.status(422).json({
+                    success: false, 
+                    expireTime: true, 
+                    message: 'Token expired, you need to login again.'
+                });
+            }
             return res.status(422).json({success: false, message: 'Could not verify token'}) 
         }else{
 
-            console.log('decoded',decoded);
-
-
+            User.findOne({_id: decoded._id})
+                .then( (user) => {
+                     let userInfo = setUserInfo(user);
+                    res.status(201).json({
+                                        success: true,
+                                        token: 'JWT ' + generateToken(userInfo),
+                                        user: userInfo
+                                });
+                });
         }
     });
-
 
 }
 
@@ -95,6 +107,7 @@ exports.changePassword = function (req, res, next) {
                             let userInfo = setUserInfo(user);
            
                             res.status(201).json({
+                                success: true,
                                 token: 'JWT ' + generateToken(userInfo),
                                 user: userInfo
                             });
@@ -133,6 +146,7 @@ exports.login = function(req, res, next) {
             let userInfo = setUserInfo(user);
 
             res.status(201).json({
+                success: true,
                 token: 'JWT ' + generateToken(userInfo),
                 user: userInfo
             });
@@ -227,6 +241,7 @@ exports.register = function(req, res, next) {
             let userInfo = setUserInfo(user);
 
             res.status(201).json({
+                success: true,
                 token: 'JWT ' + generateToken(userInfo),
                 user: userInfo
             });

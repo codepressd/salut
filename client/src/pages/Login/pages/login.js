@@ -39,6 +39,7 @@ class Login extends React.Component {
              }
 
     }
+
     handleSubmit(e, data) {
         e.preventDefault();
         const { errors} = this.validateInput(data.formData);
@@ -55,15 +56,19 @@ class Login extends React.Component {
             this.props.loginRequest(data.formData);
         }
     }
+
     render() {
          const { errors } = this.state;
+         const {message} = this.props.activeUser; 
         return (
             <Container className='fullPage'>
+                                    
 		<Header as='h2' icon textAlign='center'>
 		      <Icon name='users' circular />
 		      <Header.Content>
 		        Login
 		      </Header.Content>
+                                          {message}
 		 </Header>
 
 		<Grid verticalAlign='middle' columns={1} centered>
@@ -75,15 +80,18 @@ class Login extends React.Component {
 			        	</Form.Group>
 			    <Button type='submit'>Submit</Button>
 			  </Form>
+
 		</Grid>
 	</Container>
         )
     }
 }
 
+
 function mapDispatchToProps(dispatch){
     return{
-        loginRequest: bindActionCreators(loginRequest ,dispatch)
+        loginRequest: bindActionCreators(loginRequest ,dispatch),
+
     }    
 }
 Login.propTypes = {

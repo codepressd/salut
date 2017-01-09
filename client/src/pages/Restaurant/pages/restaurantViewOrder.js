@@ -15,6 +15,9 @@ import {singleOrderToStore} from '../../../components/actions/productActions';//
 
 import {resetFetch} from '../../../components/actions/productActions';//reset fetching
 
+//import user Actions
+import {checkUserToken, userResetFetch} from '../../../components/actions/authActions';//update user state
+
 
 //import OneSupplier template
 
@@ -37,6 +40,14 @@ class ViewOrder extends React.Component{
 	}
 
 	componentWillMount() {
+		const userId = this.props.activeUser.user.id;
+		const{ token } = this.props.activeUser;
+		const userInfo = {
+			token,
+			userId
+		}
+		this.props.checkUserToken(userInfo);
+	
 		const {ordernumber} = this.props.params;
 
 	                  this.props.getSingleOrder(ordernumber)
@@ -50,6 +61,7 @@ class ViewOrder extends React.Component{
 	}
 
 	componentWillUnmount(){
+		this.props.userResetFetch();
 		this.props.resetFetch();
 	}
 
@@ -89,81 +101,81 @@ class ViewOrder extends React.Component{
 		const {user, order} = this.props;
 		const isLoading = this.props.isFetching;
 		const { errors } = this.state;
-		const fakeArray = [1,2];
-
+		const {success, userIsFetching} = this.props.activeUser;
 		
-		
-		if(isLoading){
+		if(isLoading || !success){
 		          return(
 		          <Loader active inline='centered' />
 		          )
-		}else{
+		}else if(success){
 			const uniqueSuppliers = this.sortSuppliers(order);
 			const cartTotals = order.orderTotal;
-		return(
+			return(
 
-			<div className='pageWrap'>
-				<div className='navWrap'>
-					<SideMenu {...this.props}/>
-				</div>
-				<div className='contentWrap'>
-					<Container>
-					<h2>Order #: {order.orderNumber}</h2>
-						<Grid >
-							<Grid.Row>
-							<Grid.Column width={16}>
-								<div className='invoice-header'>
-									<Grid columns ={3} divided>
-									    <Grid.Column >
-									     <h3>Order Date:</h3>
-									     <Divider />
-									      <h2>{order.orderDate}</h2>
-									    </Grid.Column>
-									    <Grid.Column >
-									     <h3>Number Of  Suppliers: </h3>
-									     <Divider />
-									     <h2>{order.suppliers.length}</h2>
-									    </Grid.Column>
-									    <Grid.Column >
-									    <h3>Order Total :</h3>
-									    <Divider />
-									    <h2> ${order.orderTotal.total}</h2>
-									    </Grid.Column>
-								        </Grid>
-								</div>
-							</Grid.Column>
-							</Grid.Row>
-							</Grid>
-								<h2>Products Ordered:</h2>
-								{uniqueSuppliers.map((supplier, index) => <OneSupplier key={index} index={index} supplier={supplier} /> )}
-							<Divider />
-							<Grid>
-								<Grid.Row className='align-right'>
-									<Grid.Column width={10}>
-									     
-									</Grid.Column>				
-									<Grid.Column  width={3}>
-										<h4>Subtotal: </h4>
-										<Divider hidden />
-										<h4>Tax: </h4>
-										<Divider hidden />
-										<h4>Total: </h4>
-									</Grid.Column>
-									<Grid.Column  width={3}>
-										<h4>$ {cartTotals.subTotal}</h4>
-										<Divider hidden />
-										<h4>$ {cartTotals.tax}</h4>
-										<Divider  />
-									     	 <h4>$ {cartTotals.total}</h4>
-									</Grid.Column>		  
+				<div className='pageWrap'>
+					<div className='navWrap'>
+						<SideMenu {...this.props}/>
+					</div>
+					<div className='contentWrap'>
+						<Container>
+						<h2>Order #: {order.orderNumber}</h2>
+							<Grid >
+								<Grid.Row>
+								<Grid.Column width={16}>
+									<div className='invoice-header'>
+										<Grid columns ={3} divided>
+										    <Grid.Column >
+										     <h3>Order Date:</h3>
+										     <Divider />
+										      <h2>{order.orderDate}</h2>
+										    </Grid.Column>
+										    <Grid.Column >
+										     <h3>Number Of  Suppliers: </h3>
+										     <Divider />
+										     <h2>{order.suppliers.length}</h2>
+										    </Grid.Column>
+										    <Grid.Column >
+										    <h3>Order Total :</h3>
+										    <Divider />
+										    <h2> ${order.orderTotal.total}</h2>
+										    </Grid.Column>
+									        </Grid>
+									</div>
+								</Grid.Column>
 								</Grid.Row>
-								
-							</Grid>
-					</Container>
+								</Grid>
+									<h2>Products Ordered:</h2>
+									{uniqueSuppliers.map((supplier, index) => <OneSupplier key={index} index={index} supplier={supplier} /> )}
+								<Divider />
+								<Grid>
+									<Grid.Row className='align-right'>
+										<Grid.Column width={10}>
+										     
+										</Grid.Column>				
+										<Grid.Column  width={3}>
+											<h4>Subtotal: </h4>
+											<Divider hidden />
+											<h4>Tax: </h4>
+											<Divider hidden />
+											<h4>Total: </h4>
+										</Grid.Column>
+										<Grid.Column  width={3}>
+											<h4>$ {cartTotals.subTotal}</h4>
+											<Divider hidden />
+											<h4>$ {cartTotals.tax}</h4>
+											<Divider  />
+										     	 <h4>$ {cartTotals.total}</h4>
+										</Grid.Column>		  
+									</Grid.Row>
+									
+								</Grid>
+						</Container>
+					</div>
 				</div>
-			</div>
 
-		)}
+			)}else{
+				browserHistory.push('/login');
+			}
 		
 	}
 
@@ -181,7 +193,9 @@ function mapDispatchToProps(dispatch){
 	return{
 		getSingleOrder: bindActionCreators(getSingleOrder, dispatch),
 		singleOrderToStore: bindActionCreators(singleOrderToStore, dispatch),
-		resetFetch: bindActionCreators(resetFetch, dispatch)
+		resetFetch: bindActionCreators(resetFetch, dispatch),
+		checkUserToken: bindActionCreators(checkUserToken, dispatch),
+		userResetFetch: bindActionCreators(userResetFetch, dispatch)
 
 	}
 }

@@ -1,10 +1,14 @@
 //import Auth Actions
-import {AUTHORIZE_USER, AUTHORIZE_ERROR, AUTHORIZE_USER_UPDATE, USER_LOGOUT, CHANGE_PASSWORD_ERROR} from '../actions/authActions';
+import {AUTHORIZE_USER, AUTHORIZE_ERROR, AUTHORIZE_USER_UPDATE, USER_LOGOUT, CHANGE_PASSWORD_ERROR, USER_TOKEN_SUCCESS, USER_RESET_FETCH, NO_TOKEN_FAIL, USER_TOKEN_FAIL, NOT_AUTHORIZED} from '../actions/authActions';
 import {UPDATE_CART, REMOVE_PRODUCT_FROM_CART, RESET_CART} from '../actions/productActions.js';
 
 const initialState = {
 	user: null,
 	error: null,
+	expiretime: false,
+	message:'',
+	userIsFetching: true,
+	success: false,
 	cart: [],
 	token: null
 }
@@ -15,13 +19,21 @@ const AuthUserReducer = (state = initialState, action) => {
 			return{
 				...state,
 				user: action.user,
-				token: action.token
+				token: action.token, 
+				success: action.success,
+				userIsFetching: false
 			}
 
 		case AUTHORIZE_ERROR:
 			return{
 				...state,
 				error: action.error
+			}
+		case USER_RESET_FETCH:
+			return{
+				...state,
+				userIsFetching: true,
+				success: false,
 			}
 
 		case AUTHORIZE_USER_UPDATE:
@@ -34,6 +46,41 @@ const AuthUserReducer = (state = initialState, action) => {
 
 		case USER_LOGOUT:
 			return initialState;
+
+		case USER_TOKEN_SUCCESS:
+			return{
+				...state,
+				expireTime: action.expireTime,
+				success: action.success,
+				userIsFetching: false
+			}
+
+		case USER_TOKEN_FAIL:
+			return{
+				...state,
+				token: action.token,
+				message: action.message,
+				user: action.user,
+				success: action.success,
+				userIsFetching: false
+			}
+
+		case NO_TOKEN_FAIL:
+			return{
+				...state,
+				success: action.success,
+				message: action.message,
+				userIsFetching: false
+			}
+
+		case NOT_AUTHORIZED:
+			return{
+				...state,
+				success: action.success,
+				message: action.message,
+				userIsFetching: false
+			}
+
 
 		case CHANGE_PASSWORD_ERROR:
 			return{

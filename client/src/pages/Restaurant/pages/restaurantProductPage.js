@@ -2,6 +2,7 @@
 import React, { PropTypes } from 'react';
 import { Container, Grid, Image, Loader, Divider, Form, Button } from 'semantic-ui-react';
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 import{bindActionCreators} from 'redux';
 import classnames from 'classnames';
 
@@ -10,18 +11,17 @@ import { getSingleProduct } from '../../Supplier/actions/getSingleProduct';//cal
 import {pushSingleProduct} from '../../../components/actions/productActions';//update state with Single product
 
 //Add to Users Cart
-
 import {addProductToCart } from '../actions/addToCart';//call to database
 import {addToCart} from '../../../components/actions/productActions';//update store
 
 //Reset Fetching State
-
 import {resetFetch} from '../../../components/actions/productActions';//reset fetching
 
+//import user Actions
+import {checkUserToken, userResetFetch} from '../../../components/actions/authActions';//update user state
+
 //import product template
-
 import OneProduct  from '../components/oneProduct';
-
 
 import SideMenu from '../components/sideMenu';
 import  '../restaurant.css';
@@ -60,6 +60,13 @@ class ProductPage extends React.Component{
 
 	componentWillMount() {
 		const {productId} = this.props.params;
+		const userId = this.props.activeUser.user.id;
+		const{ token } = this.props.activeUser;
+		const userInfo = {
+			token,
+			userId
+		}
+		this.props.checkUserToken(userInfo);
 
 	                  this.props.getSingleProduct(productId)
 	                 .then((res) => {
@@ -71,6 +78,7 @@ class ProductPage extends React.Component{
 	}
 
 	componentWillUnmount(){
+		this.props.userResetFetch();
 		this.props.resetFetch();
 	}
 
@@ -133,12 +141,13 @@ class ProductPage extends React.Component{
 		const isLoading = this.props.isFetching;
 		const { product } = this.props;
 		const { errors } = this.state;
+		const {success, userIsFetching} = this.props.activeUser;
 		
-		if(isLoading){
+		if(isLoading || !success){
 		          return(
 		          <Loader active inline='centered' />
 		          )
-		}else{
+		}else if(success){
 
 		return(
 
@@ -178,6 +187,8 @@ class ProductPage extends React.Component{
 			</div>
 
 		)
+		}else{
+			browserHistory.push('/login');
 		}
 	}
 
@@ -197,7 +208,9 @@ function mapDispatchToProps(dispatch){
 		pushSingleProduct: bindActionCreators(pushSingleProduct, dispatch),
 		addProductToCart: bindActionCreators(addProductToCart, dispatch),
 		addToCart: bindActionCreators(addToCart, dispatch),
-		resetFetch: bindActionCreators(resetFetch, dispatch)
+		resetFetch: bindActionCreators(resetFetch, dispatch),
+		checkUserToken: bindActionCreators(checkUserToken, dispatch),
+		userResetFetch: bindActionCreators(userResetFetch, dispatch)
 
 	}
 }

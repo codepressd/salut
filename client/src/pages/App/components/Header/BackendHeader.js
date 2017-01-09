@@ -21,6 +21,18 @@ handleClick(){
   render(){
     let cart = this.props.cart.length;
     const {user} = this.props;
+    let cartButton = '';
+    if(user.role === 'restaurant'){
+          cartButton =<Button
+                basic
+                onClick={()=>browserHistory.push('/restaurant/dashboard/'+user.id+'/checkout')}
+                size='small'
+                className='cart'
+                content='CART'
+                icon='cart'
+                label={{ as: 'a', basic: true, pointing: 'left', content: cart }}
+          />;
+        }
     return(
       <div className="header">
         <Menu className="navColor" pointing secondary>
@@ -30,15 +42,7 @@ handleClick(){
           <Menu.Item name='FAQ'  active={this.props.location.pathname === '/faq'} onClick={()=> browserHistory.push('/faq')} />
           <Menu.Menu position='right'>
           <Menu.Item  name='Dashboard' onClick={()=> browserHistory.push('/'+user.role+'/dashboard/'+user.id)} />
-          <Button
-                basic
-                onClick={()=>browserHistory.push('/restaurant/dashboard/'+user.id+'/checkout')}
-                size='small'
-                className='cart'
-                content='CART'
-                icon='cart'
-                label={{ as: 'a', basic: true, pointing: 'left', content: cart }}
-          />
+          {cartButton}
          <Menu.Item name='Logout'  onClick={()=> browserHistory.push('/logout')} />
           </Menu.Menu>
         </Menu>
