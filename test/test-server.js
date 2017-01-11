@@ -79,7 +79,7 @@ describe('Test User Functions', function(){
         }); 
     });
     
-    
+    let newUser ={};
     it('Create New User with data', function(done) {
         chai.request(app)
             .post('/api/signup')
@@ -102,6 +102,7 @@ describe('Test User Functions', function(){
               res.body.token.should.be.a('string');
               res.body.user.role.should.equal('restaurant');
               res.body.user.email.should.equal('chris@gmailer.com');
+              newUser = res.body.user;
                 done();
             });
     });
@@ -128,6 +129,60 @@ describe('Test User Functions', function(){
             });
     });
     
+    it('Update User with data', function(done) {
+        chai.request(app)
+            .post('/api/updateUser')
+            .send({
+                 userId: newUser._id,
+                 companyName:'Beaujolais Bistro',
+                 address: '755 riverside dr',
+                 city: 'Reno',
+                 state:'Nevada',
+             })
+            .end(function(err, res) {
+              should.equal(err, null);
+              res.should.have.status(201);
+              res.body.token.should.be.a('String');
+              res.body.user.companyName.should.equal('Beaujolais Bistro');
+              res.body.user.address.should.equal('755 riverside dr');
+                done();
+            });
+    });
+
+    it('Change User Password', function(done) {
+        chai.request(app)
+            .post('/api/changePassword')
+            .send({
+                 userId: newUser._id,
+                 oldPassword:'12345',
+                 newPassword: '123',
+                 confirmPassword: '123'
+             })
+            .end(function(err, res) {
+              should.equal(err, null);
+              res.should.have.status(201);
+              res.body.success.should.equal(true);
+              res.body.token.should.be.a('string');
+              res.body.user.email.should.equal('chris@gmailer.com');
+                done();
+            });
+    });
+
+    it('Login User To Check New Password ', function(done){
+        chai.request(app)
+             .post('/api/login')
+             .send({email: 'chris@gmailer.com', password: '123'})
+             .end(function(err, res){
+                  should.equal(err, null);
+                  res.should.have.status(201);
+                  res.body.user.firstName.should.equal('Chris');
+                  res.body.user.lastName.should.equal('Reeder');
+                  res.body.user.role.should.equal('restaurant');
+                  res.body.user.address.should.equal('755 riverside dr');
+                  done();
+        });
+    });
+    
     it('login user ', function(done){
         chai.request(app)
              .post('/api/login')
@@ -135,6 +190,24 @@ describe('Test User Functions', function(){
              .end(function(err, res){
                   should.equal(err, null);
                   res.should.have.status(201);
+                  res.body.user.firstName.should.equal('Chris');
+                  res.body.user.lastName.should.equal('Reeder');
+                  res.body.user.role.should.equal('restaurant');
+                  newUser = res.body;
+                  done();
+        });
+        
+    });
+
+    it('Check Users Token', function(done){
+        chai.request(app)
+             .post('/api/checkUserToken')
+             .send({token: newUser.token, userId: newUser.user.id})
+             .end(function(err, res){
+                  should.equal(err, null);
+                  res.should.have.status(201);
+                  res.body.success.should.equal(true);
+                  res.body.token.should.be.a('String');
                   res.body.user.firstName.should.equal('Chris');
                   res.body.user.lastName.should.equal('Reeder');
                   res.body.user.role.should.equal('restaurant');
