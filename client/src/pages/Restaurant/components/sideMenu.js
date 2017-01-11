@@ -10,11 +10,7 @@ export function sideMenu (props){
    const user = props.activeUser.user;
     return (
       <Menu className={styles.menu} icon='labeled' fluid vertical>
-        <Menu.Item>
-        <h3>Search For Products</h3>
-          <Input placeholder='Search...' />
-        </Menu.Item>
-        
+                
         <Menu.Item className={styles.navButton} name='dashboard' active={props.location.pathname === '/restaurant/dashboard/'+user.id} onClick={() => browserHistory.push( '/restaurant/dashboard/'+user.id)}>
           <Icon name='settings' />
           Dashboard

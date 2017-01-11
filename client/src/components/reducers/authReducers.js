@@ -1,9 +1,10 @@
 //import Auth Actions
-import {AUTHORIZE_USER, AUTHORIZE_ERROR, AUTHORIZE_USER_UPDATE, USER_LOGOUT, CHANGE_PASSWORD_ERROR, USER_TOKEN_SUCCESS, USER_RESET_FETCH, NO_TOKEN_FAIL, USER_TOKEN_FAIL, NOT_AUTHORIZED} from '../actions/authActions';
+import {AUTHORIZE_USER, AUTHORIZE_ERROR, AUTHORIZE_USER_UPDATE, USER_LOGOUT, TOGGLE_USER_MENU, CHANGE_PASSWORD_ERROR, USER_TOKEN_SUCCESS, USER_RESET_FETCH, NO_TOKEN_FAIL, USER_TOKEN_FAIL, NOT_AUTHORIZED} from '../actions/authActions';
 import {UPDATE_CART, REMOVE_PRODUCT_FROM_CART, RESET_CART} from '../actions/productActions.js';
 
 const initialState = {
 	user: null,
+	menu: false,
 	error: null,
 	expiretime: false,
 	message:'',
@@ -14,6 +15,7 @@ const initialState = {
 }
 
 const AuthUserReducer = (state = initialState, action) => {
+	
 	switch(action.type){
 		case AUTHORIZE_USER:
 			return{
@@ -34,6 +36,7 @@ const AuthUserReducer = (state = initialState, action) => {
 				...state,
 				userIsFetching: true,
 				success: false,
+				menu: false
 			}
 
 		case AUTHORIZE_USER_UPDATE:
@@ -46,6 +49,14 @@ const AuthUserReducer = (state = initialState, action) => {
 
 		case USER_LOGOUT:
 			return initialState;
+
+		case TOGGLE_USER_MENU:
+
+			return {
+				...state, 
+				menu: action.toggle
+			}
+
 
 		case USER_TOKEN_SUCCESS:
 			return{

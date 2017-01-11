@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image, Card, Loader } from 'semantic-ui-react';
+import { Container, Grid, Image, Card, Loader, Segment, Input, Menu, Sidebar } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
 import {browserHistory} from 'react-router';
@@ -16,12 +16,19 @@ import OneProduct  from '../components/oneProduct';
 //import user Actions
 import {checkUserToken, userResetFetch} from '../../../components/actions/authActions';//update user state
 
+//import product Actions
+import {getProductCategory} from '../../../components/actions/productActions';//update user state
+
+//Import Mobile Menu
+import MobileMenu from '../../../components/mobileMenu';
+
 import SideMenu from '../components/sideMenu';
 import  '../restaurant.css';
 
 class Shop extends React.Component{
 	constructor(props){
 		super(props);
+		this.handleItemClick = this.handleItemClick.bind(this);
 	}
 
 	componentWillMount() {
@@ -52,6 +59,16 @@ class Shop extends React.Component{
 
 	}
 
+	handleItemClick(err, {name}){
+		if(err){
+			this.setState({errors: 'We had an error grabbing those products.'})
+		}
+		const category = {
+			category: name.toLowerCase()
+		}
+		this.props.getProductCategory(category);
+	}
+
 	render(){
 		const {user} = this.props;
 		 const isLoading = this.props.isFetching;
@@ -64,20 +81,34 @@ class Shop extends React.Component{
 		          )
 		}else if(success){
 			return(
-
+			<Sidebar.Pushable as={Segment}>
+			        <MobileMenu  {...this.props}/>
+			        <Sidebar.Pusher>
+                  			<Segment basic>
 				<div className='pageWrap'>
-					<div className='navWrap'>
-						<SideMenu {...this.props}/>
-					</div>
-					<div className='contentWrap'>
-						<Container>
-						<h2>{user.companyName} : Shop </h2>
-							<Card.Group >
-								{products.map((product, index) => <OneProduct key={index} index={index} product={product} /> )} 
-							</Card.Group>
-						</Container>
-					</div>
+					<Container>
+					<h2>{user.companyName} : Shop </h2>
+						<Menu pointing stackable>
+						          <Menu.Item name='All Products' onClick={this.handleItemClick} />
+						          <Menu.Item name='Beer'  onClick={this.handleItemClick} />
+						          <Menu.Item name='Wine' onClick={this.handleItemClick} />					          
+						          <Menu.Item name='Liqour' onClick={this.handleItemClick} />
+						          <Menu.Item name='Dry Goods' onClick={this.handleItemClick} />
+						          <Menu.Item name='Meat' onClick={this.handleItemClick} />
+						          <Menu.Item name='Produce' onClick={this.handleItemClick} />
+						</Menu>
+
+						
+						<Card.Group  >
+							{products.map((product, index) => <OneProduct key={index} index={index} product={product} /> )} 
+						</Card.Group>
+						
+							
+					</Container>
 				</div>
+				</Segment>
+			        </Sidebar.Pusher>
+			</Sidebar.Pushable>
 
 			)}else{
 				browserHistory.push('/login');
@@ -98,6 +129,7 @@ function mapDispatchToProps(dispatch){
 	return{
 		getProducts: bindActionCreators(getProducts, dispatch),
 		getAllProducts: bindActionCreators(getAllProducts, dispatch),
+		getProductCategory: bindActionCreators(getProductCategory, dispatch),
 		resetFetch : bindActionCreators(resetFetch, dispatch),
 		checkUserToken: bindActionCreators(checkUserToken, dispatch),
 		userResetFetch: bindActionCreators(userResetFetch, dispatch)

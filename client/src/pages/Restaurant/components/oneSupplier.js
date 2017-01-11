@@ -23,7 +23,7 @@ class OneSupplier extends React.Component{
 		const productsOrdered = supplier[supplierName];
 		
 		return(
-			<Grid celled='internally'>
+			<Grid celled='internally' stackable>
 
 				<Grid.Row>
 				<h3>{supplierName}</h3>

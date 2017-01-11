@@ -26,7 +26,7 @@ class OneProduct extends React.Component {
           
 
         return (
-                  <Card  onClick={()=>browserHistory.push('/restaurant/dashboard/'+user.id+'/product/'+product._id)} >
+                  <Card  onClick={()=>browserHistory.push('/restaurant/dashboard/'+user.id+'/product/'+product._id)} centered>
                       <Card.Content>
                         <Image floated='right' size='tiny' src={imageUrl}/>
                         <Card.Header>

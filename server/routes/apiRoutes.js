@@ -25,6 +25,7 @@ router.route('/getSupplierOrders/:supplierId').get(cartController.getSupplierOrd
 //product routes restaurant
 
 router.route('/getProducts').get(productController.getProducts);//get all products to display
+router.route('/getProductCategory').post(productController.getProductCategory);//get all products to display
 router.route('/addToCart').post(cartController.addToCart);//add to cart
 router.route('/deleteProductFromCart').put(cartController.removeFromCart);//remove from cart
 router.route('/sendOrders').post(cartController.sendOrders);// Send out orders from cart

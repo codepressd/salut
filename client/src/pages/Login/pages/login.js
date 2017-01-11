@@ -1,13 +1,17 @@
 /* eslint-disable */
 import React from 'react';
-import { Container, Grid, Form, Icon, Header, Checkbox, Button } from 'semantic-ui-react';
+import { Container, Grid, Form, Icon, Header, Checkbox, Button, Sidebar, Segment } from 'semantic-ui-react';
 import { loginRequest } from '../../../components/actions/authActions.js';
 import { connect } from 'react-redux';
 import{bindActionCreators} from 'redux';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
 
+//Login css
 import '../login.css';
+
+//Import Mobile Menu
+import MobileMenu from '../../../components/mobileMenu';
 
 class Login extends React.Component {
 
@@ -61,28 +65,33 @@ class Login extends React.Component {
          const { errors } = this.state;
          const {message} = this.props.activeUser; 
         return (
-            <Container className='fullPage'>
-                                    
-		<Header as='h2' icon textAlign='center'>
-		      <Icon name='users' circular />
-		      <Header.Content>
-		        Login
-		      </Header.Content>
-                                          {message}
-		 </Header>
+                  <Sidebar.Pushable as={Segment}>
+                                    <MobileMenu  {...this.props}/>
+                                    <Sidebar.Pusher>
+                                                    <Segment basic>
+                                                    <Container className='fullPage'>
+                                                                            
+                                        		<Header as='h2' icon textAlign='center'>
+                                        		      <Icon name='users' circular />
+                                        		      <Header.Content>
+                                        		        Login
+                                        		      </Header.Content>
+                                                                                  {message}
+                                        		 </Header>
 
-		<Grid verticalAlign='middle' columns={1} centered>
-		
-			    <Form onSubmit={this.handleSubmit}>
-				<Form.Group  widths='equal' >
-				          <Form.Input label={errors.email && errors.email || 'Email'} className={classnames({'error': errors.email})} name='email' placeholder={errors.email && errors.email || 'Email'} required />
-				          <Form.Input label={errors.password && errors.password ||'Password'} type='password' className={classnames({'error': errors.password})} name='password' placeholder={errors.password && errors.password ||'Password'} required />
-			        	</Form.Group>
-			    <Button type='submit'>Submit</Button>
-			  </Form>
-
-		</Grid>
-	</Container>
+                                        		<Grid verticalAlign='middle' columns={1} centered>
+                                                        		                  <Form onSubmit={this.handleSubmit}>
+                                                            			<Form.Group  widths='equal' >
+                                                            			          <Form.Input label={errors.email && errors.email || 'Email'} className={classnames({'error': errors.email})} name='email' placeholder={errors.email && errors.email || 'Email'} required />
+                                                            			          <Form.Input label={errors.password && errors.password ||'Password'} type='password' className={classnames({'error': errors.password})} name='password' placeholder={errors.password && errors.password ||'Password'} required />
+                                                            		        	</Form.Group>
+                                                        		                 <Button type='submit'>Submit</Button>
+                                                        		                 </Form>
+                                        		</Grid>
+                                        	</Container>
+                                                      </Segment>
+                                    </Sidebar.Pusher>
+                 </Sidebar.Pushable>
         )
     }
 }

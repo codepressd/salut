@@ -2,10 +2,12 @@
   font-family: "NeoRetroDraw";
   src: url('../fonts/NEORF.ttf') format('truetype');
 }
+ 
 
 .header {
   background-size: cover;
   border-bottom: 1px solid #ccc;
+
 }
  .ui.secondary.pointing.menu{
   background-color: #aac5de;

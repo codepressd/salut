@@ -141,3 +141,24 @@ exports.getProducts = function(req, res, next){
 		res.status(201).json({products: product});
 	})
 }
+
+exports.getProductCategory = function(req, res, next){
+	let query={
+		category: req.body.category
+	};
+	
+	if(req.body.category === 'all products'){
+		query = {}
+		
+	}
+	
+	Product.find(query, function(err, product){
+		if(err){
+			return next(err);
+		}
+
+		res.status(201).json({products: product});
+	})
+}
+
+

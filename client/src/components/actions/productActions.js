@@ -1,13 +1,18 @@
+import axios from 'axios';
+import {browserHistory} from 'react-router';
+
+//Product Actions
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const GRAB_SUPPLIER_PRODUCTS = 'GRAB_SUPPLIER_PRODUCTS';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
+export const GET_PRODUCT_CATEGORY = 'GET_PRODUCT_CATEGORY';
 export const PUSH_SINGLE_PRODUCT = 'PUSH_SINGLE_PRODUCT';
+
+
+//Cart Actions
 export const UPDATE_CART= 'UPDATE_CART';
 export const RESET_CART= 'RESET_CART';
-
-
-
 export const REMOVE_PRODUCT_FROM_CART= 'REMOVE_PRODUCT_FROM_CART';
 
 //getting orders
@@ -16,6 +21,18 @@ export const SINGLE_ORDER_TO_STORE= 'SINGLE_ORDER_TO_STORE';
 
 //resets fetching for double render
 export const RESET_FETCH= 'RESET_FETCH';
+
+export const getProductCategory = (data) => dispatch => {
+
+	return axios.post('/api/getProductCategory', data)
+		.then((res) => {
+			const {products} = res.data;
+			dispatch(getAllProducts(products));
+		})
+		.catch((err)=> console.log(err));
+
+}
+
 
 export const grabSupplierProducts = (Products) => {
 	return{

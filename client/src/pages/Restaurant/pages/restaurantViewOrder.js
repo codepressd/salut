@@ -1,29 +1,28 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image, Loader, Divider, Form, Button, Item, Icon } from 'semantic-ui-react';
+import { Container, Grid, Image, Loader, Divider, Form, Button, Item, Icon, Segment, Sidebar } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
 import {browserHistory} from 'react-router';
 import classnames from 'classnames';
 
 //Send Orders
-
 import {getSingleOrder} from '../actions/getSingleOrder';//get single order from database
 import {singleOrderToStore} from '../../../components/actions/productActions';//update store with single order
 
 //Reset Fetching State
-
 import {resetFetch} from '../../../components/actions/productActions';//reset fetching
 
 //import user Actions
 import {checkUserToken, userResetFetch} from '../../../components/actions/authActions';//update user state
 
-
 //import OneSupplier template
-
 import OneSupplier  from '../components/oneSupplier';
 
-import SideMenu from '../components/sideMenu';
+//Import Mobile Menu
+import MobileMenu from '../../../components/mobileMenu';
+
+//css
 import  '../restaurant.css';
 
 
@@ -111,67 +110,68 @@ class ViewOrder extends React.Component{
 			const uniqueSuppliers = this.sortSuppliers(order);
 			const cartTotals = order.orderTotal;
 			return(
-
+			<Sidebar.Pushable as={Segment}>
+			        <MobileMenu  {...this.props}/>
+			        <Sidebar.Pusher>
+                  			<Segment basic>
 				<div className='pageWrap'>
-					<div className='navWrap'>
-						<SideMenu {...this.props}/>
-					</div>
-					<div className='contentWrap'>
-						<Container>
-						<h2>Order #: {order.orderNumber}</h2>
+					<Container>
+					<h2>Order #: {order.orderNumber}</h2>
+						<Grid >
+							<Grid.Row>
+							<Grid.Column width={16}>
+								<div className='invoice-header'>
+									<Grid columns ={3} divided stackable>
+									    <Grid.Column >
+									     <h3>Order Date:</h3>
+									     <Divider />
+									      <h2>{order.orderDate}</h2>
+									    </Grid.Column>
+									    <Grid.Column >
+									     <h3>Number Of  Suppliers: </h3>
+									     <Divider />
+									     <h2>{order.suppliers.length}</h2>
+									    </Grid.Column>
+									    <Grid.Column >
+									    <h3>Order Total :</h3>
+									    <Divider />
+									    <h2> ${order.orderTotal.total}</h2>
+									    </Grid.Column>
+								        </Grid>
+								</div>
+							</Grid.Column>
+							</Grid.Row>
+							</Grid>
+								<h2>Products Ordered:</h2>
+								{uniqueSuppliers.map((supplier, index) => <OneSupplier key={index} index={index} supplier={supplier} /> )}
+							<Divider />
 							<Grid >
-								<Grid.Row>
-								<Grid.Column width={16}>
-									<div className='invoice-header'>
-										<Grid columns ={3} divided>
-										    <Grid.Column >
-										     <h3>Order Date:</h3>
-										     <Divider />
-										      <h2>{order.orderDate}</h2>
-										    </Grid.Column>
-										    <Grid.Column >
-										     <h3>Number Of  Suppliers: </h3>
-										     <Divider />
-										     <h2>{order.suppliers.length}</h2>
-										    </Grid.Column>
-										    <Grid.Column >
-										    <h3>Order Total :</h3>
-										    <Divider />
-										    <h2> ${order.orderTotal.total}</h2>
-										    </Grid.Column>
-									        </Grid>
-									</div>
-								</Grid.Column>
+								<Grid.Row className='align-right'>
+									<Grid.Column width={6}>
+									     
+									</Grid.Column>				
+									<Grid.Column  width={5}>
+										<h4>Subtotal: </h4>
+										<Divider hidden />
+										<h4>Tax: </h4>
+										<Divider hidden />
+										<h4>Total: </h4>
+									</Grid.Column>
+									<Grid.Column  width={5}>
+										<h4>$ {cartTotals.subTotal}</h4>
+										<Divider hidden />
+										<h4>$ {cartTotals.tax}</h4>
+										<Divider  />
+									     	 <h4>$ {cartTotals.total}</h4>
+									</Grid.Column>		  
 								</Grid.Row>
-								</Grid>
-									<h2>Products Ordered:</h2>
-									{uniqueSuppliers.map((supplier, index) => <OneSupplier key={index} index={index} supplier={supplier} /> )}
-								<Divider />
-								<Grid>
-									<Grid.Row className='align-right'>
-										<Grid.Column width={10}>
-										     
-										</Grid.Column>				
-										<Grid.Column  width={3}>
-											<h4>Subtotal: </h4>
-											<Divider hidden />
-											<h4>Tax: </h4>
-											<Divider hidden />
-											<h4>Total: </h4>
-										</Grid.Column>
-										<Grid.Column  width={3}>
-											<h4>$ {cartTotals.subTotal}</h4>
-											<Divider hidden />
-											<h4>$ {cartTotals.tax}</h4>
-											<Divider  />
-										     	 <h4>$ {cartTotals.total}</h4>
-										</Grid.Column>		  
-									</Grid.Row>
-									
-								</Grid>
-						</Container>
-					</div>
+								
+							</Grid>
+					</Container>
 				</div>
+				</Segment>
+			        </Sidebar.Pusher>
+			</Sidebar.Pushable>
 
 			)}else{
 				browserHistory.push('/login');

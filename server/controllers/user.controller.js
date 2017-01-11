@@ -7,7 +7,7 @@ import serverConfig from '../config/database';
 
 
 function generateToken(user) {
-    return jwt.sign(user, serverConfig.secret, { expiresIn: 10});
+    return jwt.sign(user, serverConfig.secret, { expiresIn: '1hr'});
 }
 
 function setUserInfo(request) {

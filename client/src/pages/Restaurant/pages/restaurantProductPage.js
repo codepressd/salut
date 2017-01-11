@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image, Loader, Divider, Form, Button } from 'semantic-ui-react';
+import { Container, Grid, Image, Loader, Divider, Form, Button, Segment, Sidebar } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 import{bindActionCreators} from 'redux';
@@ -22,6 +22,9 @@ import {checkUserToken, userResetFetch} from '../../../components/actions/authAc
 
 //import product template
 import OneProduct  from '../components/oneProduct';
+
+//Import Mobile Menu
+import MobileMenu from '../../../components/mobileMenu';
 
 import SideMenu from '../components/sideMenu';
 import  '../restaurant.css';
@@ -150,41 +153,42 @@ class ProductPage extends React.Component{
 		}else if(success){
 
 		return(
-
+		<Sidebar.Pushable as={Segment}>
+		        <MobileMenu  {...this.props}/>
+		        <Sidebar.Pusher>
+                  		<Segment basic>
 			<div className='pageWrap'>
-				<div className='navWrap'>
-					<SideMenu {...this.props}/>
-				</div>
-				<div className='contentWrap'>
-					<Container>
-					<h2>Supplier : {product.supplier}</h2>
-						<Grid columns='equal'>
-							<Grid.Row>
-								<Grid.Column>
-								<Image size='large' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
-								</Grid.Column>
-								<Grid.Column>
-								<h2>{product.title}</h2>
-								<Divider />
-								<h4>{product.description}</h4>
-								<h4>Single: ${product.price.single}</h4>
-								<h4>Case: ${product.price.case}</h4>
+				<Container>
+				<h2>Supplier : {product.supplier}</h2>
+					<Grid columns='equal'>
+						<Grid.Row>
+							<Grid.Column>
+							<Image size='large' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
+							</Grid.Column>
+							<Grid.Column>
+							<h2>{product.title}</h2>
+							<Divider />
+							<h4>{product.description}</h4>
+							<h4>Single: ${product.price.single}</h4>
+							<h4>Case: ${product.price.case}</h4>
 
-								<Divider />
-								<Form onSubmit={this.handleSubmit}>
-								        <Form.Group widths='equal'>
-								          <Form.Select label={errors.quantity && errors.quantity || 'Quantity'} className={classnames({'error': errors.quantity})}  name='quantity' options={quantity} placeholder='Amount' required />
-								          <Form.Select label={errors.type && errors.type || 'Single Or Case'} className={classnames({'error': errors.type})}  name='type' options={type} placeholder='Pick One' required  />
-								        </Form.Group>
-								        <Button fluid positive type='submit'>Add To Cart</Button>
-								</Form>
+							<Divider />
+							<Form onSubmit={this.handleSubmit}>
+							        <Form.Group widths='equal'>
+							          <Form.Select label={errors.quantity && errors.quantity || 'Quantity'} className={classnames({'error': errors.quantity})}  name='quantity' options={quantity} placeholder='Amount' required />
+							          <Form.Select label={errors.type && errors.type || 'Single Or Case'} className={classnames({'error': errors.type})}  name='type' options={type} placeholder='Pick One' required  />
+							        </Form.Group>
+							        <Button fluid positive type='submit'>Add To Cart</Button>
+							</Form>
 
-								</Grid.Column>
-							</Grid.Row>
-						</Grid>
-					</Container>
-				</div>
+							</Grid.Column>
+						</Grid.Row>
+					</Grid>
+				</Container>
 			</div>
+			</Segment>
+		        </Sidebar.Pusher>
+		</Sidebar.Pushable>
 
 		)
 		}else{

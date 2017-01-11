@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image, Loader, Divider, Form, Button, Item, Icon } from 'semantic-ui-react';
+import { Container, Grid, Image, Loader, Divider, Form, Button, Item, Icon , Segment, Sidebar} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
 import {browserHistory} from 'react-router';
@@ -18,6 +18,9 @@ import {checkUserToken, userResetFetch} from '../../../components/actions/authAc
 
 //import product template
 import CheckoutOneProduct  from '../components/checkoutOneProduct';
+
+//Import Mobile Menu
+import MobileMenu from '../../../components/mobileMenu';
 
 //helpers
 import {calculateCartTotal, sortCart} from '../../../components/helpers';
@@ -100,61 +103,62 @@ class CheckoutPage extends React.Component{
 		}else if(success){
 
 		return(
-
+		<Sidebar.Pushable as={Segment}>
+		        <MobileMenu  {...this.props}/>
+		        <Sidebar.Pusher>
+                  		<Segment basic>
 			<div className='pageWrap'>
-				<div className='navWrap'>
-					<SideMenu {...this.props}/>
-				</div>
-				<div className='contentWrap'>
-					<Container>
-					<h2>Checkout</h2>
-						<Grid >
-							<Grid.Row>
-							<Grid.Column width={10}>
-							<Item.Group>
-							   {cart.map((product, index) => <CheckoutOneProduct key={index} index={index} product={product} /> )}
-							    </Item.Group>
-							      </Grid.Column>
-							      <Grid.Column  width={6}>
-							        <div className='checkout-sidebar'>
-							        	<div className='sidebar-content'>
-								        <h3>Order Summary</h3>
-								        <Divider />
-								        <Grid>
-									    <Grid.Column floated='left' width={3}>
-									     <h4>SubTotal:</h4>
-									    </Grid.Column>
-									    <Grid.Column floated='right' width={7}>
-									      <h4>$ {cartTotals.subTotal}</h4>
-									    </Grid.Column>
-								        </Grid>
-								        <Grid>
-									    <Grid.Column floated='left' width={3}>
-									     <h4>Tax:</h4>
-									    </Grid.Column>
-									    <Grid.Column floated='right' width={7}>
-									      <h4>$ {cartTotals.tax}</h4>
-									    </Grid.Column>
-								        </Grid>
-								        <Divider />
-								        <Grid>
-									    <Grid.Column floated='left' width={3}>
-									     <h4>Total:</h4>
-									    </Grid.Column>
-									    <Grid.Column floated='right' width={7}>
-									      <h4>$ {cartTotals.total}</h4>
-									    </Grid.Column>
-								        </Grid>
-								        <Button fluid onClick={this.sendOrder.bind(this)} className='checkout-button'>Send Order</Button>
-							        	</div>
-							        </div>
-							      </Grid.Column>
-								
-							</Grid.Row>
-						</Grid>
-					</Container>
-				</div>
+				<Container>
+				<h2>Checkout</h2>
+					<Grid stackable>
+						<Grid.Row>
+						<Grid.Column width={10}>
+						<Item.Group>
+						   {cart.map((product, index) => <CheckoutOneProduct key={index} index={index} product={product} /> )}
+						    </Item.Group>
+						      </Grid.Column>
+						      <Grid.Column  width={6}>
+						        <div className='checkout-sidebar'>
+						        	<div className='sidebar-content'>
+							        <h3>Order Summary</h3>
+							        <Divider />
+							        <Grid>
+								    <Grid.Column floated='left' width={3}>
+								     <h4>SubTotal:</h4>
+								    </Grid.Column>
+								    <Grid.Column floated='right' width={7}>
+								      <h4>$ {cartTotals.subTotal}</h4>
+								    </Grid.Column>
+							        </Grid>
+							        <Grid>
+								    <Grid.Column floated='left' width={3}>
+								     <h4>Tax:</h4>
+								    </Grid.Column>
+								    <Grid.Column floated='right' width={7}>
+								      <h4>$ {cartTotals.tax}</h4>
+								    </Grid.Column>
+							        </Grid>
+							        <Divider />
+							        <Grid>
+								    <Grid.Column floated='left' width={3}>
+								     <h4>Total:</h4>
+								    </Grid.Column>
+								    <Grid.Column floated='right' width={7}>
+								      <h4>$ {cartTotals.total}</h4>
+								    </Grid.Column>
+							        </Grid>
+							        <Button fluid onClick={this.sendOrder.bind(this)} className='checkout-button'>Send Order</Button>
+						        	</div>
+						        </div>
+						      </Grid.Column>
+							
+						</Grid.Row>
+					</Grid>
+				</Container>
 			</div>
+			</Segment>
+		        </Sidebar.Pusher>
+		</Sidebar.Pushable>
 
 		)}else{
 			browserHistory.push('/login');

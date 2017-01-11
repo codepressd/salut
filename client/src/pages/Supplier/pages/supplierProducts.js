@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image, Loader } from 'semantic-ui-react';
+import { Container, Grid, Image, Loader, Sidebar, Segment } from 'semantic-ui-react';
 import{bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
@@ -12,7 +12,9 @@ import {grabSupplierProducts} from '../../../components/actions/productActions';
 //import user Actions
 import {checkUserToken, userResetFetch} from '../../../components/actions/authActions';//update state with products
 
-import SideMenu from '../components/SupplierMenu';
+//Import Mobile Menu
+import MobileMenu from '../../../components/mobileMenu';
+
 import SingleProduct from'../components/SingleProduct';
 import  '../supplier.css';
 
@@ -61,22 +63,24 @@ class SupplierProducts extends React.Component{
 		          )
 		}else if(success){
 			return(
+			<Sidebar.Pushable as={Segment}>
+			        <MobileMenu  {...this.props}/>
+			        <Sidebar.Pusher>
+                  			<Segment basic>
 				<div className='pageWrap'>
-					<div className='navWrap'>
-						<SideMenu {...this.props}/>
-					</div>
-					<div className='contentWrap'>
-						<Container>
-						<h2>{user.companyName} : Products</h2>
-							<Grid celled>
-							 
-							  {products.map((product, index) => <SingleProduct key={index} index={index} product={product} /> )}  
-							 
-							 
-							  </Grid>
-						</Container>
-					</div>
+					<Container>
+					<h2>{user.companyName} : Products</h2>
+						<Grid celled stackable>
+						 
+						  {products.map((product, index) => <SingleProduct key={index} index={index} product={product} /> )}  
+						 
+						 
+						  </Grid>
+					</Container>
 				</div>
+				</Segment>
+			        </Sidebar.Pusher>
+			</Sidebar.Pushable>
 
 			)}else{
 				browserHistory.push('/login');

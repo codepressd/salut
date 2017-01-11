@@ -4,8 +4,13 @@ import {browserHistory} from 'react-router';
 export const AUTHORIZE_USER = 'AUTHORIZE_USER';
 //export const AUTHORIZE_ERROR = 'AUTHORIZE_ERROR';
 export const AUTHORIZE_USER_UPDATE = 'AUTHORIZE_USER_UPDATE';
-export const USER_LOGOUT = 'USER_LOGOUT';
 export const CHANGE_PASSWORD_ERROR = 'CHANGE_PASSWORD_ERROR';
+
+//User Navigation Actions
+export const USER_LOGOUT = 'USER_LOGOUT';
+export const TOGGLE_USER_MENU= 'TOGGLE_USER_MENU';
+
+//Token Actions
 export const USER_TOKEN_SUCCESS = 'USER_TOKEN_SUCCESS';
 export const USER_RESET_FETCH = 'USER_RESET_FETCH';
 export const USER_TOKEN_FAIL = 'USER_TOKEN_FAIL';
@@ -226,6 +231,11 @@ export const authorizeUserUpdate = (user) => ({
 	type: AUTHORIZE_USER_UPDATE,
 	user
 });
+
+export const toggleUserMenu = (toggle) => ({
+	type: TOGGLE_USER_MENU,
+	toggle
+})
 
 export const logoutUser = () => {
 

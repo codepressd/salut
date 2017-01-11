@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
-import { Container, Grid, Image, Table, Header, Rating, Button, Loader } from 'semantic-ui-react';
+import { Container, Grid, Image, Table, Header, Rating, Button, Loader, Sidebar, Segment } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
 
@@ -21,6 +21,9 @@ import {checkUserToken, userResetFetch} from '../../../components/actions/authAc
 
 //Import the One Product
 import OneOrder from '../components/oneOrder';
+
+//Import Mobile Menu
+import MobileMenu from '../../../components/mobileMenu';
 
 
 class Orders extends React.Component{
@@ -63,31 +66,33 @@ class Orders extends React.Component{
 		}else if(success){
 		
 			return(
+			<Sidebar.Pushable as={Segment}>
+			        <MobileMenu  {...this.props}/>
+			        <Sidebar.Pusher>
+                 				<Segment basic>
 				<div className='pageWrap'>
-					<div className='navWrap'>
-						<SideMenu {...this.props}/>
-					</div>
-					<div className='contentWrap'>
-						<Container>
-						<h2>{user.companyName} : Orders</h2>
-							<Table celled padded>
-							      <Table.Header>
-							        <Table.Row>
-							          <Table.HeaderCell >Order Number</Table.HeaderCell>
-							          <Table.HeaderCell textAlign='center'># of Items</Table.HeaderCell>
-							          <Table.HeaderCell textAlign='center'>Date</Table.HeaderCell>
-							          <Table.HeaderCell textAlign='center'>Total</Table.HeaderCell>
-							          <Table.HeaderCell textAlign='center'>Order Details</Table.HeaderCell>
-							        </Table.Row>
-							      </Table.Header>
+					<Container>
+					<h2>{user.companyName} : Orders</h2>
+						<Table celled padded>
+						      <Table.Header>
+						        <Table.Row>
+						          <Table.HeaderCell >Order Number</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'># of Items</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'>Date</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'>Total</Table.HeaderCell>
+						          <Table.HeaderCell textAlign='center'>Order Details</Table.HeaderCell>
+						        </Table.Row>
+						      </Table.Header>
 
-							      <Table.Body>
-							        {orders.map((order, index) => <OneOrder key={index} index={index} order={order} /> )}
-							      </Table.Body>
-							    </Table>
-						</Container>
-					</div>
+						      <Table.Body>
+						        {orders.map((order, index) => <OneOrder key={index} index={index} order={order} /> )}
+						      </Table.Body>
+						    </Table>
+					</Container>
 				</div>
+				</Segment>
+			        </Sidebar.Pusher>
+			</Sidebar.Pushable>
 
 			)}else{
 				browserHistory.push('/login');

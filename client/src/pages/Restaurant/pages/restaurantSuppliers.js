@@ -16,36 +16,31 @@ class Suppliers extends React.Component{
 		const {user} = this.props;
 		return(
 			<div className='pageWrap'>
-				<div className='navWrap'>
-					<SideMenu {...this.props}/>
-				</div>
-				<div className='contentWrap'>
-					<Container>
-					<h2>{user.companyName} : Suppliers</h2>
-						<Grid celled>
-						    <Grid.Row>
-						      <Grid.Column width={3}>
-						        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
-						      </Grid.Column>
-						      <Grid.Column width={13}>
-						        <Image src='http://semantic-ui.com/images/wireframe/centered-paragraph.png' />
-						      </Grid.Column>
-						    </Grid.Row>
+				<Container>
+				<h2>{user.companyName} : Suppliers</h2>
+					<Grid celled>
+					    <Grid.Row>
+					      <Grid.Column width={3}>
+					        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
+					      </Grid.Column>
+					      <Grid.Column width={13}>
+					        <Image src='http://semantic-ui.com/images/wireframe/centered-paragraph.png' />
+					      </Grid.Column>
+					    </Grid.Row>
 
-						    <Grid.Row>
-						      <Grid.Column width={3}>
-						        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
-						      </Grid.Column>
-						      <Grid.Column width={10}>
-						        <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
-						      </Grid.Column>
-						      <Grid.Column width={3}>
-						        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
-						      </Grid.Column>
-						    </Grid.Row>
-						  </Grid>
-					</Container>
-				</div>
+					    <Grid.Row>
+					      <Grid.Column width={3}>
+					        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
+					      </Grid.Column>
+					      <Grid.Column width={10}>
+					        <Image src='http://semantic-ui.com/images/wireframe/paragraph.png' />
+					      </Grid.Column>
+					      <Grid.Column width={3}>
+					        <Image src='http://semantic-ui.com/images/wireframe/image.png' />
+					      </Grid.Column>
+					    </Grid.Row>
+					</Grid>
+				</Container>
 			</div>
 
 		)

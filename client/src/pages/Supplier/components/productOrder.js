@@ -24,8 +24,8 @@ class ProductOrder extends React.Component{
 		const {user, product} = this.props;
 		const productSubTotal = this.productTotal(product.price, product.quantity);
 		return(
-			<Grid celled='internally'>
-			<Grid.Row>
+			<Grid celled='internally' stackable>
+			<Grid.Row >
 				<Grid.Column width={8}>
 				      <h4>{product.title}</h4>
 				</Grid.Column>
