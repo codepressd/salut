@@ -15,18 +15,33 @@ I work in the Restaurant Industry and I wanted an easy way to be able to order f
 - Javascript
 
 
-### Things To Work On
+###Getting Started
+
+I have created a few demo users for your anyone to take a look at how the whole application works. If you Navigate to [somewebaddress.com] you can test it out the the credentials below.
+
+Restaurant Login:
+
+email: demo@restaurant.com
+pass: demo
+
+Supplier Login:
+
+email: demo@supplier.com
+pass: demo
+
+
+## Things To Work On
 
 This project has a long way to go before I will be happy with it. Right now it is pretty much at as barebones as it could be. Here are some features I would like to add:
 
-## For Suppliers
+### For Suppliers
 
 - pdf/excel import for suppliers
 -  Support for multiple Reps
 - Support both being a supplier but also have the ability to order
 
 
-##For Restaurants
+###For Restaurants
 
 - A better search feature when shopping
 - A place to view all your suppliers and add your specific customer number
