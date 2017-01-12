@@ -9,7 +9,7 @@ var configDB = require('./server/config/database');
 
 //static assets
 
-  app.use(express.static('client/build');
+  app.use(express.static('./client/build');
 
 //app.use(express.static('public'));
 
