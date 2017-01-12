@@ -15,7 +15,6 @@ export const saveUserState = (state) => {
 		const userState = JSON.stringify(state);
 		localStorage.setItem('user', userState);
 	}catch (err){
-		console.log(err);
 		return undefined;
 
 	}

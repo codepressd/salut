@@ -7,7 +7,7 @@ const mock = new MockAdapter(axios);
 describe('Test API Calls To Database', () => {
 
 
-	it('Restaurant Add To Cart', (done) => {
+	it('Signup', (done) => {
 		mock
 			.onPost('api/signup')
 			.reply(200, {

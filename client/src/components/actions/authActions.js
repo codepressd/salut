@@ -37,7 +37,8 @@ export const userTokenSuccess = (user, token, success) => {
 	}
 };
 
- const userTokenFail = (expireTime, message, success) => {
+ export const userTokenFail = (expireTime, message, success) => {
+
 	return {
 		type: USER_TOKEN_FAIL,
 		expireTime,
@@ -46,7 +47,8 @@ export const userTokenSuccess = (user, token, success) => {
 	}
 };
 
-const noTokenFail = ( message, success) => {
+export const noTokenFail = ( message, success) => {
+
 	return {
 		type: NO_TOKEN_FAIL,
 		success,
@@ -54,7 +56,8 @@ const noTokenFail = ( message, success) => {
 	}
 };
 
-const notAuthorized = ( message, success) => {
+export const notAuthorized = ( message, success) => {
+
 	return {
 		type: NOT_AUTHORIZED,
 		success,
