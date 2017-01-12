@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React  from 'react';
 import { connect } from 'react-redux';
-import { Container, Header, Icon, Grid, Image, Sidebar, Segment } from 'semantic-ui-react';
+import { Container, Header, Icon, Grid, Image, Sidebar, Segment, Divider } from 'semantic-ui-react';
 
 
 // Import Style
@@ -24,7 +24,30 @@ render() {
                         <Segment basic>
                                 <Container >
                                           <Image src='/bird.png' alt='bird' centered/>
-                                          <h2 className="center">Some Catchy TagLine!!</h2>
+                                          <h2 className="center">Welcome To Salut</h2>
+                                          <h3 className="center">Easy Universal Ordering App</h3>
+                                          <h4 className="center">To get Started, click the login button and use one of the user credentials below: </h4>
+                                          <Divider />
+                                          <Grid className="grid" columns={2} divided centered stackable>
+                                          <Grid.Row>
+                                                    <Grid.Column>
+                                                      <Header as='h2' icon>
+                                                        <Icon name='shipping' />
+                                                        Supplier Login Details
+                                                      </Header>
+                                                      <h3>Username: demo@supplier.com</h3>
+                                                      <h3>Password: demo</h3>
+                                                    </Grid.Column>
+                                                    <Grid.Column>
+                                                      <Header as='h2' icon>
+                                                        <Icon name='shopping basket' />
+                                                        Restaurant Login Details
+                                                      </Header>
+                                                      <h3>Username: demo@restaurant.com</h3>
+                                                      <h3>Password: demo</h3>
+                                                    </Grid.Column>
+                                          </Grid.Row>
+                                          </Grid>
                                           <Grid className="grid" columns={3} divided centered stackable>
                                                   <Grid.Row>
                                                     <Grid.Column>

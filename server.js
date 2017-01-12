@@ -8,7 +8,11 @@ var cookieParser = require('cookie-parser');
 var configDB = require('./server/config/database');
 
 //static assets
-app.use(express.static('public'));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
+//app.use(express.static('public'));
 
 //runs Server and connects to database
 var runServer = function(callback) {
