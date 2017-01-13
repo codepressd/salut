@@ -42,7 +42,7 @@ if (require.main === module) {
 }
 
 app.get('/', (req, res) => {
-    res.send('The server is running');
+    res.send('The server is running. please dont show this');
     //res.sendFile('index.html');
 });
 
