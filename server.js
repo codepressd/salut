@@ -41,9 +41,9 @@ if (require.main === module) {
     });
 }
 
-// app.get('/', (req, res) => {
-//     res.send('The server is running');
-// });
+app.get('/', (req, res) => {
+    res.send('The server is running');
+});
 
 //express setup
 
