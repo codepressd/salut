@@ -9,9 +9,9 @@ var configDB = require('./server/config/database');
 
 //static assets
 
-//if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static('./client/build'));
-//}
+}
 
 //app.use(express.static('public'));
 
@@ -43,6 +43,7 @@ if (require.main === module) {
 
 app.get('/', (req, res) => {
     res.send('The server is running');
+    //res.sendFile('index.html');
 });
 
 //express setup
