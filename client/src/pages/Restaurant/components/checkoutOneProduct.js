@@ -44,11 +44,11 @@ class CheckoutOneProduct extends React.Component {
 
     render() {
             const { product, user } = this.props;
-            let imageUrl = 'http://semantic-ui.com/images/wireframe/image.png';
+            let imageUrl = '/walrus-hat-noimage.jpg';
             const total = this.calcProductTotal(product.price, product.quantity);
 
             if (product.product.image.length !== 0) {
-            imageUrl = product.image;
+            imageUrl = product.product.image;
             }
             let size = product.type;
        
