@@ -1,3 +1,4 @@
+/* eslint-disable */
 export const calculateCartTotal = (cart) => {
 		
 		const taxRate = 1.07725;

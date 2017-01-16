@@ -133,7 +133,7 @@ class ProductPage extends React.Component{
 				
 				this.props.addToCart(res.data);
 			} )
-			// .catch((err) => this.setState({ errors: err.response.data }));
+			.catch((err) => this.setState({ errors: err.response.data }));
 		}
 
 
@@ -145,7 +145,13 @@ class ProductPage extends React.Component{
 		const { product } = this.props;
 		const { errors } = this.state;
 		const {success, userIsFetching} = this.props.activeUser;
-		
+		let productImage = '/walrus-hat-noimage.jpg';
+
+		//if  product has Image
+		if(product.image !== ''){
+			productImage = product.image;
+		}
+
 		if(isLoading || !success){
 		          return(
 		          <Loader active inline='centered' />
@@ -163,7 +169,7 @@ class ProductPage extends React.Component{
 					<Grid columns='equal'>
 						<Grid.Row>
 							<Grid.Column>
-							<Image size='large' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
+							<Image size='large' src={productImage}/>
 							</Grid.Column>
 							<Grid.Column>
 							<h2>{product.title}</h2>

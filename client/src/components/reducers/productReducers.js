@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {GRAB_SUPPLIER_PRODUCTS, REMOVE_PRODUCT, GET_ALL_PRODUCTS, PUSH_SINGLE_PRODUCT, UPDATE_CART, RESET_FETCH, ORDERS_TO_STORE, SINGLE_ORDER_TO_STORE} from '../actions/productActions';
 
 const initialState ={

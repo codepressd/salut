@@ -37,7 +37,7 @@ class SingleProduct extends React.Component {
 
 	render(){
 		const {product, user} = this.props;
-		let imageUrl = 'http://semantic-ui.com/images/wireframe/image.png';
+		let imageUrl = '/walrus-hat-noimage.jpg';
 		if(product.image.length !== 0){
 			imageUrl = product.image;
 		}
