@@ -199,11 +199,11 @@ class SupplierAddProducts extends React.Component {
                                                 <Form.Input label='Name Of Product' className={classnames({'error': errors.productName})} name='productName' placeholder={errors.productName && errors.productName ||'Product Name'}required/>
                                                 <h4>Individual Price</h4>
                                                 <Form.Group>
-                                                  <Input label='$' type='number' className={classnames({'error': errors.unitPrice})} name='unitPrice' placeholder={errors.unitPrice && errors.unitPrice ||'Amount'} required/>
+                                                  <Input label='$' type='text' className={classnames({'error': errors.unitPrice})} name='unitPrice' placeholder={errors.unitPrice && errors.unitPrice ||'Amount'} required/>
                                                 </Form.Group>
                                                 <h4>Case Price</h4>
                                                 <Form.Group>
-                                                  <Input label='$' type='number' className={classnames({'error': errors.casePrice})} name='casePrice' placeholder={errors.casePrice && errors.casePrice ||'Amount'} required/>
+                                                  <Input label='$' type='text' className={classnames({'error': errors.casePrice})} name='casePrice' placeholder={errors.casePrice && errors.casePrice ||'Amount'} required/>
                                                 </Form.Group>
                                                 <Form.TextArea name='productDescription' className={classnames({'error': errors.productDescription})} label='Product Description' placeholder={errors.productDescription && errors.productDescription ||'Describe what you are selling...'} rows='3' required/>
 

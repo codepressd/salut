@@ -3,6 +3,8 @@ import axios from 'axios';
 import {browserHistory} from 'react-router';
 
 export const AUTHORIZE_USER = 'AUTHORIZE_USER';
+export const USER_LOGIN_FAIL = 'USER_LOGIN_FAIL';
+export const USER_SIGNUP_FAIL = 'USER_SIGNUP_FAIL';
 //export const AUTHORIZE_ERROR = 'AUTHORIZE_ERROR';
 export const AUTHORIZE_USER_UPDATE = 'AUTHORIZE_USER_UPDATE';
 export const CHANGE_PASSWORD_ERROR = 'CHANGE_PASSWORD_ERROR';
@@ -26,6 +28,20 @@ export const authorizeUser = (user, token, success) => {
 		user,
 		token, 
 		success
+	}
+};
+
+export const userLoginFail = (error) => {
+	return {
+		type: USER_LOGIN_FAIL,
+		error
+	}
+};
+
+export const userSignupFail = (error) => {
+	return {
+		type: USER_SIGNUP_FAIL,
+		error
 	}
 };
 
@@ -137,7 +153,9 @@ export const signupRequest = (data) => dispatch => {
 			dispatch(authorizeUser(activeUser, token, success));
 			return browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id);
 		})
-		.catch(err => console.log(err));
+		.catch((err) => {
+			dispatch(userSignupFail(err.response.data));
+		});
 	
 }
 
@@ -165,7 +183,9 @@ export const loginRequest = (data) => dispatch => {
 			dispatch(authorizeUser(activeUser, token, success));
 			return browserHistory.push('/' + activeUser.role + '/dashboard/' + activeUser.id);
 		})
-		.catch(err => console.log(err));
+		.catch((err) => {
+			dispatch(userLoginFail(err.response.data));
+		});
 }
 
 export const updateUserData = (data) => dispatch => {

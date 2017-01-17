@@ -43,7 +43,7 @@ class Signup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            errors: {}
+            error: {}
 
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,7 +51,7 @@ class Signup extends React.Component {
     }
 
     validateInput (data) {
-        let errors = {};
+        let error = {};
         let typeOfUser = '';
 
         Object.keys(data).map(function(objectKey, index) {
@@ -59,22 +59,22 @@ class Signup extends React.Component {
 
             if (typeof value == 'string' && value.length < 1) {
 
-                errors[objectKey] = 'This Field Is Required';
+                error[objectKey] = 'This Field Is Required';
 
             }
             if (data[objectKey] !== true && objectKey === 'terms') {
-                errors.terms = 'Must Agree To Our Terms and Conditions';
+                error.terms = 'Must Agree To Our Terms and Conditions';
             }
 
         });
         
         if (data.password !== data.passwordConfirm) {
-            errors.password = 'Passwords Don\'t Match';
-            errors.passwordConfrim = 'Passwords Don\'t Match';
+            error.password = 'Passwords Don\'t Match';
+            error.passwordConfrim = 'Passwords Don\'t Match';
         }
         
         return {
-            errors,
+            error,
             typeOfUser
         }
 
@@ -83,22 +83,22 @@ class Signup extends React.Component {
     handleSubmit(e, data) {
         e.preventDefault();
       
-        const { errors, typeOfUser} = this.validateInput(data.formData);
+        const { error, typeOfUser} = this.validateInput(data.formData);
 
-        if (Object.keys(errors).length !== 0) {
-            this.setState({ errors });
+        if (Object.keys(error).length !== 0) {
+            this.setState({ error });
         }
 
-        if (Object.keys(errors).length === 0) {
+        if (Object.keys(error).length === 0) {
             this.setState({
-                errors: {},
+                error: {},
             });
 
             this.props.signupRequest(data.formData);
         }
     }
     render() {
-        const { errors } = this.state;
+        const { error } = this.props.activeUser;
         return (
                   <Sidebar.Pushable as={Segment}>
                             <MobileMenu  {...this.props}/>
@@ -112,26 +112,26 @@ class Signup extends React.Component {
                                                                    <Form onSubmit={this.handleSubmit}>
 
                                                                                     <Form.Group  widths='equal' >
-                                                                                                      <Form.Input label={errors.username && errors.username || 'Username'} className={classnames({'error': errors.username})} name='username' placeholder={errors.username && errors.username || 'Pick a Username'} required />
-                                                                                                      <Form.Input label={errors.email && errors.email ||'Email'} className={classnames({'error': errors.email})} name='email' placeholder={errors.email && errors.email ||'Email'} required />
+                                                                                                      <Form.Input label={error.username && error.username || 'Username'} className={classnames({'error': error.username})} name='username' placeholder={error.username && error.username || 'Pick a Username'} required />
+                                                                                                      <Form.Input label={error.email && error.email ||'Email'} className={classnames({'error': error.email})} name='email' placeholder={error.email && error.email ||'Email'} required />
                                                                                     </Form.Group>
 
-                                                                                    <Form.Input label='Password' className={classnames({'error': errors.password})} type='password' name='password' placeholder={errors.password && errors.password ||'Password'} required />
-                                                                                    <Form.Input label='Password Confirm' className={classnames({'error': errors.passwordConfirm})} type='password' name='passwordConfirm' placeholder={errors.passwordConfirm && errors.passwordConfirm ||'Confrim Password'} required />
+                                                                                    <Form.Input label='Password' className={classnames({'error': error.password})} type='password' name='password' placeholder={error.password && error.password ||'Password'} required />
+                                                                                    <Form.Input label='Password Confirm' className={classnames({'error': error.passwordConfirm})} type='password' name='passwordConfirm' placeholder={error.passwordConfirm && error.passwordConfirm ||'Confrim Password'} required />
 
                                                                                     <Form.Group className='group' widths='equal'>
-                                                                                                      <Form.Input label='First Name' className={classnames({'error': errors.firstName})} name='firstName' placeholder={errors.firstName && errors.firstName ||'First Name'} required/>
-                                                                                                      <Form.Input label='Last Name' className={classnames({'error': errors.lastName})} name='lastName' placeholder={errors.lastName && errors.lastName ||'Last Name'} required/>
-                                                                                                      <Form.Input label='Company Name' className={classnames({'error': errors.companyName})} name='companyName' placeholder={errors.companyName && errors.companyName ||'Company Name'} required />
+                                                                                                      <Form.Input label='First Name' className={classnames({'error': error.firstName})} name='firstName' placeholder={error.firstName && error.firstName ||'First Name'} required/>
+                                                                                                      <Form.Input label='Last Name' className={classnames({'error': error.lastName})} name='lastName' placeholder={error.lastName && error.lastName ||'Last Name'} required/>
+                                                                                                      <Form.Input label='Company Name' className={classnames({'error': error.companyName})} name='companyName' placeholder={error.companyName && error.companyName ||'Company Name'} required />
                                                                                     </Form.Group>
 
                                                                                     <Divider horizontal>Your Business Location</Divider>
 
                                                                                     <Form.Group className='group' widths='equal'>
 
-                                                                                                      <Form.Input label='Address' className={classnames({'error': errors.address})} name='address' placeholder={errors.address && errors.address ||'Address'} required/>
-                                                                                                      <Form.Input label='City' className={classnames({'error': errors.city})} name='city' placeholder={errors.city && errors.city ||'City'} required/>
-                                                                                                      <Form.Input label='State' className={classnames({'error': errors.state})} name='state' placeholder={errors.state && errors.state ||'State'}  required/>
+                                                                                                      <Form.Input label='Address' className={classnames({'error': error.address})} name='address' placeholder={error.address && error.address ||'Address'} required/>
+                                                                                                      <Form.Input label='City' className={classnames({'error': error.city})} name='city' placeholder={error.city && error.city ||'City'} required/>
+                                                                                                      <Form.Input label='State' className={classnames({'error': error.state})} name='state' placeholder={error.state && error.state ||'State'}  required/>
 
                                                                                     </Form.Group>
 
@@ -139,13 +139,13 @@ class Signup extends React.Component {
                                                                    
                                                                                     <Form.Group  className='group' widths='equal'>
                                                                                       
-                                                                                                    <Form.Select className={classnames({'error': errors.businessType})} label='Business Type'  name='businessType' options={supplyType} placeholder={errors.businessType && errors.businessType||'Business Type'}  required />
-                                                                                                    <Form.Select className={classnames({'error': errors.role})} label='Business Role'  name='role' options={role} placeholder={errors.role && errors.role||'Business Role'}  required />
-                                                                                                    <Form.Select className={classnames({'error': errors.region})} label='Business Region'  name='region' options={region} placeholder={errors.region && errors.region||'Business Region'}  required />
+                                                                                                    <Form.Select className={classnames({'error': error.businessType})} label='Business Type'  name='businessType' options={supplyType} placeholder={error.businessType && error.businessType||'Business Type'}  required />
+                                                                                                    <Form.Select className={classnames({'error': error.role})} label='Business Role'  name='role' options={role} placeholder={error.role && error.role||'Business Role'}  required />
+                                                                                                    <Form.Select className={classnames({'error': error.region})} label='Business Region'  name='region' options={region} placeholder={error.region && error.region||'Business Region'}  required />
                                                                                      
                                                                                     </Form.Group>
 
-                                                                                    <Form.Checkbox className={classnames({'error': errors.terms})} name='terms'  label='I agree to the Terms and Conditions' required/>
+                                                                                    <Form.Checkbox className={classnames({'error': error.terms})} name='terms'  label='I agree to the Terms and Conditions' required/>
                                                                                     <Button primary type='submit'>Submit</Button>
                                                                   </Form>
                                                 </Container>

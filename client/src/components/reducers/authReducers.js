@@ -1,12 +1,12 @@
 /* eslint-disable */
 //import Auth Actions
-import {AUTHORIZE_USER, AUTHORIZE_ERROR, AUTHORIZE_USER_UPDATE, USER_LOGOUT, TOGGLE_USER_MENU, CHANGE_PASSWORD_ERROR, USER_TOKEN_SUCCESS, USER_RESET_FETCH, NO_TOKEN_FAIL, USER_TOKEN_FAIL, NOT_AUTHORIZED} from '../actions/authActions';
+import {AUTHORIZE_USER, AUTHORIZE_ERROR, AUTHORIZE_USER_UPDATE, USER_LOGIN_FAIL, USER_SIGNUP_FAIL, USER_LOGOUT, TOGGLE_USER_MENU, CHANGE_PASSWORD_ERROR, USER_TOKEN_SUCCESS, USER_RESET_FETCH, NO_TOKEN_FAIL, USER_TOKEN_FAIL, NOT_AUTHORIZED} from '../actions/authActions';
 import {UPDATE_CART, REMOVE_PRODUCT_FROM_CART, RESET_CART} from '../actions/productActions.js';
 
 const initialState = {
 	user: null,
 	menu: false,
-	error: null,
+	error: {},
 	expiretime: false,
 	message:'',
 	userIsFetching: true,
@@ -47,6 +47,17 @@ const AuthUserReducer = (state = initialState, action) => {
 				token: action.token
 			}
 
+		case USER_LOGIN_FAIL:
+			return{
+				...state,
+				error: action.error
+			}
+
+		case USER_SIGNUP_FAIL:
+			return{
+				...state,
+				error: action.error
+			}
 
 		case USER_LOGOUT:
 			return initialState;

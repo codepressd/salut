@@ -64,6 +64,7 @@ class Login extends React.Component {
     render() {
          const { errors } = this.state;
          const {message} = this.props.activeUser; 
+         const serverErrors = this.props.activeUser.error;
         return (
                   <Sidebar.Pushable as={Segment}>
                                     <MobileMenu  {...this.props}/>
@@ -77,6 +78,8 @@ class Login extends React.Component {
                                         		        Login
                                         		      </Header.Content>
                                                                                   {message}
+                                                                                  {serverErrors.password}
+                                                                                  {serverErrors.email}
                                         		 </Header>
 
                                         		<Grid verticalAlign='middle' columns={1} centered>
