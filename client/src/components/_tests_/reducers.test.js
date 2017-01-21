@@ -87,7 +87,7 @@ describe('Test authReducers', () => {
 
 		const newState = authReducer(initialState, actions);
 
-		expect(newState).toEqual({user: null, error: null, cart:[], token: null, success: false, userIsFetching: true, expiretime: false, menu: false, message: ""});
+		expect(newState).toEqual({user: null, error: {}, cart:[], token: null, success: false, userIsFetching: true, expiretime: false, menu: false, message: ""});
 		
       	});
 

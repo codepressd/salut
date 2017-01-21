@@ -1,8 +1,11 @@
 /* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
+import{bindActionCreators} from 'redux';
 import { Container, Header, Icon, Grid, Image, Sidebar, Segment, Divider } from 'semantic-ui-react';
 
+//close menu 
+import {signupRequest, userResetFetch} from '../../../components/actions/authActions.js';
 
 // Import Style
 import '../faq.css';
@@ -12,6 +15,14 @@ import '../faq.css';
 import MobileMenu from '../../../components/mobileMenu';
 
 class faqPage extends React.Component {
+  constructor(props){
+            super(props);
+  }
+
+componentWillUnmount(){
+    this.props.userResetFetch();
+  }
+
   render(){
   return (
      <Sidebar.Pushable as={Segment}>
@@ -65,6 +76,11 @@ class faqPage extends React.Component {
 }
 }
 
+function mapDispatchToProps(dispatch){
+    return{
+        userResetFetch: bindActionCreators(userResetFetch ,dispatch)
 
+    }    
+}
 
-export default connect()(faqPage);
+export default connect(null, mapDispatchToProps)(faqPage);

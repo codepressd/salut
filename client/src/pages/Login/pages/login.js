@@ -1,11 +1,12 @@
 /* eslint-disable */
 import React from 'react';
 import { Container, Grid, Form, Icon, Header, Checkbox, Button, Sidebar, Segment } from 'semantic-ui-react';
-import { loginRequest } from '../../../components/actions/authActions.js';
+import { loginRequest, userResetFetch } from '../../../components/actions/authActions.js';
 import { connect } from 'react-redux';
 import{bindActionCreators} from 'redux';
 import { browserHistory } from 'react-router';
 import classnames from 'classnames';
+
 
 //Login css
 import '../login.css';
@@ -24,6 +25,10 @@ class Login extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateInput = this.validateInput.bind(this);
     }
+
+    componentWillUnmount(){
+    this.props.userResetFetch();
+  }
 
     validateInput (data){
              let errors = {};
@@ -103,6 +108,7 @@ class Login extends React.Component {
 function mapDispatchToProps(dispatch){
     return{
         loginRequest: bindActionCreators(loginRequest ,dispatch),
+        userResetFetch: bindActionCreators(userResetFetch ,dispatch)
 
     }    
 }

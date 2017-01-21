@@ -1,8 +1,11 @@
 /* eslint-disable */
 import React  from 'react';
 import { connect } from 'react-redux';
+import{bindActionCreators} from 'redux';
 import { Container, Header, Icon, Grid, Image, Sidebar, Segment, Divider } from 'semantic-ui-react';
 
+//close menu 
+import {signupRequest, userResetFetch} from '../../../components/actions/authActions.js';
 
 // Import Style
 import  '../home.css';
@@ -13,6 +16,9 @@ class HomePage extends React.Component{
     constructor(props){
               super(props);
     }
+    componentWillUnmount(){
+    this.props.userResetFetch();
+  }
 
 render() {
 
@@ -87,7 +93,13 @@ render() {
   )
 }
 }
+function mapDispatchToProps(dispatch){
+    return{
+        userResetFetch: bindActionCreators(userResetFetch ,dispatch),
+
+    }    
+}
 
 
 
-export default connect()(HomePage);
+export default connect(null, mapDispatchToProps)(HomePage);

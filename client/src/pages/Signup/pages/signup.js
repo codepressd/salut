@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import{bindActionCreators} from 'redux';
 //import { signupRequest } from '../actions/signupActions';
-import {signupRequest} from '../../../components/actions/authActions.js';
+import {signupRequest, userResetFetch} from '../../../components/actions/authActions.js';
 import { Container, Header, Icon, Grid, Image, Button, Checkbox, Form, Input, Message, Radio, Select, TextArea, Divider, Sidebar, Segment } from 'semantic-ui-react';
 import classnames from 'classnames';
 
@@ -48,6 +48,10 @@ class Signup extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateInput = this.validateInput.bind(this);
+    }
+
+    componentWillUnmount(){
+        this.props.userResetFetch();
     }
 
     validateInput (data) {
@@ -159,7 +163,8 @@ class Signup extends React.Component {
 
 function mapDispatchToProps(dispatch){
     return{
-        signupRequest: bindActionCreators(signupRequest ,dispatch)
+        signupRequest: bindActionCreators(signupRequest ,dispatch),
+        userResetFetch: bindActionCreators(userResetFetch ,dispatch)
     }    
 }
 

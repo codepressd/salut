@@ -1,7 +1,11 @@
 /* eslint-disable */
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import{bindActionCreators} from 'redux';
 import { Container, Header, Icon, Grid, Image, Sidebar, Segment, Divider } from 'semantic-ui-react';
+
+//close menu 
+import {signupRequest, userResetFetch} from '../../../components/actions/authActions.js';
 
 // Import Style
 import  '../about.css';
@@ -10,6 +14,14 @@ import  '../about.css';
 import MobileMenu from '../../../components/mobileMenu';
 
 class AboutPage extends React.Component{
+  constructor(props){
+          super(props)
+  }
+
+  componentWillUnmount(){
+    this.props.userResetFetch();
+  }
+
   render(){
   return (
     <Sidebar.Pushable as={Segment}>
@@ -67,6 +79,11 @@ class AboutPage extends React.Component{
 }
 }
 
+function mapDispatchToProps(dispatch){
+    return{
+        userResetFetch: bindActionCreators(userResetFetch ,dispatch)
 
+    }    
+}
 
-export default connect()(AboutPage);
+export default connect(null, mapDispatchToProps)(AboutPage);
