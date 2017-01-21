@@ -125,16 +125,6 @@ class Signup extends React.Component {
                                                                                                       <Form.Input label='Company Name' className={classnames({'error': error.companyName})} name='companyName' placeholder={error.companyName && error.companyName ||'Company Name'} required />
                                                                                     </Form.Group>
 
-                                                                                    <Divider horizontal>Your Business Location</Divider>
-
-                                                                                    <Form.Group className='group' widths='equal'>
-
-                                                                                                      <Form.Input label='Address' className={classnames({'error': error.address})} name='address' placeholder={error.address && error.address ||'Address'} required/>
-                                                                                                      <Form.Input label='City' className={classnames({'error': error.city})} name='city' placeholder={error.city && error.city ||'City'} required/>
-                                                                                                      <Form.Input label='State' className={classnames({'error': error.state})} name='state' placeholder={error.state && error.state ||'State'}  required/>
-
-                                                                                    </Form.Group>
-
                                                                                     <Divider horizontal>Business Type</Divider>
                                                                    
                                                                                     <Form.Group  className='group' widths='equal'>
@@ -143,6 +133,16 @@ class Signup extends React.Component {
                                                                                                     <Form.Select className={classnames({'error': error.role})} label='Business Role'  name='role' options={role} placeholder={error.role && error.role||'Business Role'}  required />
                                                                                                     <Form.Select className={classnames({'error': error.region})} label='Business Region'  name='region' options={region} placeholder={error.region && error.region||'Business Region'}  required />
                                                                                      
+                                                                                    </Form.Group>
+
+                                                                                    <Divider horizontal>Your Business Location</Divider>
+
+                                                                                    <Form.Group className='group' widths='equal'>
+
+                                                                                                      <Form.Input label='Address' className={classnames({'error': error.address})} name='address' placeholder={error.address && error.address ||'Address'} required/>
+                                                                                                      <Form.Input label='City' className={classnames({'error': error.city})} name='city' placeholder={error.city && error.city ||'City'} required/>
+                                                                                                      <Form.Input label='State' className={classnames({'error': error.state})} name='state' placeholder={error.state && error.state ||'State'}  required/>
+
                                                                                     </Form.Group>
 
                                                                                     <Form.Checkbox className={classnames({'error': error.terms})} name='terms'  label='I agree to the Terms and Conditions' required/>

@@ -196,25 +196,27 @@ class SupplierAddProducts extends React.Component {
                                               <Divider hidden />
                                               <Form onSubmit={this.handleSubmit}>
 
-                                                <Form.Input label='Name Of Product' className={classnames({'error': errors.productName})} name='productName' placeholder={errors.productName && errors.productName ||'Product Name'}required/>
-                                                <h4>Individual Price</h4>
-                                                <Form.Group>
-                                                  <Input label='$' type='text' className={classnames({'error': errors.unitPrice})} name='unitPrice' placeholder={errors.unitPrice && errors.unitPrice ||'Amount'} required/>
+                                                <Form.Group widths='2'>
+                                                      <Form.Field>
+                                                            <h2>Pick One  General Category</h2>
+                                                            <Form.Select label='Product Type' className={classnames({'error': errors.productType})} name='productType' options={categoryType} placeholder={errors.productType && errors.productType ||'Product Type'} required/>
+                                                      </Form.Field>
                                                 </Form.Group>
-                                                <h4>Case Price</h4>
-                                                <Form.Group>
-                                                  <Input label='$' type='text' className={classnames({'error': errors.casePrice})} name='casePrice' placeholder={errors.casePrice && errors.casePrice ||'Amount'} required/>
-                                                </Form.Group>
-                                                <Form.TextArea name='productDescription' className={classnames({'error': errors.productDescription})} label='Product Description' placeholder={errors.productDescription && errors.productDescription ||'Describe what you are selling...'} rows='3' required/>
 
                                                 <Divider section />
 
-                                                <Form.Group widths='2'>
-                                                  <Form.Field>
-                                                    <h2>Pick One  General Category</h2>
-                                                    <Form.Select label='Product Type' className={classnames({'error': errors.productType})} name='productType' options={categoryType} placeholder={errors.productType && errors.productType ||'Product Type'} required/>
-                                                  </Form.Field>
+                                                <Form.Input label='Name Of Product' className={classnames({'error': errors.productName})} name='productName' placeholder={errors.productName && errors.productName ||'Product Name'}required/>
+                                                <h4>Individual Price</h4>
+                                                <Form.Group>
+                                                      <Input label='$' type='text' className={classnames({'error': errors.unitPrice})} name='unitPrice' placeholder={errors.unitPrice && errors.unitPrice ||'Amount'} required/>
                                                 </Form.Group>
+
+                                                <h4>Case Price</h4>
+                                                <Form.Group>
+                                                      <Input label='$' type='text' className={classnames({'error': errors.casePrice})} name='casePrice' placeholder={errors.casePrice && errors.casePrice ||'Amount'} required/>
+                                                </Form.Group>
+                                                <Form.TextArea name='productDescription' className={classnames({'error': errors.productDescription})} label='Product Description' placeholder={errors.productDescription && errors.productDescription ||'Describe what you are selling...'} rows='3' required/>
+
                                                 <Button primary type='submit'>Add Product</Button>
                                               </Form>
                                             </Container>

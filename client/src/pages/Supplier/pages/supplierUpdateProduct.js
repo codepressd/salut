@@ -235,6 +235,16 @@ class SupplierUpdateProducts extends React.Component {
                                                       <Grid.Column> 
                                                               <Form onSubmit={this.handleSubmit}>
 
+                                                                        <Form.Group widths='2'>
+                                                                                  <Form.Field>
+                                                                                            <h2>Pick One  General Category</h2>
+                                                                                            <Form.Select label='Product Type' className={classnames({'error': errors.productType})} name='productType' options={categoryType} placeholder={errors.productType && errors.productType ||'Product Type'} required/>
+                                                                                  </Form.Field>
+                                                                        </Form.Group>
+
+                                                                        
+                                                                        <Divider section />
+
                                                                         <Form.Input label='Name Of Product' className={classnames({'error': errors.productName})} name='productName' placeholder={errors.productName && errors.productName ||'Product Name'}required/>
                                                                         <h4>Individual Price</h4>
                                                                         <Form.Group>
@@ -245,16 +255,8 @@ class SupplierUpdateProducts extends React.Component {
                                                                                   <Input label='$' type='number' className={classnames({'error': errors.casePrice})} name='casePrice' placeholder={errors.casePrice && errors.casePrice ||'Amount'} required/>
                                                                         </Form.Group>
                                                                         <Form.TextArea name='productDescription' className={classnames({'error': errors.productDescription})} label='Product Description' placeholder={errors.productDescription && errors.productDescription ||'Describe what you are selling...'} rows='3' required/>
-
-                                                                        <Divider section />
-
-                                                                        <Form.Group widths='2'>
-                                                                                  <Form.Field>
-                                                                                            <h2>Pick One  General Category</h2>
-                                                                                            <Form.Select label='Product Type' className={classnames({'error': errors.productType})} name='productType' options={categoryType} placeholder={errors.productType && errors.productType ||'Product Type'} required/>
-                                                                                  </Form.Field>
-                                                                        </Form.Group>
-                                                                        <Button primary type='submit'>Add Product</Button>
+                                                                        
+                                                                        <Button primary type='submit'>Update Product</Button>
                                                                 </Form>
                                               </Grid.Column>
                                               <Grid.Column>
