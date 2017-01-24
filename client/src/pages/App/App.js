@@ -26,16 +26,14 @@ export class App extends Component {
          
         const Header = ({activeUser: {user}}) => user ? <BackEndHeader {...this.props} /> : <FrontEndHeader {...this.props} />;
         return (
-            <div>
-        {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
-        <div>
-          <Header activeUser={this.props.activeUser} {...this.props} />
-          <div >
-            {React.cloneElement(this.props.children, this.props)}
-          </div>
-          <Footer />
-        </div>
-      </div>
+                <div className='app-wrap'>
+                    {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
+                       <Header activeUser={this.props.activeUser} {...this.props} />
+                        <div className='components-wrap' >
+                                {React.cloneElement(this.props.children, this.props)}
+                      </div>
+                      <Footer />
+               </div>
         );
     }
 }

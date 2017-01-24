@@ -1,8 +1,9 @@
 /* eslint-disable */
 import React  from 'react';
 import { connect } from 'react-redux';
+import {browserHistory} from 'react-router';
 import{bindActionCreators} from 'redux';
-import { Container, Header, Icon, Grid, Image, Sidebar, Segment, Divider } from 'semantic-ui-react';
+import { Container, Header, Icon, Grid, Image, Sidebar, Segment, Divider, Button } from 'semantic-ui-react';
 
 //close menu 
 import {signupRequest, userResetFetch} from '../../../components/actions/authActions.js';
@@ -28,65 +29,83 @@ render() {
                <MobileMenu  {...this.props}/>
                 <Sidebar.Pusher>
                         <Segment basic>
-                                <Container >
-                                          <Image src='/bird.png' alt='bird' centered/>
-                                          <h2 className="center">Welcome To Salut</h2>
-                                          <h3 className="center">Easy Universal Ordering App</h3>
-                                          <h4 className="center">To get Started, click the login button and use one of the user credentials below: </h4>
-                                          <Divider />
-                                          <Grid className="grid" columns={2} divided centered stackable>
-                                          <Grid.Row>
-                                                    <Grid.Column>
-                                                      <Header as='h2' icon>
-                                                        <Icon name='shipping' />
-                                                        Supplier Login Details
-                                                      </Header>
-                                                      <h3>Username: demo@supplier.com</h3>
-                                                      <h3>Password: demo</h3>
-                                                    </Grid.Column>
-                                                    <Grid.Column>
-                                                      <Header as='h2' icon>
-                                                        <Icon name='shopping basket' />
-                                                        Restaurant Login Details
-                                                      </Header>
-                                                      <h3>Username: demo@restaurant.com</h3>
-                                                      <h3>Password: demo</h3>
-                                                    </Grid.Column>
-                                          </Grid.Row>
-                                          </Grid>
-                                          <Grid className="grid" columns={3} divided centered stackable>
+                            <section className="intro">
+                                    <div className="intro-content">
+                                          <p className="headline">Order from all your existing suppliers in one stop</p>
+                                          <div className="get-started">
+                                                <Button content='Start Now' onClick={() => browserHistory.push('/signup')} color='blue' icon='right arrow' labelPosition='right' />
+                                          </div>
+                                    </div>
+                            </section>
+                            <section className="grid-points">
+                            <Grid className="grid" columns={3} divided centered stackable>
                                                   <Grid.Row>
                                                     <Grid.Column>
-                                                      <Header as='h2' icon>
-                                                        <Icon name='home' />
-                                                        One Shop Ordering
-                                                        <Header.Subheader>
-                                                          Order from all your suppliers in one place.
-                                                        </Header.Subheader>
-                                                      </Header>
+                                                      <p className="headline no-pad">All your suppliers on a single site</p>
                                                     </Grid.Column>
                                                     <Grid.Column>
-                                                      <Header as='h2' icon>
-                                                        <Icon name='lemon' />
-                                                        Local Suppliers 
-                                                        <Header.Subheader>
-                                                          We strive to provide you with as many local organic options as possible.
-                                                        </Header.Subheader>
-                                                      </Header>
+                                                        <p className="headline no-pad">Easy To Order</p>
                                                     </Grid.Column>
                                                     <Grid.Column>
-                                                      <Header as='h2' icon>
-                                                        <Icon name='settings' />
-                                                        Detailed Reporting
-                                                        <Header.Subheader>
-                                                          We have detailed reports to stay on top of your business.
-                                                        </Header.Subheader>
-                                                      </Header>
+                                                      <p className="headline no-pad">Access Invoices for Quick Re-Ordering</p>
                                                     </Grid.Column>
                                                   </Grid.Row>
-                                            </Grid>
-                                    </Container>
-                        </Segment>
+                                  </Grid>
+                            </section>
+                            <section className="bar-shot">
+                                  <div className="bar-content">
+                                          <p className="headline">Hunting Down Each & Every Supplier Is Like Beating a Dead Horse</p>
+                                          <p className="description plus-pad">Ordering your supplies (from seasonal fruits, to seafood, to wine, to linens and printer paper) should be the quick and easy part of your day. </p>
+                                          <p className="description plus-pad">Instead of calling, texting, emailing and faxing each order by itself, with Salut your supplies are ordered all together. We send separate orders to each supplier for you so you can focus your time elsewhere.</p>
+                                  </div>
+                            </section>
+                            <section className="light-blue">
+                            <p className="white-headline ">Salut was built by a GM to save time & Reduce Headaches</p>
+                                    <div className="grid-points">
+                                              <Grid className="grid" columns={3} divided centered stackable>
+                                                            <Grid.Row>
+                                                              <Grid.Column>
+                                                                  <Image src='/work-fork.jpg' />
+                                                                  <p className="description">order from one, four or allof your suppliers at once</p>
+                                                              </Grid.Column>
+                                                              <Grid.Column>
+                                                                  <Image src='/work-juice.jpg' />
+                                                                  <p className="description">orders are individually sent to each mechant for you</p>
+                                                              </Grid.Column>
+                                                              <Grid.Column>
+                                                                  <Image src='/work-tray.jpg' />
+                                                                  <p className="description">orders are stored online for easy re-ordering & verification</p>
+                                                              </Grid.Column>
+                                                            </Grid.Row>
+                                             </Grid>
+                                  </div>
+                            </section>
+                            <section className="multi-login">
+                                  <div className="intro-content">
+                                          <p className="headline">Multiple User Log in</p>
+                                          <div className="get-started">
+                                                <p className="description">Access, verify & share invoices with all of your staff. You'll never lose an order again, and everyone stays on the same page for receiving orders, bookkeeping and future ordering!</p>
+                                          </div>
+                                    </div>
+                            </section>
+                            <section className="order-anywhere">
+                                    <div className="anywhere-content">
+                                          <p className="white-headline no-line">Order anywhere, Anytime</p>
+                                          <p className="description">Order on the fly from every corner of your restaurant or on the road</p>
+                                          <p className="white-description">Log in on your laptop, desktop or mobile device</p>
+                                    </div>
+                            </section>
+                            <section className="start-now">
+                                  <div className="start-content">
+                                          <Image src='/walrus-hat.png' centered/>
+                                          <p className="headline light-weight">Upgrade your Ordering. Try Salut For Free!</p>
+                                          <div className="get-started">
+                                                
+                                                <p className="description click-me" onClick={() => browserHistory.push('/signup')}>Sign Up Now >></p>
+                                          </div>
+                                    </div>
+                            </section>
+                         </Segment>
                 </Sidebar.Pusher>
       </Sidebar.Pushable>
  

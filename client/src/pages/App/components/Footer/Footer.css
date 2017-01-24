@@ -5,9 +5,9 @@
   background-size: cover;
   background-color:#aac5de;
   width: 100%;
-  position: fixed; 
-   bottom: 0; 
    z-index: 99;
+   position: fixed;
+   bottom: 0;
 }
 
 .footer p{

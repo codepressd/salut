@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { Container, Grid, Form, Icon, Header, Checkbox, Button, Sidebar, Segment } from 'semantic-ui-react';
+import { Container, Grid, Form, Icon, Header, Checkbox, Button, Sidebar, Segment, Image } from 'semantic-ui-react';
 import { loginRequest, userResetFetch } from '../../../components/actions/authActions.js';
 import { connect } from 'react-redux';
 import{bindActionCreators} from 'redux';
@@ -75,10 +75,9 @@ class Login extends React.Component {
                                     <MobileMenu  {...this.props}/>
                                     <Sidebar.Pusher>
                                                     <Segment basic>
-                                                    <Container className='fullPage'>
-                                                                            
-                                        		<Header as='h2' icon textAlign='center'>
-                                        		      <Icon name='users' circular />
+                                                    <Container className='fullPage'>        
+                                                    <Image src='/walrus-hat.png' centered/>       
+                                        		<Header as='h2' textAlign='center'>
                                         		      <Header.Content>
                                         		        Login
                                         		      </Header.Content>
@@ -96,7 +95,28 @@ class Login extends React.Component {
                                                         		                 <Button type='submit'>Submit</Button>
                                                         		                 </Form>
                                         		</Grid>
-                                        	</Container>
+                                            <Grid className="grid" columns={2} divided centered stackable>
+                                          <Grid.Row>
+                                                    <Grid.Column>
+                                                      <Header as='h2' icon>
+                                                        <Icon name='shipping' />
+                                                        Supplier Login Details
+                                                      </Header>
+                                                      <h3>Username: demo@supplier.com</h3>
+                                                      <h3>Password: demo</h3>
+                                                    </Grid.Column>
+                                                    <Grid.Column>
+                                                      <Header as='h2' icon>
+                                                        <Icon name='shopping basket' />
+                                                        Restaurant Login Details
+                                                      </Header>
+                                                      <h3>Username: demo@restaurant.com</h3>
+                                                      <h3>Password: demo</h3>
+                                                    </Grid.Column>
+                                          </Grid.Row>
+                                          </Grid>   
+                                        	         </Container>
+
                                                       </Segment>
                                     </Sidebar.Pusher>
                  </Sidebar.Pushable>

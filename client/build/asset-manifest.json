@@ -1,7 +1,12 @@
 {
-  "main.css": "static/css/main.81ab2d5c.css",
-  "main.css.map": "static/css/main.81ab2d5c.css.map",
-  "main.js": "static/js/main.a8eb856b.js",
-  "main.js.map": "static/js/main.a8eb856b.js.map",
-  "static\\media\\NEORF.ttf": "static/media/NEORF.d8869f60.ttf"
+  "main.css": "static/css/main.a91ec94e.css",
+  "main.css.map": "static/css/main.a91ec94e.css.map",
+  "main.js": "static/js/main.0e094a92.js",
+  "main.js.map": "static/js/main.0e094a92.js.map",
+  "static\\media\\bar.jpg": "static/media/bar.98e7308a.jpg",
+  "static\\media\\dinnertable.jpg": "static/media/dinnertable.8a64869d.jpg",
+  "static\\media\\quicksand.otf": "static/media/quicksand.3ce1580b.otf",
+  "static\\media\\salut-font.ttf": "static/media/salut-font.d8869f60.ttf",
+  "static\\media\\strawberries.jpg": "static/media/strawberries.2b2c840a.jpg",
+  "static\\media\\toasting.jpg": "static/media/toasting.f20fb94c.jpg"
 }

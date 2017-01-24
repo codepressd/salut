@@ -36,7 +36,7 @@ class SupplierOneOrder extends React.Component{
 			            ${suppliersProduct.totalPrice.total}
 			          </Table.Cell>
 			          <Table.Cell textAlign='center'>
-			          <Button onClick={()=> browserHistory.push('/'+user.role+'/dashboard/'+user.id+'/vieworder/'+ order.orderNumber)}>View Order</Button>
+			          <Button color='blue' onClick={()=> browserHistory.push('/'+user.role+'/dashboard/'+user.id+'/vieworder/'+ order.orderNumber)}>View Order</Button>
 			          </Table.Cell>
 			</Table.Row>
 		

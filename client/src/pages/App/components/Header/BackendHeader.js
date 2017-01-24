@@ -1,6 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import { Menu, Dropdown, Button, Icon } from 'semantic-ui-react';
+import { Menu, Dropdown, Button, Icon, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import{bindActionCreators} from 'redux';
 import MediaQuery from 'react-responsive';
@@ -70,20 +70,22 @@ toggleVisibility(menu){
       <div className="header">
           <MediaQuery minWidth={768}>
                 <Menu  pointing secondary>
-                <span className="myBrand">Salut.io</span>
-                 <Menu.Item name='Home' active={this.props.location.pathname === '/'} onClick={()=> browserHistory.push('/')} />
-                  <Menu.Item name='About' active={this.props.location.pathname === '/about'} onClick={()=> browserHistory.push('/about')} />
-                  <Menu.Item name='FAQ'  active={this.props.location.pathname === '/faq'} onClick={()=> browserHistory.push('/faq')} />
+                      <Image onClick={()=> browserHistory.push('/')} src='/walrus-hat.png' alt='walrus'/>
+                      <ul onClick={()=> browserHistory.push('/')} className="nav-brand">
+                          <li className="myBrand">Salut.<span className="io">io</span></li>
+                          <li className="tag-line">a better way to order</li>
+                      </ul>
                   <Menu.Menu position='right'>
-                  {backendNav}
-                  {cartButton}
-                 <Menu.Item name='Logout'  onClick={()=> browserHistory.push('/logout')} />
+                         <span className="cart-button">{cartButton}</span>
+                          <span className="backend-logout" onClick={()=> browserHistory.push('/logout')} >Logout</span>
+                          {backendNav}
                   </Menu.Menu>
                 </Menu>
           </MediaQuery>
         <MediaQuery maxWidth={767}>
         <Menu pointing secondary>
-                  <span className="myBrand">Salut.io</span>
+                  <img  onClick={()=> browserHistory.push('/')} className="walrus-nav" src='/walrus-hat.png' alt='walrus'/>
+                  <span  onClick={()=> browserHistory.push('/')} className="myBrand">Salut.io</span>
                   <Menu.Menu position='right'>
                           {cartButton}
                           <Button icon onClick={this.toggleVisibility.bind(this, menu)}>

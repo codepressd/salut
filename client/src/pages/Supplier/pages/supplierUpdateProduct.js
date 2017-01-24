@@ -256,7 +256,7 @@ class SupplierUpdateProducts extends React.Component {
                                                                         </Form.Group>
                                                                         <Form.TextArea name='productDescription' className={classnames({'error': errors.productDescription})} label='Product Description' placeholder={errors.productDescription && errors.productDescription ||'Describe what you are selling...'} rows='3' required/>
                                                                         
-                                                                        <Button primary type='submit'>Update Product</Button>
+                                                                        <Button color='blue' type='submit'>Update Product</Button>
                                                                 </Form>
                                               </Grid.Column>
                                               <Grid.Column>

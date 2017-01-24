@@ -151,7 +151,7 @@ class RestaurantDashboard extends React.Component{
   							<Form.Input label='Address' name='address' placeholder='Address' required/>
   							<Form.Input label='City' name='city' placeholder='City' required/>
   							<Form.Input label='State' name='state' placeholder='State' required/>
-          							<Button primary type='submit' floated='right'>Update Information</Button>
+          							<Button color='blue' type='submit' floated='right'>Update Information</Button>
           						           </Form>
           						           
 						      </Grid.Column>
@@ -167,16 +167,28 @@ class RestaurantDashboard extends React.Component{
 						             </Header>
 						         <Divider  hidden/>
 						         <Grid>
-							<Grid.Column floated='left' width={3}>
+							<Grid.Column  width={8}>
 							         <h3>CompanyName:</h3>
-							         <h3>Address:</h3>
+							</Grid.Column>
+							<Grid.Column  width={8}>
+							         <h3>{user.companyName}</h3>
+							</Grid.Column>
+							<Grid.Column  width={8}>
+							          <h3>Address:</h3>
+							</Grid.Column>
+							<Grid.Column  width={8}>
+							          <h3>{user.address}</h3>
+							</Grid.Column>
+							<Grid.Column  width={8}>
 							         <h3>City:</h3>
+							</Grid.Column>
+							<Grid.Column  width={8}>
+							         <h3>{user.city}</h3>
+							</Grid.Column>
+							<Grid.Column  width={8}>
 							         <h3>State:</h3>
 							</Grid.Column>
-							<Grid.Column floated='right' width={10}>
-							         <h3>{user.companyName}</h3>
-							         <h3>{user.address}</h3>
-							         <h3>{user.city}</h3>
+							<Grid.Column  width={8}>
 							         <h3>{user.state}</h3>
 							</Grid.Column>
 						         </Grid>
@@ -197,7 +209,7 @@ class RestaurantDashboard extends React.Component{
 	  							<Form.Input label={errors.newPassword && errors.newPassword ||'New Password'} className={classnames({'error': errors.newPassword})} name='newPassword' type='password' placeholder={errors.newPassword && errors.newPassword ||'New Password'} required/>
 	  							<Form.Input label={errors.confirmPassword && errors.confirmPassword ||'Confirm Password'} className={classnames({'error': errors.confirmPassword})} name='confirmPassword' type='password' placeholder={errors.confirmPassword && errors.confirmPassword ||'Confirm Password'} required/>
   							</Form.Group>
-  							<Button primary type='submit' floated='right'>Reset Password</Button>
+  							<Button color='blue' type='submit' floated='right'>Reset Password</Button>
           						       </Form>
           						        </Grid.Column>
 						    </Grid.Row>

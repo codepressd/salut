@@ -1,6 +1,64 @@
+@font-face{
+  font-family: "Salut";
+  src: url('../public/fonts/salut-font.ttf') format('truetype');
+}
+
+@font-face{
+  font-family: "Quicksand";
+  src: url('../public/fonts/quicksand.otf') format('opentype');
+}
+
+h1, h2, h3{
+  padding: 2%;
+}
+
+.ui.header{
+  font-family: "Salut", serif;
+  color: #173870;
+  padding: 2%;
+}
+
+.ui.header .sub.header {
+  color: #aac5de;
+  font-family: "Quicksand", serif;
+}
+
+.ui.blue.button{
+  background-color: #aac5de;
+  font-family: "Salut", serif;
+}
+
+.ui.blue.button:hover{
+  color: #173870;
+  background: #f9f6e1;
+}
+.ui .segment{
+	box-shadow: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.ui.table tr td{
+    font-family: "Quicksand", serif;
+    color: #173870;
+    font-size: 1.5em
+}
+html{
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: "Quicksand",sans-serif;
+  min-height: 100%;
 }
+
+#root, .app-wrap, .components-wrap{
+  position: relative;
+  min-height: 100%;
+}
+
+
+
 

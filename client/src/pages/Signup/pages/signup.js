@@ -150,7 +150,7 @@ class Signup extends React.Component {
                                                                                     </Form.Group>
 
                                                                                     <Form.Checkbox className={classnames({'error': error.terms})} name='terms'  label='I agree to the Terms and Conditions' required/>
-                                                                                    <Button primary type='submit'>Submit</Button>
+                                                                                    <Button color='blue' type='submit'>Submit</Button>
                                                                   </Form>
                                                 </Container>
                                     </Segment>

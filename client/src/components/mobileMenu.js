@@ -1,8 +1,10 @@
 /* eslint-disable */
 import React from 'react';
 import {browserHistory} from 'react-router';
-import { Menu, Icon, Sidebar, Dropdown, Button } from 'semantic-ui-react';
+import { Menu, Icon, Sidebar, Dropdown, Button, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+
+import './mobileMenu.css';
 
 
  class MobileMenu extends React.Component {
@@ -19,18 +21,18 @@ import { connect } from 'react-redux';
       let backEnd = '';
       let cartButton = '';
       const nonLoggedIn =<Menu.Item>
-                                                                <Menu.Item  name='Home' active={this.props.location.pathname === '/'} onClick={() => browserHistory.push( '/')} />
+                                                                {/*<Menu.Item  name='Home' active={this.props.location.pathname === '/'} onClick={() => browserHistory.push( '/')} />
                                                                 <Menu.Item  name='About' active={this.props.location.pathname === '/about'}  onClick={() => browserHistory.push('/about')} />
-                                                                <Menu.Item  name='Faq' active={this.props.location.pathname === '/faq'} onClick={() => browserHistory.push('/faq')} />
+                                                                <Menu.Item  name='Faq' active={this.props.location.pathname === '/faq'} onClick={() => browserHistory.push('/faq')} />*/}
                                                                 <Menu.Item  name='Signup' active={this.props.location.pathname === '/signup'} onClick={() => browserHistory.push('/signup')} />
                                                                 <Menu.Item  name='Login' active={this.props.location.pathname === '/login'} onClick={() => browserHistory.push('/login')} />
                                                         </Menu.Item>;
       const loggedIn =<Menu.Item>
-                                                         <Icon name='home' />
-                                                        <Menu.Header>Front End</Menu.Header>
+                                                         <Icon name='user' />
+                                                        {/*<Menu.Header>Front End</Menu.Header>
                                                         <Menu.Item  name='Home' active={this.props.location.pathname === '/'} onClick={() => browserHistory.push( '/')} />
                                                         <Menu.Item  name='Faq' active={this.props.location.pathname === '/faq'} onClick={() => browserHistory.push( '/faq')} />
-                                                        <Menu.Item  name='About' active={this.props.location.pathname === '/about'} onClick={() => browserHistory.push( '/about')} />
+                                                        <Menu.Item  name='About' active={this.props.location.pathname === '/about'} onClick={() => browserHistory.push( '/about')} />*/}
                                                         <Menu.Item  name='Logout'  onClick={()=> browserHistory.push('/logout')} />
                                                 </Menu.Item>;      
 
@@ -68,8 +70,6 @@ import { connect } from 'react-redux';
 
                   frontEnd = loggedIn;
                   backEnd = <Menu.Item>
-                                                       <Icon name='settings' />
-                                                      <Menu.Header>Back End</Menu.Header>
                                                       <Menu.Item  name='Dashboard' active={this.props.location.pathname === '/'+user.role+'/dashboard/'+user.id} onClick={()=> browserHistory.push('/'+user.role+'/dashboard/'+user.id)}/>
                                                       <Menu.Item  name='Shop' active={this.props.location.pathname === '/restaurant/dashboard/'+user.id+'/shop'} onClick={() => browserHistory.push( '/restaurant/dashboard/'+user.id+'/shop')} />
                                                       <Menu.Item  name='Orders' active={this.props.location.pathname === '/restaurant/dashboard/'+user.id+'/orders'} onClick={() => browserHistory.push( '/restaurant/dashboard/'+user.id+'/orders')} />
@@ -79,8 +79,7 @@ import { connect } from 'react-redux';
 
                   frontEnd = loggedIn;
                   backEnd = <Menu.Item>
-                                                     <Icon name='settings' />
-                                                    <Menu.Header>Back End</Menu.Header>
+                                                     <Divider />
                                                     <Menu.Item  name='Dashboard' active={this.props.location.pathname === '/'+user.role+'/dashboard/'+user.id} onClick={() => browserHistory.push( '/'+user.role+'/dashboard/'+user.id)} />
                                                     <Menu.Item  name='Products' active={this.props.location.pathname === '/supplier/dashboard/'+user.id+'/products'} onClick={() => browserHistory.push( '/supplier/dashboard/'+user.id+'/products')} />
                                                     <Menu.Item  name='Add Products' active={this.props.location.pathname === '/supplier/dashboard/'+user.id+'/addProducts'} onClick={() => browserHistory.push('/supplier/dashboard/'+user.id+'/addProducts')} />

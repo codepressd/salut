@@ -166,10 +166,10 @@ class ProductPage extends React.Component{
 			<div className='pageWrap'>
 				<Container>
 				<h2>Supplier : {product.supplier}</h2>
-					<Grid columns='equal'>
+					<Grid columns='equal' stackable>
 						<Grid.Row>
 							<Grid.Column>
-							<Image size='large' src={productImage}/>
+							<Image size='large' src={productImage} centered/>
 							</Grid.Column>
 							<Grid.Column>
 							<h2>{product.title}</h2>
@@ -184,7 +184,7 @@ class ProductPage extends React.Component{
 							          <Form.Select label={errors.quantity && errors.quantity || 'Quantity'} className={classnames({'error': errors.quantity})}  name='quantity' options={quantity} placeholder='Amount' required />
 							          <Form.Select label={errors.type && errors.type || 'Single Or Case'} className={classnames({'error': errors.type})}  name='type' options={type} placeholder='Pick One' required  />
 							        </Form.Group>
-							        <Button fluid positive type='submit'>Add To Cart</Button>
+							        <Button fluid color='blue' type='submit'>Add To Cart</Button>
 							</Form>
 
 							</Grid.Column>
