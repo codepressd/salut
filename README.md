@@ -2,9 +2,14 @@
 
 A platform where you can accomplish all your ordering in one place. Order from mulitple different suppliers all at once.
 
+Mobile Version:
+![Mobile Version](public/mobile-screenshots.jpg?raw=true)
+
+Desktop Version:
+![Mobile Version](public/desktop-screenshots.jpg?raw=true)
 ### Why I Built It
 
-I work in the Restaurant Industry and I wanted an easy way to be able to order from all my suppliers in one fell swoop. 
+I work in the Restaurant Industry and I wanted an easy way to be able to order from all my suppliers in one fell swoop. I the restaurant I currently manage, we have well over 20 different suppliers and many have over 5000 products. So I set out to create an app that could make ordering a bit easier for professionals like myself.
 
 ### Technology Used
 
